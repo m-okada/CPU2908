@@ -1,5 +1,6 @@
 ﻿; Echo back.
-	mov a0,0f01
+		ld r0,ao+32
+		mov a0,0f01
 loop:
 		ld r0,[a0]
 		mov r1,r0
