@@ -18,13 +18,9 @@ Open source home brew 8-bit CPU.
 
 レジスタ構成
 ----
-<style>
-	table{width: 120px;}
-	td{text-align: center;}
-</style>
-<table>
+<table width="120">
 <tr><td>R1</td><td>R0</td></tr>
-<tr><td colspan="2">W0</td></tr>
+<tr><td align="center" colspan="2">W0</td></tr>
 </table>
 
 <table>
