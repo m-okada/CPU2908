@@ -18,27 +18,32 @@ Open source home brew 8-bit CPU.
 
 レジスタ構成
 ----
+<style>
+	table{width: 120px;}
+	td{text-align: center;}
+</style>
+<table>
+<tr><td>R1</td><td>R0</td></tr>
+<tr><td colspan="2">W0</td></tr>
+</table>
 
-|R1|R0|
-|:--:|:--:|
+<table>
+<tr><td>R2</td><td>R3</td></tr>
+<tr><td colspan="2">W1</td></tr>
+</table>
 
-|&nbsp;&nbsp;&nbsp;&nbsp; W0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
-|:--:|
+<table>
+<tr><td>A0</td></tr>
+</table>
 
-|R2|R3|
-|:--:|:--:|
+<table>
+<tr><td>A1</td></tr>
+</table>
 
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;W0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
-|:--:|
+<table>
+<tr><td>CP</td></tr>
+</table>
 
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
-|:--:|
-
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
-|:--:|
-
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
-|:--:|
-
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
-|:--:|
+<table>
+<tr><td>SP</td></tr>
+</table>
