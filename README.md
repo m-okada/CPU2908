@@ -2,6 +2,8 @@ CPU2908
 ====
 
 Open source home brew 8-bit CPU.
+----
+74HCとOTPROMで作る8ビットCPU。
 
 アーキテクチャ
 ----
