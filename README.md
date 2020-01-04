@@ -34,9 +34,6 @@ Open source home brew 8-bit CPU.
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 |:--:|
 
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;W1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
-|:--:|
-
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 |:--:|
 
