@@ -1,0 +1,930 @@
+
+             Lattice Mapping Report File for Design Module 'top'
+
+
+Design Information
+------------------
+
+Command line:   map -a MachXO2 -p LCMXO2-2000HC -t TQFP100 -s 4 -oc Commercial
+     cpu_impl1.ngd -o cpu_impl1_map.ncd -pr cpu_impl1.prf -mp cpu_impl1.mrp -lpf
+     V:/CPU2908/FPGA/MachXO2/impl1/cpu_impl1.lpf -lpf
+     V:/CPU2908/FPGA/MachXO2/cpu.lpf -c 0 -gui -msgset
+     V:/CPU2908/FPGA/MachXO2/promote.xml 
+Target Vendor:  LATTICE
+Target Device:  LCMXO2-2000HCTQFP100
+Target Performance:   4
+Mapper:  xo2c00,  version:  Diamond (64-bit) 3.8.0.115.3
+Mapped on:  01/04/20  15:04:40
+
+Design Summary
+--------------
+
+   Number of registers:    274 out of  2352 (12%)
+      PFU registers:          274 out of  2112 (13%)
+      PIO registers:            0 out of   240 (0%)
+   Number of SLICEs:       298 out of  1056 (28%)
+      SLICEs as Logic/ROM:    298 out of  1056 (28%)
+      SLICEs as RAM:            0 out of   792 (0%)
+      SLICEs as Carry:         25 out of  1056 (2%)
+   Number of LUT4s:        556 out of  2112 (26%)
+      Number used as logic LUTs:        506
+      Number used as distributed RAM:     0
+      Number used as ripple logic:       50
+      Number used as shift registers:     0
+   Number of PIO sites used: 67 + 4(JTAG) out of 80 (89%)
+   Number of block RAMs:  5 out of 8 (63%)
+   Number of GSRs:  1 out of 1 (100%)
+   EFB used :       No
+   JTAG used :      No
+   Readback used :  No
+   Oscillator used :  No
+   Startup used :   No
+   POR :            On
+   Bandgap :        On
+   Number of Power Controller:  0 out of 1 (0%)
+   Number of Dynamic Bank Controller (BCINRD):  0 out of 6 (0%)
+   Number of Dynamic Bank Controller (BCLVDSO):  0 out of 1 (0%)
+   Number of DCCA:  0 out of 8 (0%)
+   Number of DCMA:  0 out of 2 (0%)
+   Number of PLLs:  0 out of 1 (0%)
+   Number of DQSDLLs:  0 out of 2 (0%)
+   Number of CLKDIVC:  0 out of 4 (0%)
+   Number of ECLKSYNCA:  0 out of 4 (0%)
+   Number of ECLKBRIDGECS:  0 out of 2 (0%)
+   Notes:-
+      1. Total number of LUT4s = (Number of logic LUT4s) + 2*(Number of
+     distributed RAMs) + 2*(Number of ripple logic)
+      2. Number of logic LUT4s does not include count of distributed RAM and
+     ripple logic.
+   Number of clocks:  21
+     Net iclk: 1 loads, 1 rising, 0 falling (Driver: clk3_I_0_2_lut )
+     Net clkQ_c: 25 loads, 9 rising, 16 falling (Driver: clkQ_I_0_89 )
+     Net clk_c: 7 loads, 7 rising, 0 falling (Driver: PIO clk )
+
+                                    Page 1
+
+
+
+
+Design:  top                                           Date:  01/04/20  15:04:40
+
+Design Summary (cont)
+---------------------
+     Net SerialClock2: 2 loads, 1 rising, 1 falling (Driver: dff06 )
+     Net nRDRxD: 1 loads, 1 rising, 0 falling (Driver:
+     nWR_I_0_84/addrOut_15__I_0/i2643_3_lut_4_lut )
+     Net clkE_c: 38 loads, 17 rising, 21 falling (Driver: clkE_I_0_88 )
+     Net nWR_I_0_84/Executer/Executer_s/N_34: 51 loads, 51 rising, 0 falling
+     (Driver: nWR_I_0_84/i2_3_lut_3_lut )
+     Net nWRTxD: 4 loads, 4 rising, 0 falling (Driver:
+     nWR_I_0_84/addrOut_15__I_0/i2710_2_lut_3_lut_4_lut )
+     Net nWR_I_0_84/Sequencer/Sequencer_s/N_14: 1 loads, 0 rising, 1 falling
+     (Driver: nWR_I_0_84/Sequencer/Sequencer_s/I46 )
+     Net nWR_I_0_84/sig[4]: 5 loads, 5 rising, 0 falling (Driver:
+     nWR_I_0_84/Sequencer/Sequencer_s/I48 )
+     Net nWR_I_0_84/Sequencer/Sequencer_s/N_28: 4 loads, 4 rising, 0 falling
+     (Driver: nWR_I_0_84/Sequencer/Sequencer_s/I112 )
+     Net rxd01/N_41: 8 loads, 8 rising, 0 falling (Driver: rxd01/I9 )
+     Net rxd01/N_2: 1 loads, 1 rising, 0 falling (Driver: rxd01/I13 )
+     Net rxd01/N_6: 1 loads, 1 rising, 0 falling (Driver: rxd01/I16 )
+     Net rxd01/N_19: 5 loads, 5 rising, 0 falling (Driver: rxd01/I14 )
+     Net RxD_c: 1 loads, 0 rising, 1 falling (Driver: PIO RxD )
+     Net txd01/N_48: 7 loads, 6 rising, 1 falling (Driver: txd01/I36 )
+     Net txd01/N_44: 1 loads, 1 rising, 0 falling (Driver: txd01/I50 )
+     Net txd01/N_38: 1 loads, 0 rising, 1 falling (Driver: txd01/I39 )
+     Net txd01/N_36: 1 loads, 0 rising, 1 falling (Driver: txd01/I40 )
+     Net txd01/N_34: 1 loads, 0 rising, 1 falling (Driver: txd01/I41 )
+   Number of Clock Enables:  15
+     Net ocea_enable_1: 2 loads, 0 LSLICEs
+     Net nWR_I_0_84/sig_34: 5 loads, 5 LSLICEs
+     Net nWR_I_0_84/sig_35: 9 loads, 9 LSLICEs
+     Net nWR_I_0_84/sig_89: 4 loads, 4 LSLICEs
+     Net nWR_I_0_84/clkQ_c_derived_27_enable_5: 1 loads, 1 LSLICEs
+     Net nWR_I_0_84/Executer/Executer_s/sig_60: 6 loads, 6 LSLICEs
+     Net nWR_I_0_84/Executer/Executer_s/sig_61: 4 loads, 4 LSLICEs
+     Net nWR_I_0_84/Executer/Executer_s/sig_62: 4 loads, 4 LSLICEs
+     Net nWR_I_0_84/Executer/Executer_s/sig_63: 4 loads, 4 LSLICEs
+     Net nWR_I_0_84/Executer/Executer_s/sig_59: 9 loads, 9 LSLICEs
+     Net nWR_I_0_84/Executer/Executer_s/sig_57: 8 loads, 8 LSLICEs
+     Net nWR_I_0_84/Executer/Executer_s/sig_58: 8 loads, 8 LSLICEs
+     Net nWR_I_0_84/Executer/Executer_s/sig_56: 8 loads, 8 LSLICEs
+     Net nWR_I_0_84/Executer/Executer_s/out_3_N_226_1: 4 loads, 4 LSLICEs
+     Net nWR_I_0_84/Executer/Executer_s/out_3_N_226_2: 4 loads, 4 LSLICEs
+   Number of LSRs:  9
+     Net clkQ_c: 1 loads, 1 LSLICEs
+     Net nReset2: 9 loads, 8 LSLICEs
+     Net RxDclr: 8 loads, 8 LSLICEs
+     Net nWRTxD: 12 loads, 12 LSLICEs
+     Net nWR_I_0_84/Sequencer/Sequencer_s/N_2: 1 loads, 1 LSLICEs
+     Net nWR_I_0_84/Sequencer/Sequencer_s/N_16: 1 loads, 1 LSLICEs
+     Net nWR_I_0_84/Executer/Executer_s/I29/n1103: 2 loads, 2 LSLICEs
+     Net sig_40: 8 loads, 8 LSLICEs
+     Net nReset_c: 3 loads, 3 LSLICEs
+   Number of nets driven by tri-state buffers:  0
+   Top 10 highest fanout non-clock nets:
+     Net nWR_I_0_84/Sequencer/Sequencer_s/uromIDX_6: 123 loads
+     Net nWR_I_0_84/Sequencer/Sequencer_s/uromIDX_3: 99 loads
+     Net nWR_I_0_84/Sequencer/Sequencer_s/uromIDX_2: 96 loads
+     Net nWR_I_0_84/Sequencer/Sequencer_s/uromIDX_1: 90 loads
+
+                                    Page 2
+
+
+
+
+Design:  top                                           Date:  01/04/20  15:04:40
+
+Design Summary (cont)
+---------------------
+     Net nWR_I_0_84/Sequencer/Sequencer_s/uromIDX_7: 70 loads
+     Net nWR_I_0_84/Sequencer/Sequencer_s/uromIDX_5: 37 loads
+     Net nWR_I_0_84/sig_80: 36 loads
+     Net nReset2: 35 loads
+     Net nWR_I_0_84/sig_77: 35 loads
+     Net nWR_I_0_84/sig_79: 35 loads
+
+
+
+
+   Number of warnings:  29
+   Number of errors:    0
+     
+
+Design Errors/Warnings
+----------------------
+
+WARNING - map: V:/CPU2908/FPGA/MachXO2/cpu.lpf(100): Semantic error in "IOBUF
+     PORT "UM[15]" IO_TYPE=LVCMOS33 ;": Port "UM[15]" does not exist in the
+     design. This preference has been disabled.
+WARNING - map: V:/CPU2908/FPGA/MachXO2/cpu.lpf(101): Semantic error in "IOBUF
+     PORT "UM[14]" IO_TYPE=LVCMOS33 ;": Port "UM[14]" does not exist in the
+     design. This preference has been disabled.
+WARNING - map: V:/CPU2908/FPGA/MachXO2/cpu.lpf(102): Semantic error in "IOBUF
+     PORT "UM[13]" IO_TYPE=LVCMOS33 ;": Port "UM[13]" does not exist in the
+     design. This preference has been disabled.
+WARNING - map: V:/CPU2908/FPGA/MachXO2/cpu.lpf(103): Semantic error in "IOBUF
+     PORT "UM[12]" IO_TYPE=LVCMOS33 ;": Port "UM[12]" does not exist in the
+     design. This preference has been disabled.
+WARNING - map: V:/CPU2908/FPGA/MachXO2/cpu.lpf(104): Semantic error in "IOBUF
+     PORT "UM[11]" IO_TYPE=LVCMOS33 ;": Port "UM[11]" does not exist in the
+     design. This preference has been disabled.
+WARNING - map: V:/CPU2908/FPGA/MachXO2/cpu.lpf(105): Semantic error in "IOBUF
+     PORT "UM[10]" IO_TYPE=LVCMOS33 ;": Port "UM[10]" does not exist in the
+     design. This preference has been disabled.
+WARNING - map: V:/CPU2908/FPGA/MachXO2/cpu.lpf(106): Semantic error in "IOBUF
+     PORT "UM[9]" IO_TYPE=LVCMOS33 ;": Port "UM[9]" does not exist in the
+     design. This preference has been disabled.
+WARNING - map: V:/CPU2908/FPGA/MachXO2/cpu.lpf(107): Semantic error in "IOBUF
+     PORT "UM[8]" IO_TYPE=LVCMOS33 ;": Port "UM[8]" does not exist in the
+     design. This preference has been disabled.
+WARNING - map: V:/CPU2908/FPGA/MachXO2/cpu.lpf(139): Semantic error in "IOBUF
+     PORT "serialClockOut" IO_TYPE=LVCMOS33 ;": Port "serialClockOut" does not
+     exist in the design. This preference has been disabled.
+WARNING - map: V:/CPU2908/FPGA/MachXO2/cpu.lpf(155): Semantic error in "IOBUF
+     PORT "monitor_sel[3]" IO_TYPE=LVCMOS33 PULLMODE=NONE ;": Port
+     "monitor_sel[3]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: V:/CPU2908/FPGA/MachXO2/cpu.lpf(156): Semantic error in "IOBUF
+     PORT "monitor_sel[2]" IO_TYPE=LVCMOS33 PULLMODE=NONE ;": Port
+     "monitor_sel[2]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: V:/CPU2908/FPGA/MachXO2/cpu.lpf(157): Semantic error in "IOBUF
+     PORT "monitor_sel[1]" IO_TYPE=LVCMOS33 PULLMODE=NONE ;": Port
+     "monitor_sel[1]" does not exist in the design. This preference has been
+     disabled.
+
+                                    Page 3
+
+
+
+
+Design:  top                                           Date:  01/04/20  15:04:40
+
+Design Errors/Warnings (cont)
+-----------------------------
+WARNING - map: V:/CPU2908/FPGA/MachXO2/cpu.lpf(158): Semantic error in "IOBUF
+     PORT "monitor_sel[0]" IO_TYPE=LVCMOS33 PULLMODE=NONE ;": Port
+     "monitor_sel[0]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: Preference parsing results:  13 semantic errors detected.
+WARNING - map: input pad net 'gclk1' has no legal load.
+WARNING - map: input pad net 'bootMode' has no legal load.
+WARNING - map: input pad net 'nCTS' has no legal load.
+WARNING - map: input pad net 'monitor_sel[3]' has no legal load.
+WARNING - map: input pad net 'monitor_sel[2]' has no legal load.
+WARNING - map: input pad net 'monitor_sel[1]' has no legal load.
+WARNING - map: input pad net 'monitor_sel[0]' has no legal load.
+WARNING - map: IO buffer missing for top level port gclk1...logic will be
+     discarded.
+WARNING - map: IO buffer missing for top level port bootMode...logic will be
+     discarded.
+WARNING - map: IO buffer missing for top level port nCTS...logic will be
+     discarded.
+WARNING - map: IO buffer missing for top level port monitor_sel[3:0](3)...logic
+     will be discarded.
+WARNING - map: IO buffer missing for top level port monitor_sel[3:0](2)...logic
+     will be discarded.
+WARNING - map: IO buffer missing for top level port monitor_sel[3:0](1)...logic
+     will be discarded.
+WARNING - map: IO buffer missing for top level port monitor_sel[3:0](0)...logic
+     will be discarded.
+WARNING - map: There are semantic errors in the preference file
+     V:/CPU2908/FPGA/MachXO2/cpu.lpf.
+
+IO (PIO) Attributes
+-------------------
+
++---------------------+-----------+-----------+------------+
+| IO Name             | Direction | Levelmode | IO         |
+|                     |           |  IO_TYPE  | Register   |
++---------------------+-----------+-----------+------------+
+| RxD                 | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| nTSC                | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| nIRQ                | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| nReset              | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| clk                 | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| UM[0]               | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| UM[1]               | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| UM[2]               | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| UM[3]               | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| UM[4]               | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+
+                                    Page 4
+
+
+
+
+Design:  top                                           Date:  01/04/20  15:04:40
+
+IO (PIO) Attributes (cont)
+--------------------------
+| UM[5]               | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| UM[6]               | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| UM[7]               | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| SerialClock         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| nRTS                | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| TxD                 | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| SPI_CS[0]           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| SPI_CS[1]           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| SPI_CS[2]           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| SPI_CS[3]           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| SPI_CS[4]           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| SPI_CS[5]           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| SPI_MOSI            | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| SPI_MISO            | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| SPI_CLK             | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| S[0]                | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| S[1]                | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| IRQH                | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| nIRQA               | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| nAltWR              | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| nWR                 | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| nAltRD              | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| nRD                 | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| clkE                | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| clkQ                | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[0]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[1]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[2]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+
+                                    Page 5
+
+
+
+
+Design:  top                                           Date:  01/04/20  15:04:40
+
+IO (PIO) Attributes (cont)
+--------------------------
+| addrOut[3]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[4]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[5]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[6]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[7]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[8]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[9]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[10]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[11]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[12]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[13]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[14]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[15]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[16]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[17]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[18]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| addrOut[19]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| nCS[0]              | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| nCS[1]              | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| nCS[2]              | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| nCS[3]              | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| dataBus[0]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| dataBus[1]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| dataBus[2]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| dataBus[3]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| dataBus[4]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| dataBus[5]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| dataBus[6]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+
+                                    Page 6
+
+
+
+
+Design:  top                                           Date:  01/04/20  15:04:40
+
+IO (PIO) Attributes (cont)
+--------------------------
+| dataBus[7]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+
+Removed logic
+-------------
+
+Signal clkQ_c__inv was merged into signal clkQ_c
+Signal n531 was merged into signal nTSC_c
+Signal nReset_N_22 was merged into signal nReset_c
+Signal txd01/N_51 was merged into signal nWRTxD
+Signal txd01/N_52 was merged into signal txd01/N_48
+Signal rxd01/N_7 was merged into signal RxBusy
+Signal rxd01/N_43 was merged into signal SerialClock2
+Signal nWR_I_0_84/Sequencer/Sequencer_s/N_13 was merged into signal S_c_1
+Signal nWR_I_0_84/Sequencer/Sequencer_s/N_12 was merged into signal S_c_0
+Signal nWR_I_0_84/Sequencer/Sequencer_s/N_11 was merged into signal
+     nWR_I_0_84/Sequencer/Sequencer_s/N_16
+Signal nWR_I_0_84/Sequencer/Sequencer_s/sig_0 was merged into signal
+     nWR_I_0_84/Sequencer/Sequencer_s/N_14
+Signal nWR_I_0_84/Sequencer/Sequencer_s/N_21 was merged into signal
+     nWR_I_0_84/Sequencer/Sequencer_s/UM_8
+Signal nWR_I_0_84/Sequencer/Sequencer_s/N_44 was merged into signal ExDataIn_3
+Signal nWR_I_0_84/Sequencer/Sequencer_s/N_42 was merged into signal ExDataIn_4
+Signal nWR_I_0_84/Sequencer/Sequencer_s/N_30 was merged into signal ExDataIn_2
+Signal nWR_I_0_84/Sequencer/Sequencer_s/N_29 was merged into signal ExDataIn_1
+Signal nWR_I_0_84/Sequencer/Sequencer_s/N_47 was merged into signal ExDataIn_0
+Signal nWR_I_0_84/clkQ_c_derived_27_enable_9 was merged into signal
+     nWR_I_0_84/sig_89
+Signal nReset2_N_20 was merged into signal nReset2
+Signal VCC_net undriven or does not drive anything - clipped.
+Signal div01/counter_200_add_4_1/S0 undriven or does not drive anything -
+     clipped.
+Signal div01/counter_200_add_4_1/CI undriven or does not drive anything -
+     clipped.
+Signal div01/counter_200_add_4_9/S1 undriven or does not drive anything -
+     clipped.
+Signal div01/counter_200_add_4_9/CO undriven or does not drive anything -
+     clipped.
+Signal nWR_I_0_84/Executer/Executer_s/I11/add_15_17/S1 undriven or does not
+     drive anything - clipped.
+Signal nWR_I_0_84/Executer/Executer_s/I11/add_15_17/CO undriven or does not
+     drive anything - clipped.
+Signal nWR_I_0_84/Executer/Executer_s/I11/add_15_1/S0 undriven or does not drive
+     anything - clipped.
+Signal nWR_I_0_84/Executer/Executer_s/I11/add_15_1/CI undriven or does not drive
+     anything - clipped.
+Signal nWR_I_0_84/Executer/Executer_s/I2/ia/add_7_1/S0 undriven or does not
+     drive anything - clipped.
+Signal nWR_I_0_84/Executer/Executer_s/I2/ia/add_7_1/CI undriven or does not
+     drive anything - clipped.
+Signal nWR_I_0_84/Executer/Executer_s/I2/ia/add_7_9/CO undriven or does not
+     drive anything - clipped.
+Signal nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201_add_4_11/S1 undriven or
+     does not drive anything - clipped.
+Signal nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201_add_4_11/CO undriven or
+     does not drive anything - clipped.
+
+                                    Page 7
+
+
+
+
+Design:  top                                           Date:  01/04/20  15:04:40
+
+Removed logic (cont)
+--------------------
+Signal nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201_add_4_1/S0 undriven or
+     does not drive anything - clipped.
+Signal nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201_add_4_1/CI undriven or
+     does not drive anything - clipped.
+Block i4931 was optimized away.
+Block i260_1_lut was optimized away.
+Block nReset_I_0_1_lut was optimized away.
+Block txd01/I46 was optimized away.
+Block txd01/I51 was optimized away.
+Block rxd01/I10 was optimized away.
+Block rxd01/I40 was optimized away.
+Block nWR_I_0_84/Sequencer/Sequencer_s/I6 was optimized away.
+Block nWR_I_0_84/Sequencer/Sequencer_s/I5 was optimized away.
+Block nWR_I_0_84/Sequencer/Sequencer_s/I50 was optimized away.
+Block nWR_I_0_84/Sequencer/Sequencer_s/I51 was optimized away.
+Block nWR_I_0_84/Sequencer/Sequencer_s/I102 was optimized away.
+Block nWR_I_0_84/Sequencer/Sequencer_s/I32 was optimized away.
+Block nWR_I_0_84/Sequencer/Sequencer_s/I120 was optimized away.
+Block nWR_I_0_84/Sequencer/Sequencer_s/I119 was optimized away.
+Block nWR_I_0_84/Sequencer/Sequencer_s/I118 was optimized away.
+Block nWR_I_0_84/Sequencer/Sequencer_s/I34 was optimized away.
+Block nWR_I_0_84/Sequencer/Sequencer_s/I62/i414_1_lut_rep_109 was optimized
+     away.
+Block nWR_I_0_84/nirq_ff_I_0/nReset2_I_0_1_lut was optimized away.
+Block i2 was optimized away.
+
+Memory Usage
+------------
+
+    
+         
+    INFO: Design contains EBR with GSR enabled. The GSR is only applicable for
+         output registers except FIFO. 
+    /nWR_I_0_84/Sequencer/Sequencer_s/I105:
+    EBRs: 4
+    RAM SLICEs: 0
+    Logic SLICEs: 0
+    PFU Registers: 0
+    -Contains EBR uromd_0_3_0:  TYPE= DP8KC,  Width_A= 4,  Depth_A= 1024,
+         REGMODE_A= NOREG,  REGMODE_B= NOREG,  RESETMODE= ASYNC,
+         ASYNC_RESET_RELEASE= SYNC,  WRITEMODE_A= NORMAL,  WRITEMODE_B= NORMAL,
+         GSR= ENABLED,  MEM_INIT_FILE= 2908curom.mem,  MEM_LPC_FILE= uromd.lpc
+    -Contains EBR uromd_0_1_2:  TYPE= DP8KC,  Width_A= 9,  Depth_A= 1024,
+         REGMODE_A= NOREG,  REGMODE_B= NOREG,  RESETMODE= ASYNC,
+         ASYNC_RESET_RELEASE= SYNC,  WRITEMODE_A= NORMAL,  WRITEMODE_B= NORMAL,
+         GSR= ENABLED,  MEM_INIT_FILE= 2908curom.mem,  MEM_LPC_FILE= uromd.lpc
+    -Contains EBR uromd_0_0_3:  TYPE= DP8KC,  Width_A= 9,  Depth_A= 1024,
+         REGMODE_A= NOREG,  REGMODE_B= NOREG,  RESETMODE= ASYNC,
+         ASYNC_RESET_RELEASE= SYNC,  WRITEMODE_A= NORMAL,  WRITEMODE_B= NORMAL,
+         GSR= ENABLED,  MEM_INIT_FILE= 2908curom.mem,  MEM_LPC_FILE= uromd.lpc
+    -Contains EBR uromd_0_2_1:  TYPE= DP8KC,  Width_A= 7,  Depth_A= 1024,
+         REGMODE_A= NOREG,  REGMODE_B= NOREG,  RESETMODE= ASYNC,
+         ASYNC_RESET_RELEASE= SYNC,  WRITEMODE_A= NORMAL,  WRITEMODE_B= NORMAL,
+         GSR= ENABLED,  MEM_INIT_FILE= 2908curom.mem,  MEM_LPC_FILE= uromd.lpc
+/sramData_7__I_0:
+    EBRs: 1
+
+                                    Page 8
+
+
+
+
+Design:  top                                           Date:  01/04/20  15:04:40
+
+Memory Usage (cont)
+-------------------
+    RAM SLICEs: 0
+    Logic SLICEs: 0
+    PFU Registers: 0
+    -Contains EBR sram_0_0_0_0:  TYPE= DP8KC,  Width_A= 8,  Depth_A= 128,
+         REGMODE_A= NOREG,  REGMODE_B= NOREG,  RESETMODE= ASYNC,
+         ASYNC_RESET_RELEASE= SYNC,  WRITEMODE_A= NORMAL,  WRITEMODE_B= NORMAL,
+         GSR= ENABLED,  MEM_INIT_FILE= INIT_ALL_0s,  MEM_LPC_FILE= sram.lpc
+
+     
+
+ASIC Components
+---------------
+
+Instance Name: sramData_7__I_0/sram_0_0_0_0
+         Type: DP8KC
+Instance Name: nWR_I_0_84/Sequencer/Sequencer_s/I105/uromd_0_3_0
+         Type: DP8KC
+Instance Name: nWR_I_0_84/Sequencer/Sequencer_s/I105/uromd_0_1_2
+         Type: DP8KC
+Instance Name: nWR_I_0_84/Sequencer/Sequencer_s/I105/uromd_0_0_3
+         Type: DP8KC
+Instance Name: nWR_I_0_84/Sequencer/Sequencer_s/I105/uromd_0_2_1
+         Type: DP8KC
+
+GSR Usage
+---------
+
+GSR Component:
+   The Global Set Reset (GSR) resource has been used to implement a global reset
+        of the design. The reset signal used for GSR control is 'nReset1'.
+        
+
+     GSR Property:
+   The design components with GSR property set to ENABLED will respond to global
+        set reset while the components with GSR property set to DISABLED will
+        not.
+        
+
+     Components with disabled GSR Property
+-------------------------------------
+
+     These components have the GSR property set to DISABLED. The components will
+     not respond to the reset signal 'nReset1' via the GSR component.
+
+     Type and number of components of the type: 
+   Register = 244 
+
+     Type and instance name of component: 
+   Register : clkQ_I_0_89
+   Register : dff03
+   Register : nReset2_I_0_87
+   Register : dff05
+   Register : dff06
+   Register : dff07
+   Register : clkE_I_0_88
+   Register : nWR_I_0_84/nwrite_ff_I_0/R_15
+
+                                    Page 9
+
+
+
+
+Design:  top                                           Date:  01/04/20  15:04:40
+
+GSR Usage (cont)
+----------------
+   Register : nWR_I_0_84/nread_ff_I_0/R_15
+   Register : nWR_I_0_84/nirq_ff_I_0/R_15
+   Register : nWR_I_0_84/data_ibus2_7__I_0/R_i0_i0
+   Register : nWR_I_0_84/data_ibus2_7__I_0/R_i0_i1
+   Register : nWR_I_0_84/data_ibus2_7__I_0/R_i0_i2
+   Register : nWR_I_0_84/data_ibus2_7__I_0/R_i0_i3
+   Register : nWR_I_0_84/data_ibus2_7__I_0/R_i0_i4
+   Register : nWR_I_0_84/data_ibus2_7__I_0/R_i0_i5
+   Register : nWR_I_0_84/data_ibus2_7__I_0/R_i0_i6
+   Register : nWR_I_0_84/data_ibus2_7__I_0/R_i0_i7
+   Register : nWR_I_0_84/data_ctrl_I_0_25/R_12
+   Register : nWR_I_0_84/addrOut_15__I_0/R_i0_i0
+   Register : nWR_I_0_84/addrOut_15__I_0/R_i0_i1
+   Register : nWR_I_0_84/addrOut_15__I_0/R_i0_i2
+   Register : nWR_I_0_84/addrOut_15__I_0/R_i0_i3
+   Register : nWR_I_0_84/addrOut_15__I_0/R_i0_i4
+   Register : nWR_I_0_84/addrOut_15__I_0/R_i0_i5
+   Register : nWR_I_0_84/addrOut_15__I_0/R_i0_i6
+   Register : nWR_I_0_84/addrOut_15__I_0/R_i0_i7
+   Register : nWR_I_0_84/addrOut_15__I_0/R_i0_i8
+   Register : nWR_I_0_84/addrOut_15__I_0/R_i0_i9
+   Register : nWR_I_0_84/addrOut_15__I_0/R_i0_i10
+   Register : nWR_I_0_84/addrOut_15__I_0/R_i0_i11
+   Register : nWR_I_0_84/addrOut_15__I_0/R_i0_i12
+   Register : nWR_I_0_84/addrOut_15__I_0/R_i0_i13
+   Register : nWR_I_0_84/addrOut_15__I_0/R_i0_i14
+   Register : nWR_I_0_84/addrOut_15__I_0/R_i0_i15
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/IRQCtrl
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/I46
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/tempReg/R_i7
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/tempReg/R_i6
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/tempReg/R_i5
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/tempReg/R_i4
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/tempReg/R_i3
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/tempReg/R_i2
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/tempReg/R_i1
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/tempReg/R_i0
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201__i9
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201__i8
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201__i7
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201__i6
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201__i5
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201__i4
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201__i3
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201__i2
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201__i1
+   Register : nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201__i0
+   Register : nWR_I_0_84/Executer/Executer_s/I8/out_7__I_0/R_i0_i0
+   Register : nWR_I_0_84/Executer/Executer_s/I8/out_7__I_0/R_i0_i1
+   Register : nWR_I_0_84/Executer/Executer_s/I8/out_7__I_0/R_i0_i2
+   Register : nWR_I_0_84/Executer/Executer_s/I8/out_7__I_0/R_i0_i3
+   Register : nWR_I_0_84/Executer/Executer_s/I8/out_7__I_0/R_i0_i4
+   Register : nWR_I_0_84/Executer/Executer_s/I8/out_7__I_0/R_i0_i5
+   Register : nWR_I_0_84/Executer/Executer_s/I8/out_7__I_0/R_i0_i6
+   Register : nWR_I_0_84/Executer/Executer_s/I8/out_7__I_0/R_i0_i7
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R2/R_i0_i0
+
+                                   Page 10
+
+
+
+
+Design:  top                                           Date:  01/04/20  15:04:40
+
+GSR Usage (cont)
+----------------
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R2/R_i0_i1
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R2/R_i0_i2
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R2/R_i0_i3
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R2/R_i0_i4
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R2/R_i0_i5
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R2/R_i0_i6
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R2/R_i0_i7
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R1/R_i0_i0
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R1/R_i0_i1
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R1/R_i0_i2
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R1/R_i0_i3
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R1/R_i0_i4
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R1/R_i0_i5
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R1/R_i0_i6
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R1/R_i0_i7
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R0/R_i0_i0
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R0/R_i0_i1
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R0/R_i0_i2
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R0/R_i0_i3
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R0/R_i0_i4
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R0/R_i0_i5
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R0/R_i0_i6
+   Register : nWR_I_0_84/Executer/Executer_s/I8/R0/R_i0_i7
+   Register : nWR_I_0_84/Executer/Executer_s/I3/out_15__I_0/R_i0_i0
+   Register : nWR_I_0_84/Executer/Executer_s/I3/out_15__I_0/R_i0_i1
+   Register : nWR_I_0_84/Executer/Executer_s/I3/out_15__I_0/R_i0_i2
+   Register : nWR_I_0_84/Executer/Executer_s/I3/out_15__I_0/R_i0_i3
+   Register : nWR_I_0_84/Executer/Executer_s/I3/out_15__I_0/R_i0_i4
+   Register : nWR_I_0_84/Executer/Executer_s/I3/out_15__I_0/R_i0_i5
+   Register : nWR_I_0_84/Executer/Executer_s/I3/out_15__I_0/R_i0_i6
+   Register : nWR_I_0_84/Executer/Executer_s/I3/out_15__I_0/R_i0_i7
+   Register : nWR_I_0_84/Executer/Executer_s/I3/out_15__I_0/R_i0_i8
+   Register : nWR_I_0_84/Executer/Executer_s/I3/out_15__I_0/R_i0_i9
+   Register : nWR_I_0_84/Executer/Executer_s/I3/out_15__I_0/R_i0_i10
+   Register : nWR_I_0_84/Executer/Executer_s/I3/out_15__I_0/R_i0_i11
+   Register : nWR_I_0_84/Executer/Executer_s/I3/out_15__I_0/R_i0_i12
+   Register : nWR_I_0_84/Executer/Executer_s/I3/out_15__I_0/R_i0_i13
+   Register : nWR_I_0_84/Executer/Executer_s/I3/out_15__I_0/R_i0_i14
+   Register : nWR_I_0_84/Executer/Executer_s/I3/out_15__I_0/R_i0_i15
+   Register : nWR_I_0_84/Executer/Executer_s/I3/CPMonitor_15__I_0/R__i1
+   Register : nWR_I_0_84/Executer/Executer_s/I3/CPMonitor_15__I_0/R__i2
+   Register : nWR_I_0_84/Executer/Executer_s/I3/CPMonitor_15__I_0/R__i3
+   Register : nWR_I_0_84/Executer/Executer_s/I3/CPMonitor_15__I_0/R__i4
+   Register : nWR_I_0_84/Executer/Executer_s/I3/CPMonitor_15__I_0/R__i5
+   Register : nWR_I_0_84/Executer/Executer_s/I3/CPMonitor_15__I_0/R__i6
+   Register : nWR_I_0_84/Executer/Executer_s/I3/CPMonitor_15__I_0/R__i7
+   Register : nWR_I_0_84/Executer/Executer_s/I3/CPMonitor_15__I_0/R__i8
+   Register : nWR_I_0_84/Executer/Executer_s/I3/CPMonitor_15__I_0/R__i9
+   Register : nWR_I_0_84/Executer/Executer_s/I3/CPMonitor_15__I_0/R__i10
+   Register : nWR_I_0_84/Executer/Executer_s/I3/CPMonitor_15__I_0/R__i11
+   Register : nWR_I_0_84/Executer/Executer_s/I3/CPMonitor_15__I_0/R__i12
+   Register : nWR_I_0_84/Executer/Executer_s/I3/CPMonitor_15__I_0/R__i13
+   Register : nWR_I_0_84/Executer/Executer_s/I3/CPMonitor_15__I_0/R__i14
+   Register : nWR_I_0_84/Executer/Executer_s/I3/CPMonitor_15__I_0/R__i15
+   Register : nWR_I_0_84/Executer/Executer_s/I3/CPMonitor_15__I_0/R__i16
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A1/R_i0_i0
+
+                                   Page 11
+
+
+
+
+Design:  top                                           Date:  01/04/20  15:04:40
+
+GSR Usage (cont)
+----------------
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A1/R_i0_i1
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A1/R_i0_i2
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A1/R_i0_i3
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A1/R_i0_i4
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A1/R_i0_i5
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A1/R_i0_i6
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A1/R_i0_i7
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A1/R_i0_i8
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A1/R_i0_i9
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A1/R_i0_i10
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A1/R_i0_i11
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A1/R_i0_i12
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A1/R_i0_i13
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A1/R_i0_i14
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A1/R_i0_i15
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A0/R_i0_i0
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A0/R_i0_i1
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A0/R_i0_i2
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A0/R_i0_i3
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A0/R_i0_i4
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A0/R_i0_i5
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A0/R_i0_i6
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A0/R_i0_i7
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A0/R_i0_i8
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A0/R_i0_i9
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A0/R_i0_i10
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A0/R_i0_i11
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A0/R_i0_i12
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A0/R_i0_i13
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A0/R_i0_i14
+   Register : nWR_I_0_84/Executer/Executer_s/I3/A0/R_i0_i15
+   Register : nWR_I_0_84/Executer/Executer_s/I29/flagRegister__i1
+   Register : nWR_I_0_84/Executer/Executer_s/I29/flagRegister__i8
+   Register : nWR_I_0_84/Executer/Executer_s/I29/flagRegister__i7
+   Register : nWR_I_0_84/Executer/Executer_s/I29/flagRegister__i6
+   Register : nWR_I_0_84/Executer/Executer_s/I29/flagRegister__i2
+   Register : nWR_I_0_84/Executer/Executer_s/I29/flagRegister__i4
+   Register : nWR_I_0_84/Executer/Executer_s/I29/flagRegister__i3
+   Register : nWR_I_0_84/Executer/Executer_s/I29/flagRegister__i5
+   Register : nWR_I_0_84/Executer/Executer_s/BUFF_2/R_i0_i7
+   Register : nWR_I_0_84/Executer/Executer_s/BUFF_2/R_i0_i6
+   Register : nWR_I_0_84/Executer/Executer_s/BUFF_2/R_i0_i5
+   Register : nWR_I_0_84/Executer/Executer_s/BUFF_2/R_i0_i4
+   Register : nWR_I_0_84/Executer/Executer_s/BUFF_2/R_i0_i3
+   Register : nWR_I_0_84/Executer/Executer_s/BUFF_2/R_i0_i2
+   Register : nWR_I_0_84/Executer/Executer_s/BUFF_2/R_i0_i1
+   Register : nWR_I_0_84/Executer/Executer_s/BUFF_2/R_i0_i0
+   Register : nWR_I_0_84/Executer/Executer_s/BUFF_1/R_i0_i0
+   Register : nWR_I_0_84/Executer/Executer_s/BUFF_1/R_i0_i7
+   Register : nWR_I_0_84/Executer/Executer_s/BUFF_1/R_i0_i6
+   Register : nWR_I_0_84/Executer/Executer_s/BUFF_1/R_i0_i5
+   Register : nWR_I_0_84/Executer/Executer_s/BUFF_1/R_i0_i4
+   Register : nWR_I_0_84/Executer/Executer_s/BUFF_1/R_i0_i3
+   Register : nWR_I_0_84/Executer/Executer_s/BUFF_1/R_i0_i2
+   Register : nWR_I_0_84/Executer/Executer_s/BUFF_1/R_i0_i1
+   Register : rxd01/I25
+
+                                   Page 12
+
+
+
+
+Design:  top                                           Date:  01/04/20  15:04:40
+
+GSR Usage (cont)
+----------------
+   Register : rxd01/I15
+   Register : rxd01/I16
+   Register : rxd01/I17
+   Register : rxd01/I9
+   Register : rxd01/I1
+   Register : rxd01/I2
+   Register : rxd01/I3
+   Register : rxd01/I4
+   Register : rxd01/I5
+   Register : rxd01/I6
+   Register : rxd01/I7
+   Register : rxd01/I8
+   Register : rxd01/I35/R_i0
+   Register : rxd01/I35/R_i7
+   Register : rxd01/I35/R_i6
+   Register : rxd01/I35/R_i5
+   Register : rxd01/I35/R_i4
+   Register : rxd01/I35/R_i3
+   Register : rxd01/I35/R_i2
+   Register : rxd01/I35/R_i1
+   Register : TxBuff_i0
+   Register : txd01/I19
+   Register : txd01/I49
+   Register : txd01/I50
+   Register : txd01/I39
+   Register : txd01/I40
+   Register : txd01/I41
+   Register : txd01/I42
+   Register : txd01/I44
+   Register : txd01/I15
+   Register : txd01/I16
+   Register : txd01/I17
+   Register : txd01/I14
+   Register : txd01/I13
+   Register : txd01/I12
+   Register : txd01/I11
+   Register : txd01/I10
+   Register : ioaddr_reg/R_i0
+   Register : ioaddr_reg/R_i15
+   Register : ioaddr_reg/R_i14
+   Register : ioaddr_reg/R_i13
+   Register : ioaddr_reg/R_i12
+   Register : ioaddr_reg/R_i11
+   Register : ioaddr_reg/R_i10
+   Register : ioaddr_reg/R_i9
+   Register : ioaddr_reg/R_i8
+   Register : ioaddr_reg/R_i7
+   Register : ioaddr_reg/R_i6
+   Register : ioaddr_reg/R_i5
+   Register : ioaddr_reg/R_i4
+   Register : ioaddr_reg/R_i3
+   Register : ioaddr_reg/R_i2
+   Register : ioaddr_reg/R_i1
+   Register : div01/counter_200__i0
+   Register : div01/counter_200__i1
+   Register : div01/counter_200__i2
+
+                                   Page 13
+
+
+
+
+Design:  top                                           Date:  01/04/20  15:04:40
+
+GSR Usage (cont)
+----------------
+   Register : div01/counter_200__i3
+   Register : div01/counter_200__i4
+   Register : div01/counter_200__i5
+   Register : div01/counter_200__i6
+   Register : div01/counter_200__i7
+   Register : TxBuff_i7
+   Register : TxBuff_i6
+   Register : TxBuff_i5
+   Register : TxBuff_i4
+   Register : TxBuff_i3
+   Register : TxBuff_i2
+   Register : TxBuff_i1
+
+     EBR components with enabled GSR
+-------------------------------
+
+     These EBR components have the GSR property set to ENABLED. The components
+     will respond to the asynchronous reset signal 'nReset1' via the GSR
+     component.
+
+     Type and number of components of the type: 
+   DP8KC = 5
+
+     Type and instance name of component: 
+   DP8KC : sramData_7__I_0/sram_0_0_0_0
+   DP8KC : nWR_I_0_84/Sequencer/Sequencer_s/I105/uromd_0_3_0
+   DP8KC : nWR_I_0_84/Sequencer/Sequencer_s/I105/uromd_0_1_2
+   DP8KC : nWR_I_0_84/Sequencer/Sequencer_s/I105/uromd_0_0_3
+   DP8KC : nWR_I_0_84/Sequencer/Sequencer_s/I105/uromd_0_2_1
+
+Run Time and Memory Usage
+-------------------------
+
+   Total CPU Time: 0 secs  
+   Total REAL Time: 0 secs  
+   Peak Memory Usage: 47 MB
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                   Page 14
+
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+     Copyright (c) 1995 AT&T Corp.   All rights reserved.
+     Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+     Copyright (c) 2001 Agere Systems   All rights reserved.
+     Copyright (c) 2002-2016 Lattice Semiconductor Corporation,  All rights
+     reserved.

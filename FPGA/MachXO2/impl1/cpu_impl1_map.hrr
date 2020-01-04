@@ -1,0 +1,464 @@
+---------------------------------------------------
+Report for cell top
+   Instance path: top
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	     298.00        100.0
+                                  LUT4	     506.00        100.0
+                                 IOBUF	         67        100.0
+                                PFUREG	        274        100.0
+                                RIPPLE	         25        100.0
+                                   EBR	          5        100.0
+SUB MODULES
+                                  cell	      count    SLC Usage(%)
+                             serialRxD	          1         4.8
+                                  sram	          1         0.0
+                             serialTxD	          1         4.2
+                        register16_U18	          1         1.3
+                               divider	          1         1.7
+                               bootROM	          1         2.7
+                                  core	          1        78.8
+---------------------------------------------------
+Report for cell sram
+   Instance path: top/sramData_7__I_0
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                   EBR	          1        20.0
+---------------------------------------------------
+Report for cell core
+   Instance path: top/nWR_I_0_84
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	     234.75        78.8
+                                  LUT4	     414.00        81.8
+                                PFUREG	        198        72.3
+                                RIPPLE	         20        80.0
+                                   EBR	          4        80.0
+SUB MODULES
+                                  cell	      count    SLC Usage(%)
+                     tristateBuff8_U16	          1         0.7
+                             sequencer	          1        37.0
+                             register1	          1         0.2
+                         register8_U15	          1         0.8
+                       register1as_U13	          1         0.2
+                       register1as_U14	          1         0.1
+                           register1as	          1         0.1
+                        register16_U17	          1         4.4
+                              executer	          1        34.8
+---------------------------------------------------
+Report for cell register1as
+   Instance path: top/nWR_I_0_84/nwrite_ff_I_0
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       0.25         0.1
+                                PFUREG	          1         0.4
+---------------------------------------------------
+Report for cell register1as_U13
+   Instance path: top/nWR_I_0_84/nread_ff_I_0
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       0.50         0.2
+                                PFUREG	          1         0.4
+---------------------------------------------------
+Report for cell register1as_U14
+   Instance path: top/nWR_I_0_84/nirq_ff_I_0
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       0.25         0.1
+                                PFUREG	          1         0.4
+---------------------------------------------------
+Report for cell register8_U15
+   Instance path: top/nWR_I_0_84/data_ibus2_7__I_0
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       2.33         0.8
+                                PFUREG	          8         2.9
+---------------------------------------------------
+Report for cell register1
+   Instance path: top/nWR_I_0_84/data_ctrl_I_0_25
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       0.50         0.2
+                                PFUREG	          1         0.4
+---------------------------------------------------
+Report for cell tristateBuff8_U16
+   Instance path: top/nWR_I_0_84/dataOut_7__I_0
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       2.00         0.7
+                                  LUT4	       8.00         1.6
+---------------------------------------------------
+Report for cell register16_U17
+   Instance path: top/nWR_I_0_84/addrOut_15__I_0
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      13.17         4.4
+                                  LUT4	      29.00         5.7
+                                PFUREG	         16         5.8
+---------------------------------------------------
+Report for cell sequencer
+   Instance path: top/nWR_I_0_84/Sequencer
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	     110.23        37.0
+                                  LUT4	     211.00        41.7
+                                PFUREG	         50        18.2
+                                RIPPLE	          6        24.0
+                                   EBR	          4        80.0
+SUB MODULES
+                                  cell	      count    SLC Usage(%)
+                           sequencer_s	          1        37.0
+---------------------------------------------------
+Report for cell sequencer_s
+   Instance path: top/nWR_I_0_84/Sequencer/Sequencer_s
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	     110.23        37.0
+                                  LUT4	     211.00        41.7
+                                PFUREG	         50        18.2
+                                RIPPLE	          6        24.0
+                                   EBR	          4        80.0
+SUB MODULES
+                                  cell	      count    SLC Usage(%)
+                                 uromd	          1         0.0
+                              urom_TBL	          1        23.2
+                           uromCounter	          1         2.3
+                          register8_U6	          1         0.7
+                            register32	          1         5.1
+                           jccSelector	          1         0.1
+                           Mux2_1x8_U7	          1         0.7
+                           Mux2_1x8_U8	          1         0.7
+                              Mux2_1x8	          1         0.7
+---------------------------------------------------
+Report for cell register8_U6
+   Instance path: top/nWR_I_0_84/Sequencer/Sequencer_s/tempReg
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       2.08         0.7
+                                PFUREG	          8         2.9
+---------------------------------------------------
+Report for cell Mux2_1x8
+   Instance path: top/nWR_I_0_84/Sequencer/Sequencer_s/I97
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       2.00         0.7
+                                  LUT4	       8.00         1.6
+---------------------------------------------------
+Report for cell jccSelector
+   Instance path: top/nWR_I_0_84/Sequencer/Sequencer_s/I82
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       0.20         0.1
+                                  LUT4	       0.50         0.1
+---------------------------------------------------
+Report for cell register32
+   Instance path: top/nWR_I_0_84/Sequencer/Sequencer_s/I62
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      15.15         5.1
+                                  LUT4	      23.00         4.5
+                                PFUREG	         27         9.9
+---------------------------------------------------
+Report for cell Mux2_1x8_U7
+   Instance path: top/nWR_I_0_84/Sequencer/Sequencer_s/I59
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       2.00         0.7
+                                  LUT4	       8.00         1.6
+---------------------------------------------------
+Report for cell uromCounter
+   Instance path: top/nWR_I_0_84/Sequencer/Sequencer_s/I45
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       7.00         2.3
+                                  LUT4	      10.00         2.0
+                                PFUREG	         10         3.6
+                                RIPPLE	          6        24.0
+---------------------------------------------------
+Report for cell Mux2_1x8_U8
+   Instance path: top/nWR_I_0_84/Sequencer/Sequencer_s/I33
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       2.23         0.7
+                                  LUT4	       4.00         0.8
+---------------------------------------------------
+Report for cell urom_TBL
+   Instance path: top/nWR_I_0_84/Sequencer/Sequencer_s/I107
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      69.00        23.2
+                                  LUT4	     133.00        26.3
+---------------------------------------------------
+Report for cell uromd
+   Instance path: top/nWR_I_0_84/Sequencer/Sequencer_s/I105
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                   EBR	          4        80.0
+---------------------------------------------------
+Report for cell executer
+   Instance path: top/nWR_I_0_84/Executer
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	     103.82        34.8
+                                  LUT4	     161.00        31.8
+                                PFUREG	        120        43.8
+                                RIPPLE	         14        56.0
+SUB MODULES
+                                  cell	      count    SLC Usage(%)
+                            executer_s	          1        34.8
+---------------------------------------------------
+Report for cell executer_s
+   Instance path: top/nWR_I_0_84/Executer/Executer_s
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	     103.82        34.8
+                                  LUT4	     161.00        31.8
+                                PFUREG	        120        43.8
+                                RIPPLE	         14        56.0
+SUB MODULES
+                                  cell	      count    SLC Usage(%)
+                              zeroFlag	          1         0.3
+                     writeBackSelector	          1         0.7
+                      tristateBuff8_U9	          1         1.9
+                         register8_U11	          1         0.7
+                         register8_U12	          1         0.7
+                               flagReg	          1         1.1
+                          decoder4_U10	          1         0.3
+                              decoder4	          1         0.2
+                               dataReg	          1         6.7
+                               addrReg	          1        10.9
+                                addrEx	          1         3.2
+                                   ALU	          1         7.9
+---------------------------------------------------
+Report for cell dataReg
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I8
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      20.00         6.7
+                                  LUT4	      31.00         6.1
+                                PFUREG	         32        11.7
+SUB MODULES
+                                  cell	      count    SLC Usage(%)
+                             register8	          1         4.7
+                          register8_U2	          1         0.7
+                          register8_U0	          1         0.7
+                          register8_U1	          1         0.7
+---------------------------------------------------
+Report for cell register8
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I8/out_7__I_0
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      14.00         4.7
+                                  LUT4	      31.00         6.1
+                                PFUREG	          8         2.9
+---------------------------------------------------
+Report for cell register8_U0
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I8/R2
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       2.00         0.7
+                                PFUREG	          8         2.9
+---------------------------------------------------
+Report for cell register8_U1
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I8/R1
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       2.00         0.7
+                                PFUREG	          8         2.9
+---------------------------------------------------
+Report for cell register8_U2
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I8/R0
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       2.00         0.7
+                                PFUREG	          8         2.9
+---------------------------------------------------
+Report for cell writeBackSelector
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I4
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       2.17         0.7
+                                  LUT4	       8.00         1.6
+---------------------------------------------------
+Report for cell addrReg
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I3
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      32.40        10.9
+                                  LUT4	      32.00         6.3
+                                PFUREG	         64        23.4
+SUB MODULES
+                                  cell	      count    SLC Usage(%)
+                         register16_U4	          1         1.2
+                         register16_U5	          1         1.4
+                         register16_U3	          1         1.4
+                            register16	          1         6.8
+---------------------------------------------------
+Report for cell register16
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I3/out_15__I_0
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      20.33         6.8
+                                  LUT4	      32.00         6.3
+                                PFUREG	         16         5.8
+---------------------------------------------------
+Report for cell register16_U3
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I3/CPMonitor_15__I_0
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       4.20         1.4
+                                PFUREG	         16         5.8
+---------------------------------------------------
+Report for cell register16_U4
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I3/A1
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       3.70         1.2
+                                PFUREG	         16         5.8
+---------------------------------------------------
+Report for cell register16_U5
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I3/A0
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       4.17         1.4
+                                PFUREG	         16         5.8
+---------------------------------------------------
+Report for cell zeroFlag
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I33
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       0.75         0.3
+                                  LUT4	       2.00         0.4
+---------------------------------------------------
+Report for cell tristateBuff8_U9
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I30
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       5.75         1.9
+                                  LUT4	      21.00         4.2
+---------------------------------------------------
+Report for cell ALU
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I2
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      23.67         7.9
+                                  LUT4	      39.00         7.7
+                                RIPPLE	          5        20.0
+SUB MODULES
+                                  cell	      count    SLC Usage(%)
+                         tristateBuff8	          1         1.5
+                                ALU_L8	          1         2.7
+                                ALU_A8	          1         1.7
+---------------------------------------------------
+Report for cell ALU_L8
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I2/il
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       8.00         2.7
+                                  LUT4	      16.00         3.2
+---------------------------------------------------
+Report for cell ALU_A8
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I2/ia
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       5.00         1.7
+                                RIPPLE	          5        20.0
+---------------------------------------------------
+Report for cell tristateBuff8
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I2/YA_7__I_0
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       4.42         1.5
+                                  LUT4	      10.00         2.0
+---------------------------------------------------
+Report for cell flagReg
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I29
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       3.42         1.1
+                                  LUT4	       5.00         1.0
+                                PFUREG	          8         2.9
+---------------------------------------------------
+Report for cell decoder4
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I25
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       0.50         0.2
+                                  LUT4	       2.00         0.4
+---------------------------------------------------
+Report for cell decoder4_U10
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I17
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       1.00         0.3
+                                  LUT4	       2.00         0.4
+---------------------------------------------------
+Report for cell addrEx
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/I11
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       9.67         3.2
+                                  LUT4	      18.00         3.6
+                                RIPPLE	          9        36.0
+---------------------------------------------------
+Report for cell register8_U11
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/BUFF_2
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       2.00         0.7
+                                PFUREG	          8         2.9
+---------------------------------------------------
+Report for cell register8_U12
+   Instance path: top/nWR_I_0_84/Executer/Executer_s/BUFF_1
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       2.00         0.7
+                                PFUREG	          8         2.9
+---------------------------------------------------
+Report for cell serialRxD
+   Instance path: top/rxd01
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      14.42         4.8
+                                  LUT4	      13.00         2.6
+                                PFUREG	         21         7.7
+SUB MODULES
+                                  cell	      count    SLC Usage(%)
+                           register8AC	          1         1.3
+---------------------------------------------------
+Report for cell register8AC
+   Instance path: top/rxd01/I35
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       4.00         1.3
+                                PFUREG	          8         2.9
+---------------------------------------------------
+Report for cell serialTxD
+   Instance path: top/txd01
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      12.50         4.2
+                                  LUT4	      16.00         3.2
+                                PFUREG	         16         5.8
+---------------------------------------------------
+Report for cell bootROM
+   Instance path: top/rom0
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       8.00         2.7
+                                  LUT4	      16.00         3.2
+---------------------------------------------------
+Report for cell register16_U18
+   Instance path: top/ioaddr_reg
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       4.00         1.3
+                                PFUREG	         16         5.8
+---------------------------------------------------
+Report for cell divider
+   Instance path: top/div01
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	       5.00         1.7
+                                PFUREG	          8         2.9
+                                RIPPLE	          5        20.0

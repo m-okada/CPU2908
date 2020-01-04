@@ -1,4 +1,4 @@
-/* Verilog model created from schematic SPI.sch -- Jan 04, 2020 14:20 */
+/* Verilog model created from schematic SPI.sch -- Jan 04, 2020 15:04 */
 
 module SPI( clk, clkOut, Done, in, LClock, LorS, MISO, nReset, nStart, out );
  input clk;

@@ -1,0 +1,671 @@
+----------------------------------------------------------------------
+Report for cell top.TECH
+Register bits:  274 of 2352 (11.650%)
+I/O cells:      67
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               AND2         7          100.0
+                               AND3         3          100.0
+                               AND4         3          100.0
+                                 BB         8          100.0
+                              CCU2D        25          100.0
+                              DP8KC         5          100.0
+                            FD1P3AX       143          100.0
+                            FD1P3AY         1          100.0
+                            FD1P3BX         3          100.0
+                            FD1P3DX        35          100.0
+                            FD1P3IX         2          100.0
+                            FD1P3JX         1          100.0
+                            FD1S3AX        70          100.0
+                            FD1S3BX         3          100.0
+                            FD1S3DX        16          100.0
+                                GSR         1          100.0
+                                 IB         5          100.0
+                                INV        34          100.0
+                               LUT4       289          100.0
+                              MUX21        32          100.0
+                                NR2         2          100.0
+                                 OB        29          100.0
+                                OBZ        25          100.0
+                                OR2         7          100.0
+                                OR3         1          100.0
+                              PFUMX        41          100.0
+                          ROM256X1A        10          100.0
+                           ROM32X1A         8          100.0
+                               XOR2         2          100.0
+SUB MODULES
+                                ALU         1
+                             ALU_A8         1
+                             ALU_L8         1
+                           Mux2_1x8         1
+                        Mux2_1x8_U7         1
+                        Mux2_1x8_U8         1
+                             addrEx         1
+                            addrReg         1
+                            bootROM         1
+                               core         1
+                            dataReg         1
+                           decoder4         1
+                       decoder4_U10         1
+                            divider         1
+                           executer         1
+                         executer_s         1
+                            flagReg         1
+                        jccSelector         1
+                          register1         1
+                         register16         1
+                     register16_U17         1
+                     register16_U18         1
+                      register16_U3         1
+                      register16_U4         1
+                      register16_U5         1
+                        register1as         1
+                    register1as_U13         1
+                    register1as_U14         1
+                         register32         1
+                          register8         1
+                        register8AC         1
+                       register8_U0         1
+                       register8_U1         1
+                      register8_U11         1
+                      register8_U12         1
+                      register8_U15         1
+                       register8_U2         1
+                       register8_U6         1
+                          sequencer         1
+                        sequencer_s         1
+                          serialRxD         1
+                          serialTxD         1
+                               sram         1
+                      tristateBuff8         1
+                  tristateBuff8_U16         1
+                   tristateBuff8_U9         1
+                        uromCounter         1
+                           urom_TBL         1
+                              uromd         1
+                  writeBackSelector         1
+                           zeroFlag         1
+                              TOTAL       862
+----------------------------------------------------------------------
+Report for cell sram.v1
+Instance Path : sramData_7__I_0
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              DP8KC         1           20.0
+                              TOTAL         1
+----------------------------------------------------------------------
+Report for cell core.v1
+Instance Path : nWR_I_0_84
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               AND2         7          100.0
+                               AND3         3          100.0
+                               AND4         2           66.7
+                              CCU2D        20           80.0
+                              DP8KC         4           80.0
+                            FD1P3AX       143          100.0
+                            FD1P3AY         1          100.0
+                            FD1P3DX         2            5.7
+                            FD1P3IX         2          100.0
+                            FD1P3JX         1          100.0
+                            FD1S3AX        46           65.7
+                            FD1S3BX         3          100.0
+                                INV        11           32.4
+                               LUT4       245           84.8
+                              MUX21        24           75.0
+                                NR2         1           50.0
+                                OR2         5           71.4
+                                OR3         1          100.0
+                              PFUMX        38           92.7
+                          ROM256X1A        10          100.0
+                               XOR2         2          100.0
+SUB MODULES
+                                ALU         1
+                             ALU_A8         1
+                             ALU_L8         1
+                           Mux2_1x8         1
+                        Mux2_1x8_U7         1
+                        Mux2_1x8_U8         1
+                             addrEx         1
+                            addrReg         1
+                            dataReg         1
+                           decoder4         1
+                       decoder4_U10         1
+                           executer         1
+                         executer_s         1
+                            flagReg         1
+                        jccSelector         1
+                          register1         1
+                         register16         1
+                     register16_U17         1
+                      register16_U3         1
+                      register16_U4         1
+                      register16_U5         1
+                        register1as         1
+                    register1as_U13         1
+                    register1as_U14         1
+                         register32         1
+                          register8         1
+                       register8_U0         1
+                       register8_U1         1
+                      register8_U11         1
+                      register8_U12         1
+                      register8_U15         1
+                       register8_U2         1
+                       register8_U6         1
+                          sequencer         1
+                        sequencer_s         1
+                      tristateBuff8         1
+                  tristateBuff8_U16         1
+                   tristateBuff8_U9         1
+                        uromCounter         1
+                           urom_TBL         1
+                              uromd         1
+                  writeBackSelector         1
+                           zeroFlag         1
+                              TOTAL       614
+----------------------------------------------------------------------
+Report for cell register1as.v1
+Instance Path : nWR_I_0_84.nwrite_ff_I_0
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1S3BX         1           33.3
+                              TOTAL         1
+----------------------------------------------------------------------
+Report for cell register1as_U13.v1
+Instance Path : nWR_I_0_84.nread_ff_I_0
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1S3BX         1           33.3
+                              TOTAL         1
+----------------------------------------------------------------------
+Report for cell register1as_U14.v1
+Instance Path : nWR_I_0_84.nirq_ff_I_0
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1S3BX         1           33.3
+                               LUT4         1            0.3
+                              TOTAL         2
+----------------------------------------------------------------------
+Report for cell register8_U15.v1
+Instance Path : nWR_I_0_84.data_ibus2_7__I_0
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX         8            5.6
+                              TOTAL         8
+----------------------------------------------------------------------
+Report for cell register1.v1
+Instance Path : nWR_I_0_84.data_ctrl_I_0_25
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1S3AX         1            1.4
+                              TOTAL         1
+----------------------------------------------------------------------
+Report for cell tristateBuff8_U16.v1
+Instance Path : nWR_I_0_84.dataOut_7__I_0
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               LUT4         8            2.8
+                              TOTAL         8
+----------------------------------------------------------------------
+Report for cell register16_U17.v1
+Instance Path : nWR_I_0_84.addrOut_15__I_0
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX        16           11.2
+                               LUT4        29           10.0
+                              TOTAL        45
+----------------------------------------------------------------------
+Report for cell sequencer.v1
+Instance Path : nWR_I_0_84.Sequencer
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               AND2         7          100.0
+                               AND3         3          100.0
+                               AND4         2           66.7
+                              CCU2D         6           24.0
+                              DP8KC         4           80.0
+                            FD1P3AX         2            1.4
+                            FD1P3AY         1          100.0
+                            FD1P3DX         2            5.7
+                            FD1S3AX        45           64.3
+                                INV        11           32.4
+                               LUT4        40           13.8
+                              MUX21        24           75.0
+                                NR2         1           50.0
+                                OR2         5           71.4
+                                OR3         1          100.0
+                              PFUMX         4            9.8
+                          ROM256X1A        10          100.0
+                               XOR2         2          100.0
+SUB MODULES
+                           Mux2_1x8         1
+                        Mux2_1x8_U7         1
+                        Mux2_1x8_U8         1
+                        jccSelector         1
+                         register32         1
+                       register8_U6         1
+                        sequencer_s         1
+                        uromCounter         1
+                           urom_TBL         1
+                              uromd         1
+                              TOTAL       180
+----------------------------------------------------------------------
+Report for cell sequencer_s.v1
+Instance Path : nWR_I_0_84.Sequencer.Sequencer_s
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               AND2         7          100.0
+                               AND3         3          100.0
+                               AND4         2           66.7
+                              CCU2D         6           24.0
+                              DP8KC         4           80.0
+                            FD1P3AX         2            1.4
+                            FD1P3AY         1          100.0
+                            FD1P3DX         2            5.7
+                            FD1S3AX        45           64.3
+                                INV        11           32.4
+                               LUT4        40           13.8
+                              MUX21        24           75.0
+                                NR2         1           50.0
+                                OR2         5           71.4
+                                OR3         1          100.0
+                              PFUMX         4            9.8
+                          ROM256X1A        10          100.0
+                               XOR2         2          100.0
+SUB MODULES
+                           Mux2_1x8         1
+                        Mux2_1x8_U7         1
+                        Mux2_1x8_U8         1
+                        jccSelector         1
+                         register32         1
+                       register8_U6         1
+                        uromCounter         1
+                           urom_TBL         1
+                              uromd         1
+                              TOTAL       179
+----------------------------------------------------------------------
+Report for cell register8_U6.v1
+Instance Path : nWR_I_0_84.Sequencer.Sequencer_s.tempReg
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1S3AX         8           11.4
+                              TOTAL         8
+----------------------------------------------------------------------
+Report for cell Mux2_1x8.v1
+Instance Path : nWR_I_0_84.Sequencer.Sequencer_s.I97
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              MUX21         8           25.0
+                              TOTAL         8
+----------------------------------------------------------------------
+Report for cell jccSelector.v1
+Instance Path : nWR_I_0_84.Sequencer.Sequencer_s.I82
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               LUT4         4            1.4
+                              TOTAL         4
+----------------------------------------------------------------------
+Report for cell register32.v1
+Instance Path : nWR_I_0_84.Sequencer.Sequencer_s.I62
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1S3AX        27           38.6
+                               LUT4        24            8.3
+                              PFUMX         3            7.3
+                              TOTAL        54
+----------------------------------------------------------------------
+Report for cell Mux2_1x8_U7.v1
+Instance Path : nWR_I_0_84.Sequencer.Sequencer_s.I59
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              MUX21         8           25.0
+                              TOTAL         8
+----------------------------------------------------------------------
+Report for cell uromCounter.v1
+Instance Path : nWR_I_0_84.Sequencer.Sequencer_s.I45
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              CCU2D         6           24.0
+                            FD1S3AX        10           14.3
+                               LUT4        10            3.5
+                              TOTAL        26
+----------------------------------------------------------------------
+Report for cell Mux2_1x8_U8.v1
+Instance Path : nWR_I_0_84.Sequencer.Sequencer_s.I33
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              MUX21         8           25.0
+                              TOTAL         8
+----------------------------------------------------------------------
+Report for cell urom_TBL.v1
+Instance Path : nWR_I_0_84.Sequencer.Sequencer_s.I107
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                          ROM256X1A        10          100.0
+                              TOTAL        10
+----------------------------------------------------------------------
+Report for cell uromd.v1
+Instance Path : nWR_I_0_84.Sequencer.Sequencer_s.I105
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              DP8KC         4           80.0
+                              TOTAL         4
+----------------------------------------------------------------------
+Report for cell executer.v1
+Instance Path : nWR_I_0_84.Executer
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              CCU2D        14           56.0
+                            FD1P3AX       117           81.8
+                            FD1P3IX         2          100.0
+                            FD1P3JX         1          100.0
+                               LUT4       162           56.1
+                              PFUMX        34           82.9
+SUB MODULES
+                                ALU         1
+                             ALU_A8         1
+                             ALU_L8         1
+                             addrEx         1
+                            addrReg         1
+                            dataReg         1
+                           decoder4         1
+                       decoder4_U10         1
+                         executer_s         1
+                            flagReg         1
+                         register16         1
+                      register16_U3         1
+                      register16_U4         1
+                      register16_U5         1
+                          register8         1
+                       register8_U0         1
+                       register8_U1         1
+                      register8_U11         1
+                      register8_U12         1
+                       register8_U2         1
+                      tristateBuff8         1
+                   tristateBuff8_U9         1
+                  writeBackSelector         1
+                           zeroFlag         1
+                              TOTAL       354
+----------------------------------------------------------------------
+Report for cell executer_s.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              CCU2D        14           56.0
+                            FD1P3AX       117           81.8
+                            FD1P3IX         2          100.0
+                            FD1P3JX         1          100.0
+                               LUT4       162           56.1
+                              PFUMX        34           82.9
+SUB MODULES
+                                ALU         1
+                             ALU_A8         1
+                             ALU_L8         1
+                             addrEx         1
+                            addrReg         1
+                            dataReg         1
+                           decoder4         1
+                       decoder4_U10         1
+                            flagReg         1
+                         register16         1
+                      register16_U3         1
+                      register16_U4         1
+                      register16_U5         1
+                          register8         1
+                       register8_U0         1
+                       register8_U1         1
+                      register8_U11         1
+                      register8_U12         1
+                       register8_U2         1
+                      tristateBuff8         1
+                   tristateBuff8_U9         1
+                  writeBackSelector         1
+                           zeroFlag         1
+                              TOTAL       353
+----------------------------------------------------------------------
+Report for cell dataReg.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I8
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX        32           22.4
+                               LUT4        31           10.7
+                              PFUMX         8           19.5
+SUB MODULES
+                          register8         1
+                       register8_U0         1
+                       register8_U1         1
+                       register8_U2         1
+                              TOTAL        75
+----------------------------------------------------------------------
+Report for cell register8.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I8.out_7__I_0
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX         8            5.6
+                               LUT4        31           10.7
+                              PFUMX         8           19.5
+                              TOTAL        47
+----------------------------------------------------------------------
+Report for cell register8_U0.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I8.R2
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX         8            5.6
+                              TOTAL         8
+----------------------------------------------------------------------
+Report for cell register8_U1.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I8.R1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX         8            5.6
+                              TOTAL         8
+----------------------------------------------------------------------
+Report for cell register8_U2.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I8.R0
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX         8            5.6
+                              TOTAL         8
+----------------------------------------------------------------------
+Report for cell writeBackSelector.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I4
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               LUT4         8            2.8
+                              TOTAL         8
+----------------------------------------------------------------------
+Report for cell addrReg.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I3
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX        64           44.8
+                               LUT4        32           11.1
+                              PFUMX        16           39.0
+SUB MODULES
+                         register16         1
+                      register16_U3         1
+                      register16_U4         1
+                      register16_U5         1
+                              TOTAL       116
+----------------------------------------------------------------------
+Report for cell register16.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I3.out_15__I_0
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX        16           11.2
+                               LUT4        32           11.1
+                              PFUMX        16           39.0
+                              TOTAL        64
+----------------------------------------------------------------------
+Report for cell register16_U3.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I3.CPMonitor_15__I_0
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX        16           11.2
+                              TOTAL        16
+----------------------------------------------------------------------
+Report for cell register16_U4.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I3.A1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX        16           11.2
+                              TOTAL        16
+----------------------------------------------------------------------
+Report for cell register16_U5.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I3.A0
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX        16           11.2
+                              TOTAL        16
+----------------------------------------------------------------------
+Report for cell zeroFlag.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I33
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               LUT4         2            0.7
+                              TOTAL         2
+----------------------------------------------------------------------
+Report for cell tristateBuff8_U9.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I30
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               LUT4        21            7.3
+                              PFUMX         1            2.4
+                              TOTAL        22
+----------------------------------------------------------------------
+Report for cell ALU.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I2
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              CCU2D         5           20.0
+                               LUT4        39           13.5
+                              PFUMX         8           19.5
+SUB MODULES
+                             ALU_A8         1
+                             ALU_L8         1
+                      tristateBuff8         1
+                              TOTAL        55
+----------------------------------------------------------------------
+Report for cell ALU_L8.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I2.il
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               LUT4        16            5.5
+                              PFUMX         8           19.5
+                              TOTAL        24
+----------------------------------------------------------------------
+Report for cell ALU_A8.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I2.ia
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              CCU2D         5           20.0
+                              TOTAL         5
+----------------------------------------------------------------------
+Report for cell tristateBuff8.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I2.YA_7__I_0
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               LUT4        10            3.5
+                              TOTAL        10
+----------------------------------------------------------------------
+Report for cell flagReg.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I29
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX         5            3.5
+                            FD1P3IX         2          100.0
+                            FD1P3JX         1          100.0
+                               LUT4         5            1.7
+                              TOTAL        13
+----------------------------------------------------------------------
+Report for cell decoder4.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I25
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               LUT4         2            0.7
+                              TOTAL         2
+----------------------------------------------------------------------
+Report for cell decoder4_U10.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I17
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               LUT4         2            0.7
+                              TOTAL         2
+----------------------------------------------------------------------
+Report for cell addrEx.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.I11
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              CCU2D         9           36.0
+                               LUT4        18            6.2
+                              TOTAL        27
+----------------------------------------------------------------------
+Report for cell register8_U11.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.BUFF_2
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX         8            5.6
+                              TOTAL         8
+----------------------------------------------------------------------
+Report for cell register8_U12.v1
+Instance Path : nWR_I_0_84.Executer.Executer_s.BUFF_1
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX         8            5.6
+                              TOTAL         8
+----------------------------------------------------------------------
+Report for cell serialRxD.v1
+Instance Path : rxd01
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3DX        13           37.1
+                            FD1S3DX         8           50.0
+                                INV        13           38.2
+                                NR2         1           50.0
+                                OR2         1           14.3
+SUB MODULES
+                        register8AC         1
+                              TOTAL        37
+----------------------------------------------------------------------
+Report for cell register8AC.v1
+Instance Path : rxd01.I35
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1S3DX         8           50.0
+                              TOTAL         8
+----------------------------------------------------------------------
+Report for cell serialTxD.v1
+Instance Path : txd01
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               AND4         1           33.3
+                            FD1P3BX         3          100.0
+                            FD1P3DX        13           37.1
+                                INV         8           23.5
+                              MUX21         8           25.0
+                                OR2         1           14.3
+                              TOTAL        34
+----------------------------------------------------------------------
+Report for cell bootROM.v1
+Instance Path : rom0
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                           ROM32X1A         8          100.0
+                              TOTAL         8
+----------------------------------------------------------------------
+Report for cell register16_U18.v1
+Instance Path : ioaddr_reg
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1S3AX        16           22.9
+                              TOTAL        16
+----------------------------------------------------------------------
+Report for cell divider.v1
+Instance Path : div01
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              CCU2D         5           20.0
+                            FD1S3DX         8           50.0
+                              TOTAL        13

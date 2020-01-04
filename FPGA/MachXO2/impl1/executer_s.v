@@ -1,4 +1,4 @@
-/* Verilog model created from schematic executer_s.sch -- Jan 04, 2020 14:20 */
+/* Verilog model created from schematic executer_s.sch -- Jan 04, 2020 15:04 */
 
 module executer_s( addrOut, ALU_M, ALUOpecode, buffSel, byteRegSelector, CPMonitor,
                    cySelector, dataIn, dataOut, E, flagLatchEn, flagOut, misc,

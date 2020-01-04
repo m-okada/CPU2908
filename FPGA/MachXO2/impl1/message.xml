@@ -1,2 +1,1001 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<BaliMessageLog/>
+<BaliMessageLog>
+    <Task name="Map">
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>V:/CPU2908/FPGA/MachXO2/cpu.lpf(100): Semantic error in &quot;IOBUF PORT &quot;UM[15]&quot; IO_TYPE=LVCMOS33 ;&quot;: </Dynamic>
+            <Dynamic>UM[15]</Dynamic>
+            <Navigation>V:/CPU2908/FPGA/MachXO2/cpu.lpf</Navigation>
+            <Navigation>100</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>V:/CPU2908/FPGA/MachXO2/cpu.lpf(101): Semantic error in &quot;IOBUF PORT &quot;UM[14]&quot; IO_TYPE=LVCMOS33 ;&quot;: </Dynamic>
+            <Dynamic>UM[14]</Dynamic>
+            <Navigation>V:/CPU2908/FPGA/MachXO2/cpu.lpf</Navigation>
+            <Navigation>101</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>V:/CPU2908/FPGA/MachXO2/cpu.lpf(102): Semantic error in &quot;IOBUF PORT &quot;UM[13]&quot; IO_TYPE=LVCMOS33 ;&quot;: </Dynamic>
+            <Dynamic>UM[13]</Dynamic>
+            <Navigation>V:/CPU2908/FPGA/MachXO2/cpu.lpf</Navigation>
+            <Navigation>102</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>V:/CPU2908/FPGA/MachXO2/cpu.lpf(103): Semantic error in &quot;IOBUF PORT &quot;UM[12]&quot; IO_TYPE=LVCMOS33 ;&quot;: </Dynamic>
+            <Dynamic>UM[12]</Dynamic>
+            <Navigation>V:/CPU2908/FPGA/MachXO2/cpu.lpf</Navigation>
+            <Navigation>103</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>V:/CPU2908/FPGA/MachXO2/cpu.lpf(104): Semantic error in &quot;IOBUF PORT &quot;UM[11]&quot; IO_TYPE=LVCMOS33 ;&quot;: </Dynamic>
+            <Dynamic>UM[11]</Dynamic>
+            <Navigation>V:/CPU2908/FPGA/MachXO2/cpu.lpf</Navigation>
+            <Navigation>104</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>V:/CPU2908/FPGA/MachXO2/cpu.lpf(105): Semantic error in &quot;IOBUF PORT &quot;UM[10]&quot; IO_TYPE=LVCMOS33 ;&quot;: </Dynamic>
+            <Dynamic>UM[10]</Dynamic>
+            <Navigation>V:/CPU2908/FPGA/MachXO2/cpu.lpf</Navigation>
+            <Navigation>105</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>V:/CPU2908/FPGA/MachXO2/cpu.lpf(106): Semantic error in &quot;IOBUF PORT &quot;UM[9]&quot; IO_TYPE=LVCMOS33 ;&quot;: </Dynamic>
+            <Dynamic>UM[9]</Dynamic>
+            <Navigation>V:/CPU2908/FPGA/MachXO2/cpu.lpf</Navigation>
+            <Navigation>106</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>V:/CPU2908/FPGA/MachXO2/cpu.lpf(107): Semantic error in &quot;IOBUF PORT &quot;UM[8]&quot; IO_TYPE=LVCMOS33 ;&quot;: </Dynamic>
+            <Dynamic>UM[8]</Dynamic>
+            <Navigation>V:/CPU2908/FPGA/MachXO2/cpu.lpf</Navigation>
+            <Navigation>107</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>V:/CPU2908/FPGA/MachXO2/cpu.lpf(139): Semantic error in &quot;IOBUF PORT &quot;serialClockOut&quot; IO_TYPE=LVCMOS33 ;&quot;: </Dynamic>
+            <Dynamic>serialClockOut</Dynamic>
+            <Navigation>V:/CPU2908/FPGA/MachXO2/cpu.lpf</Navigation>
+            <Navigation>139</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>V:/CPU2908/FPGA/MachXO2/cpu.lpf(155): Semantic error in &quot;IOBUF PORT &quot;monitor_sel[3]&quot; IO_TYPE=LVCMOS33 PULLMODE=NONE ;&quot;: </Dynamic>
+            <Dynamic>monitor_sel[3]</Dynamic>
+            <Navigation>V:/CPU2908/FPGA/MachXO2/cpu.lpf</Navigation>
+            <Navigation>155</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>V:/CPU2908/FPGA/MachXO2/cpu.lpf(156): Semantic error in &quot;IOBUF PORT &quot;monitor_sel[2]&quot; IO_TYPE=LVCMOS33 PULLMODE=NONE ;&quot;: </Dynamic>
+            <Dynamic>monitor_sel[2]</Dynamic>
+            <Navigation>V:/CPU2908/FPGA/MachXO2/cpu.lpf</Navigation>
+            <Navigation>156</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>V:/CPU2908/FPGA/MachXO2/cpu.lpf(157): Semantic error in &quot;IOBUF PORT &quot;monitor_sel[1]&quot; IO_TYPE=LVCMOS33 PULLMODE=NONE ;&quot;: </Dynamic>
+            <Dynamic>monitor_sel[1]</Dynamic>
+            <Navigation>V:/CPU2908/FPGA/MachXO2/cpu.lpf</Navigation>
+            <Navigation>157</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>V:/CPU2908/FPGA/MachXO2/cpu.lpf(158): Semantic error in &quot;IOBUF PORT &quot;monitor_sel[0]&quot; IO_TYPE=LVCMOS33 PULLMODE=NONE ;&quot;: </Dynamic>
+            <Dynamic>monitor_sel[0]</Dynamic>
+            <Navigation>V:/CPU2908/FPGA/MachXO2/cpu.lpf</Navigation>
+            <Navigation>158</Navigation>
+        </Message>
+        <Message>
+            <ID>1104062</ID>
+            <Severity>Warning</Severity>
+            <Dynamic></Dynamic>
+            <Dynamic>13 semantic errors</Dynamic>
+        </Message>
+        <Message>
+            <ID>1166064</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>input</Dynamic>
+            <Dynamic>gclk1</Dynamic>
+        </Message>
+        <Message>
+            <ID>1166064</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>input</Dynamic>
+            <Dynamic>bootMode</Dynamic>
+        </Message>
+        <Message>
+            <ID>1166064</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>input</Dynamic>
+            <Dynamic>nCTS</Dynamic>
+        </Message>
+        <Message>
+            <ID>1166064</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>input</Dynamic>
+            <Dynamic>monitor_sel[3]</Dynamic>
+        </Message>
+        <Message>
+            <ID>1166064</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>input</Dynamic>
+            <Dynamic>monitor_sel[2]</Dynamic>
+        </Message>
+        <Message>
+            <ID>1166064</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>input</Dynamic>
+            <Dynamic>monitor_sel[1]</Dynamic>
+        </Message>
+        <Message>
+            <ID>1166064</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>input</Dynamic>
+            <Dynamic>monitor_sel[0]</Dynamic>
+        </Message>
+        <Message>
+            <ID>51001046</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>gclk1</Dynamic>
+        </Message>
+        <Message>
+            <ID>51001046</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>bootMode</Dynamic>
+        </Message>
+        <Message>
+            <ID>51001046</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>nCTS</Dynamic>
+        </Message>
+        <Message>
+            <ID>51001046</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>monitor_sel[3:0](3)</Dynamic>
+        </Message>
+        <Message>
+            <ID>51001046</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>monitor_sel[3:0](2)</Dynamic>
+        </Message>
+        <Message>
+            <ID>51001046</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>monitor_sel[3:0](1)</Dynamic>
+        </Message>
+        <Message>
+            <ID>51001046</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>monitor_sel[3:0](0)</Dynamic>
+        </Message>
+        <Message>
+            <ID>51001230</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>V:/CPU2908/FPGA/MachXO2/cpu.lpf</Dynamic>
+        </Message>
+    </Task>
+    <Task name="Lattice_Synthesis">
+        <Message>
+            <ID>35002000</ID>
+            <Severity>Info</Severity>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/top.v(1): </Dynamic>
+            <Dynamic>top</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/top.v</Navigation>
+            <Navigation>1</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(187): </Dynamic>
+            <Dynamic>FD1P3DX</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>187</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/top.v(258): </Dynamic>
+            <Dynamic>divider</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/top.v</Navigation>
+            <Navigation>258</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/core.v(1): </Dynamic>
+            <Dynamic>core</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/core.v</Navigation>
+            <Navigation>1</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/register.v(43): </Dynamic>
+            <Dynamic>register8</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/register.v</Navigation>
+            <Navigation>43</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/tristatebuff.v(11): </Dynamic>
+            <Dynamic>tristateBuff8</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/tristatebuff.v</Navigation>
+            <Navigation>11</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/register.v(94): </Dynamic>
+            <Dynamic>register16</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/register.v</Navigation>
+            <Navigation>94</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/register.v(21): </Dynamic>
+            <Dynamic>register1as</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/register.v</Navigation>
+            <Navigation>21</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/tristatebuff.v(1): </Dynamic>
+            <Dynamic>tristateBuff1</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/tristatebuff.v</Navigation>
+            <Navigation>1</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/register.v(1): </Dynamic>
+            <Dynamic>register1</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/register.v</Navigation>
+            <Navigation>1</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/sequencer.v(1): </Dynamic>
+            <Dynamic>sequencer</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/sequencer.v</Navigation>
+            <Navigation>1</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/impl1/sequencer_s.v(3): </Dynamic>
+            <Dynamic>sequencer_s</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/impl1/sequencer_s.v</Navigation>
+            <Navigation>3</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(936): </Dynamic>
+            <Dynamic>OR3</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>936</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(49): </Dynamic>
+            <Dynamic>AND3</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>49</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1173): </Dynamic>
+            <Dynamic>XOR2</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1173</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(827): </Dynamic>
+            <Dynamic>NR2</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>827</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(772): </Dynamic>
+            <Dynamic>MUX41</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>772</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/urom_tbl.v(8): </Dynamic>
+            <Dynamic>urom_TBL</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/urom_tbl.v</Navigation>
+            <Navigation>8</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1062): </Dynamic>
+            <Dynamic>ROM256X1A_renamed_due_excessive_length_1</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1062</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1062): </Dynamic>
+            <Dynamic>ROM256X1A_renamed_due_excessive_length_2</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1062</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1062): </Dynamic>
+            <Dynamic>ROM256X1A_renamed_due_excessive_length_3</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1062</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1062): </Dynamic>
+            <Dynamic>ROM256X1A_renamed_due_excessive_length_4</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1062</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1062): </Dynamic>
+            <Dynamic>ROM256X1A_renamed_due_excessive_length_5</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1062</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1062): </Dynamic>
+            <Dynamic>ROM256X1A_renamed_due_excessive_length_6</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1062</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1062): </Dynamic>
+            <Dynamic>ROM256X1A_renamed_due_excessive_length_7</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1062</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1062): </Dynamic>
+            <Dynamic>ROM256X1A_renamed_due_excessive_length_8</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1062</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1062): </Dynamic>
+            <Dynamic>ROM256X1A_renamed_due_excessive_length_9</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1062</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1062): </Dynamic>
+            <Dynamic>ROM256X1A_renamed_due_excessive_length_10</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1062</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/uromd.v(8): </Dynamic>
+            <Dynamic>uromd</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/uromd.v</Navigation>
+            <Navigation>8</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1291): </Dynamic>
+            <Dynamic>DP8KC_renamed_due_excessive_length_11</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1291</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1291): </Dynamic>
+            <Dynamic>DP8KC_renamed_due_excessive_length_12</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1291</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1291): </Dynamic>
+            <Dynamic>DP8KC_renamed_due_excessive_length_13</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1291</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1120): </Dynamic>
+            <Dynamic>VHI</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1120</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1124): </Dynamic>
+            <Dynamic>VLO</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1124</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1291): </Dynamic>
+            <Dynamic>DP8KC_renamed_due_excessive_length_14</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1291</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(176): </Dynamic>
+            <Dynamic>FD1P3BX</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>176</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/sequencer.v(193): </Dynamic>
+            <Dynamic>uConstSel</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/sequencer.v</Navigation>
+            <Navigation>193</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/sequencer.v(158): </Dynamic>
+            <Dynamic>urSplitter</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/sequencer.v</Navigation>
+            <Navigation>158</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/sequencer.v(172): </Dynamic>
+            <Dynamic>jccSelector</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/sequencer.v</Navigation>
+            <Navigation>172</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/sequencer.v(207): </Dynamic>
+            <Dynamic>constEx</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/sequencer.v</Navigation>
+            <Navigation>207</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/register.v(118): </Dynamic>
+            <Dynamic>register32</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/register.v</Navigation>
+            <Navigation>118</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/uromcounter.v(1): </Dynamic>
+            <Dynamic>uromCounter</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/uromcounter.v</Navigation>
+            <Navigation>1</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/mux.v(14): </Dynamic>
+            <Dynamic>Mux2_1x8</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/mux.v</Navigation>
+            <Navigation>14</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(723): </Dynamic>
+            <Dynamic>MUX21</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>723</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(56): </Dynamic>
+            <Dynamic>AND4</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>56</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(930): </Dynamic>
+            <Dynamic>OR2</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>930</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(43): </Dynamic>
+            <Dynamic>AND2</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>43</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(563): </Dynamic>
+            <Dynamic>INV</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>563</Navigation>
+        </Message>
+        <Message>
+            <ID>35901330</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/sequencer.v(123): </Dynamic>
+            <Dynamic>1</Dynamic>
+            <Dynamic>10</Dynamic>
+            <Dynamic>CT</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/sequencer.v</Navigation>
+            <Navigation>123</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/executer.v(2): </Dynamic>
+            <Dynamic>executer</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/executer.v</Navigation>
+            <Navigation>2</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/impl1/executer_s.v(3): </Dynamic>
+            <Dynamic>executer_s</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/impl1/executer_s.v</Navigation>
+            <Navigation>3</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/alu.v(141): </Dynamic>
+            <Dynamic>zeroFlag</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/alu.v</Navigation>
+            <Navigation>141</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/executer.v(244): </Dynamic>
+            <Dynamic>flagReg</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/executer.v</Navigation>
+            <Navigation>244</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/executer.v(170): </Dynamic>
+            <Dynamic>splitter16_8x2</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/executer.v</Navigation>
+            <Navigation>170</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/executer.v(193): </Dynamic>
+            <Dynamic>addrEx</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/executer.v</Navigation>
+            <Navigation>193</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/executer.v(227): </Dynamic>
+            <Dynamic>addrMux</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/executer.v</Navigation>
+            <Navigation>227</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/executer.v(182): </Dynamic>
+            <Dynamic>splitter8x2_16</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/executer.v</Navigation>
+            <Navigation>182</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/decoder.v(1): </Dynamic>
+            <Dynamic>decoder4</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/decoder.v</Navigation>
+            <Navigation>1</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/executer.v(100): </Dynamic>
+            <Dynamic>dataReg</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/executer.v</Navigation>
+            <Navigation>100</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/executer.v(64): </Dynamic>
+            <Dynamic>addrReg</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/executer.v</Navigation>
+            <Navigation>64</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/alu.v(1): </Dynamic>
+            <Dynamic>ALU</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/alu.v</Navigation>
+            <Navigation>1</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/alu.v(94): </Dynamic>
+            <Dynamic>ALU_L8</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/alu.v</Navigation>
+            <Navigation>94</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/alu.v(81): </Dynamic>
+            <Dynamic>ALU_A8</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/alu.v</Navigation>
+            <Navigation>81</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/executer.v(135): </Dynamic>
+            <Dynamic>writeBackSelector</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/executer.v</Navigation>
+            <Navigation>135</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/impl1/serialrxd.v(3): </Dynamic>
+            <Dynamic>serialRxD</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/impl1/serialrxd.v</Navigation>
+            <Navigation>3</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(943): </Dynamic>
+            <Dynamic>OR4</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>943</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(951): </Dynamic>
+            <Dynamic>OR5</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>951</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/register.v(67): </Dynamic>
+            <Dynamic>register8AC</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/register.v</Navigation>
+            <Navigation>67</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/impl1/serialtxd.v(3): </Dynamic>
+            <Dynamic>serialTxD</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/impl1/serialtxd.v</Navigation>
+            <Navigation>3</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/bootrom.v(8): </Dynamic>
+            <Dynamic>bootROM</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/bootrom.v</Navigation>
+            <Navigation>8</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1077): </Dynamic>
+            <Dynamic>ROM32X1A(initval=32'b0110111010111100000)</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1077</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1077): </Dynamic>
+            <Dynamic>ROM32X1A(initval=32'b0110111000111010001)</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1077</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1077): </Dynamic>
+            <Dynamic>ROM32X1A(initval=32'b0110011010011100001)</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1077</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1077): </Dynamic>
+            <Dynamic>ROM32X1A(initval=32'b0100110000110100001)</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1077</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1077): </Dynamic>
+            <Dynamic>ROM32X1A(initval=32'b011010100110110101)</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1077</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1077): </Dynamic>
+            <Dynamic>ROM32X1A(initval=32'b010101010101000101)</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1077</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1077): </Dynamic>
+            <Dynamic>ROM32X1A(initval=32'b010110000110000100)</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1077</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1077): </Dynamic>
+            <Dynamic>ROM32X1A(initval=32'b0101011010011010110)</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1077</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/sram.v(8): </Dynamic>
+            <Dynamic>sram</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/sram.v</Navigation>
+            <Navigation>8</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v(1291): </Dynamic>
+            <Dynamic>DP8KC(CSDECODE_B=&quot;0b111&quot;,RESETMODE=&quot;ASYNC&quot;)</Dynamic>
+            <Navigation>D:/ProgramFiles64/lscc/diamond/3.8_x64/ispfpga/userware/NT/SYNTHESIS_HEADERS/machxo2.v</Navigation>
+            <Navigation>1291</Navigation>
+        </Message>
+        <Message>
+            <ID>35931002</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/top.v(47): </Dynamic>
+            <Dynamic>addrHi[3]</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/top.v</Navigation>
+            <Navigation>47</Navigation>
+        </Message>
+        <Message>
+            <ID>35931002</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/executer.v(198): </Dynamic>
+            <Dynamic>addrOut_15__N_184[15]</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/executer.v</Navigation>
+            <Navigation>198</Navigation>
+        </Message>
+        <Message>
+            <ID>35931002</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>v:/cpu2908/fpga/machxo2/alu.v(86): </Dynamic>
+            <Dynamic>Y_7__N_275[8]</Dynamic>
+            <Navigation>v:/cpu2908/fpga/machxo2/alu.v</Navigation>
+            <Navigation>86</Navigation>
+        </Message>
+        <Message>
+            <ID>35001611</ID>
+            <Severity>Warning</Severity>
+        </Message>
+        <Message>
+            <ID>1166052</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>logical</Dynamic>
+            <Dynamic>gclk1</Dynamic>
+            <Navigation>gclk1</Navigation>
+        </Message>
+        <Message>
+            <ID>1166064</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>input</Dynamic>
+            <Dynamic>gclk1</Dynamic>
+        </Message>
+        <Message>
+            <ID>1166052</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>logical</Dynamic>
+            <Dynamic>bootMode</Dynamic>
+            <Navigation>bootMode</Navigation>
+        </Message>
+        <Message>
+            <ID>1166064</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>input</Dynamic>
+            <Dynamic>bootMode</Dynamic>
+        </Message>
+        <Message>
+            <ID>1166052</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>logical</Dynamic>
+            <Dynamic>nCTS</Dynamic>
+            <Navigation>nCTS</Navigation>
+        </Message>
+        <Message>
+            <ID>1166064</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>input</Dynamic>
+            <Dynamic>nCTS</Dynamic>
+        </Message>
+        <Message>
+            <ID>1166052</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>logical</Dynamic>
+            <Dynamic>monitor_sel[3]</Dynamic>
+            <Navigation>monitor_sel[3]</Navigation>
+        </Message>
+        <Message>
+            <ID>1166064</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>input</Dynamic>
+            <Dynamic>monitor_sel[3]</Dynamic>
+        </Message>
+        <Message>
+            <ID>1166052</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>logical</Dynamic>
+            <Dynamic>monitor_sel[2]</Dynamic>
+            <Navigation>monitor_sel[2]</Navigation>
+        </Message>
+        <Message>
+            <ID>1166064</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>input</Dynamic>
+            <Dynamic>monitor_sel[2]</Dynamic>
+        </Message>
+        <Message>
+            <ID>1166052</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>logical</Dynamic>
+            <Dynamic>monitor_sel[1]</Dynamic>
+            <Navigation>monitor_sel[1]</Navigation>
+        </Message>
+        <Message>
+            <ID>1166064</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>input</Dynamic>
+            <Dynamic>monitor_sel[1]</Dynamic>
+        </Message>
+        <Message>
+            <ID>1166052</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>logical</Dynamic>
+            <Dynamic>monitor_sel[0]</Dynamic>
+            <Navigation>monitor_sel[0]</Navigation>
+        </Message>
+        <Message>
+            <ID>1166064</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>input</Dynamic>
+            <Dynamic>monitor_sel[0]</Dynamic>
+        </Message>
+        <Message>
+            <ID>1163101</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>14</Dynamic>
+        </Message>
+    </Task>
+    <Task name="PAR">
+        <Message>
+            <ID>66011008</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>
+   Signal=iclk loads=1 clock_loads=1
+   Signal=SerialClock2 loads=3 clock_loads=2
+   Signal=nRDRxD loads=1 clock_loads=1
+   Signal=nWR_I_0_84/Sequencer/Sequencer_s/N_14 loads=1 clock_loads=1
+   Signal=nWR_I_0_84/Sequencer/Sequencer_s/N_28 loads=4 clock_loads=4
+   Signal=rxd01/N_2 loads=1 clock_loads=1
+   Signal=rxd01/N_6 l   ....   nal=txd01/N_44 loads=2 clock_loads=1
+   Signal=txd01/N_38 loads=3 clock_loads=1
+   Signal=txd01/N_36 loads=3 clock_loads=1
+   Signal=txd01/N_34 loads=3 clock_loads=1</Dynamic>
+        </Message>
+        <Message>
+            <ID>66011008</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>
+   Signal=iclk loads=1 clock_loads=1
+   Signal=SerialClock2 loads=3 clock_loads=2
+   Signal=nRDRxD loads=1 clock_loads=1
+   Signal=nWR_I_0_84/Sequencer/Sequencer_s/N_14 loads=1 clock_loads=1
+   Signal=nWR_I_0_84/Sequencer/Sequencer_s/N_28 loads=4 clock_loads=4
+   Signal=rxd01/N_2 loads=1 clock_loads=1
+   Signal=rxd01/N_6 l   ....   nal=txd01/N_44 loads=2 clock_loads=1
+   Signal=txd01/N_38 loads=3 clock_loads=1
+   Signal=txd01/N_36 loads=3 clock_loads=1
+   Signal=txd01/N_34 loads=3 clock_loads=1</Dynamic>
+        </Message>
+    </Task>
+</BaliMessageLog>

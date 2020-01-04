@@ -1,4 +1,4 @@
-/* Verilog model created from schematic serialRxD.sch -- Jan 04, 2020 14:20 */
+/* Verilog model created from schematic serialRxD.sch -- Jan 04, 2020 15:04 */
 
 module serialRxD( clk, clr, dataIn, DataRdy, Empty, ParallelOut, reset, rxBusy );
  input clk;

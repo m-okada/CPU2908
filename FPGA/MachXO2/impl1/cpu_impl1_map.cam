@@ -1,0 +1,109 @@
+[ START MERGED ]
+nReset2_N_20 nReset2
+nReset_N_22 nReset_c
+clkQ_c__inv clkQ_c
+nWR_I_0_84/Sequencer/Sequencer_s/N_11 nWR_I_0_84/Sequencer/Sequencer_s/N_16
+nWR_I_0_84/Sequencer/Sequencer_s/sig_0 nWR_I_0_84/Sequencer/Sequencer_s/N_14
+nWR_I_0_84/clkQ_c_derived_27_enable_9 nWR_I_0_84/sig_89
+nWR_I_0_84/Sequencer/Sequencer_s/N_29 ExDataIn_1
+nWR_I_0_84/Sequencer/Sequencer_s/N_30 ExDataIn_2
+nWR_I_0_84/Sequencer/Sequencer_s/N_47 ExDataIn_0
+nWR_I_0_84/Sequencer/Sequencer_s/N_42 ExDataIn_4
+nWR_I_0_84/Sequencer/Sequencer_s/N_44 ExDataIn_3
+nWR_I_0_84/Sequencer/Sequencer_s/N_13 S_c_1
+nWR_I_0_84/Sequencer/Sequencer_s/N_12 S_c_0
+nWR_I_0_84/Sequencer/Sequencer_s/N_21 nWR_I_0_84/Sequencer/Sequencer_s/UM_8
+rxd01/N_43 SerialClock2
+rxd01/N_7 RxBusy
+txd01/N_51 nWRTxD
+txd01/N_52 txd01/N_48
+n531 nTSC_c
+[ END MERGED ]
+[ START CLIPPED ]
+VCC_net
+div01/counter_200_add_4_1/S0
+div01/counter_200_add_4_1/CI
+div01/counter_200_add_4_9/S1
+div01/counter_200_add_4_9/CO
+nWR_I_0_84/Executer/Executer_s/I11/add_15_17/S1
+nWR_I_0_84/Executer/Executer_s/I11/add_15_17/CO
+nWR_I_0_84/Executer/Executer_s/I11/add_15_1/S0
+nWR_I_0_84/Executer/Executer_s/I11/add_15_1/CI
+nWR_I_0_84/Executer/Executer_s/I2/ia/add_7_1/S0
+nWR_I_0_84/Executer/Executer_s/I2/ia/add_7_1/CI
+nWR_I_0_84/Executer/Executer_s/I2/ia/add_7_9/CO
+nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201_add_4_11/S1
+nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201_add_4_11/CO
+nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201_add_4_1/S0
+nWR_I_0_84/Sequencer/Sequencer_s/I45/count_201_add_4_1/CI
+[ END CLIPPED ]
+[ START DESIGN PREFS ]
+SCHEMATIC START ;
+# map:  version Diamond (64-bit) 3.8.0.115.3 -- WARNING: Map write only section -- Sat Jan 04 15:04:41 2020
+
+SYSCONFIG SDM_PORT=DISABLE SLAVE_SPI_PORT=DISABLE I2C_PORT=DISABLE MASTER_SPI_PORT=DISABLE COMPRESS_CONFIG=ON CONFIGURATION=CFG MY_ASSP=OFF ONE_TIME_PROGRAM=OFF CONFIG_SECURE=OFF MCCLK_FREQ=2.08 JTAG_PORT=ENABLE ENABLE_TRANSFR=DISABLE SHAREDEBRINIT=DISABLE MUX_CONFIGURATION_PORTS=DISABLE BACKGROUND_RECONFIG=OFF ;
+LOCATE COMP "RxD" SITE "48" ;
+LOCATE COMP "nTSC" SITE "16" ;
+LOCATE COMP "nIRQ" SITE "15" ;
+LOCATE COMP "nReset" SITE "20" ;
+LOCATE COMP "clk" SITE "12" ;
+LOCATE COMP "UM[0]" SITE "30" ;
+LOCATE COMP "UM[1]" SITE "31" ;
+LOCATE COMP "UM[2]" SITE "32" ;
+LOCATE COMP "UM[3]" SITE "35" ;
+LOCATE COMP "UM[4]" SITE "36" ;
+LOCATE COMP "UM[5]" SITE "37" ;
+LOCATE COMP "UM[6]" SITE "39" ;
+LOCATE COMP "UM[7]" SITE "40" ;
+LOCATE COMP "TxD" SITE "49" ;
+LOCATE COMP "SPI_CS[0]" SITE "61" ;
+LOCATE COMP "SPI_CS[1]" SITE "60" ;
+LOCATE COMP "SPI_CS[2]" SITE "59" ;
+LOCATE COMP "SPI_CS[3]" SITE "58" ;
+LOCATE COMP "SPI_CS[4]" SITE "57" ;
+LOCATE COMP "SPI_CS[5]" SITE "62" ;
+LOCATE COMP "SPI_MOSI" SITE "52" ;
+LOCATE COMP "SPI_MISO" SITE "53" ;
+LOCATE COMP "SPI_CLK" SITE "54" ;
+LOCATE COMP "S[0]" SITE "13" ;
+LOCATE COMP "S[1]" SITE "14" ;
+LOCATE COMP "nIRQA" SITE "42" ;
+LOCATE COMP "nAltWR" SITE "18" ;
+LOCATE COMP "nWR" SITE "25" ;
+LOCATE COMP "nAltRD" SITE "19" ;
+LOCATE COMP "nRD" SITE "78" ;
+LOCATE COMP "clkE" SITE "27" ;
+LOCATE COMP "clkQ" SITE "28" ;
+LOCATE COMP "addrOut[0]" SITE "68" ;
+LOCATE COMP "addrOut[1]" SITE "69" ;
+LOCATE COMP "addrOut[2]" SITE "70" ;
+LOCATE COMP "addrOut[3]" SITE "71" ;
+LOCATE COMP "addrOut[4]" SITE "74" ;
+LOCATE COMP "addrOut[5]" SITE "75" ;
+LOCATE COMP "addrOut[6]" SITE "76" ;
+LOCATE COMP "addrOut[7]" SITE "77" ;
+LOCATE COMP "addrOut[8]" SITE "81" ;
+LOCATE COMP "addrOut[9]" SITE "82" ;
+LOCATE COMP "addrOut[10]" SITE "83" ;
+LOCATE COMP "addrOut[11]" SITE "84" ;
+LOCATE COMP "addrOut[12]" SITE "85" ;
+LOCATE COMP "addrOut[13]" SITE "86" ;
+LOCATE COMP "addrOut[14]" SITE "87" ;
+LOCATE COMP "addrOut[15]" SITE "88" ;
+LOCATE COMP "addrOut[16]" SITE "96" ;
+LOCATE COMP "addrOut[17]" SITE "97" ;
+LOCATE COMP "addrOut[18]" SITE "98" ;
+LOCATE COMP "addrOut[19]" SITE "99" ;
+LOCATE COMP "nCS[0]" SITE "64" ;
+LOCATE COMP "nCS[2]" SITE "66" ;
+LOCATE COMP "nCS[3]" SITE "67" ;
+LOCATE COMP "dataBus[0]" SITE "10" ;
+LOCATE COMP "dataBus[1]" SITE "9" ;
+LOCATE COMP "dataBus[2]" SITE "8" ;
+LOCATE COMP "dataBus[3]" SITE "7" ;
+LOCATE COMP "dataBus[4]" SITE "4" ;
+LOCATE COMP "dataBus[5]" SITE "3" ;
+LOCATE COMP "dataBus[6]" SITE "2" ;
+LOCATE COMP "dataBus[7]" SITE "1" ;
+SCHEMATIC END ;
+[ END DESIGN PREFS ]
