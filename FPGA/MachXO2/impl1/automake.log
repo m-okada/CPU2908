@@ -1,0 +1,10 @@
+
+sch2vlog -FPGA -i V:/CPU2908/Schematics/MachXO2/sequencer_s.sch -o V:/CPU2908/Schematics/MachXO2/impl1/sequencer_s.v -gui -msgset V:/CPU2908/Schematics/MachXO2/promote.xml
+
+sch2vlog -FPGA -i V:/CPU2908/Schematics/MachXO2/executer_s.sch -o V:/CPU2908/Schematics/MachXO2/impl1/executer_s.v -gui -msgset V:/CPU2908/Schematics/MachXO2/promote.xml
+
+sch2vlog -FPGA -i V:/CPU2908/Schematics/MachXO2/serialTxD.sch -o V:/CPU2908/Schematics/MachXO2/impl1/serialTxD.v -gui -msgset V:/CPU2908/Schematics/MachXO2/promote.xml
+
+sch2vlog -FPGA -i V:/CPU2908/Schematics/MachXO2/serialRxD.sch -o V:/CPU2908/Schematics/MachXO2/impl1/serialRxD.v -gui -msgset V:/CPU2908/Schematics/MachXO2/promote.xml
+
+sch2vlog -FPGA -i V:/CPU2908/Schematics/MachXO2/SPI.sch -o V:/CPU2908/Schematics/MachXO2/impl1/SPI.v -gui -msgset V:/CPU2908/Schematics/MachXO2/promote.xml

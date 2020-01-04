@@ -1,0 +1,29 @@
+<Project ModBy="Analyzer" Name="K:/home/projects/CPU2908C_PLD/machxo2_7000/seq.rvs" Date="2019-12-14">
+ <Core Name="top_LA0">
+  <Setting>
+   <Capture SamplesPerTrig="1024" NumTrigsCap="1"/>
+   <Event EventCnt="0" CntEnableRun="0"/>
+   <TrigSetting PreTrgSamples="" AND_ALL="0" PostTrgSamples="" TURadix="0"/>
+  </Setting>
+  <Dataset Name="Base">
+   <Trace>
+    <Sig Name="TxRdy"/>
+    <Bus Name="TxBuff" Radix="0">
+     <Sig Name="TxBuff:0"/>
+     <Sig Name="TxBuff:1"/>
+     <Sig Name="TxBuff:2"/>
+     <Sig Name="TxBuff:3"/>
+     <Sig Name="TxBuff:4"/>
+     <Sig Name="TxBuff:5"/>
+     <Sig Name="TxBuff:6"/>
+     <Sig Name="TxBuff:7"/>
+    </Bus>
+    <Sig Name="RxD"/>
+   </Trace>
+   <Trigger>
+    <TU Operator="7" Name="TU1" ID="1" Value="0" Radix="0"/>
+    <TE Enable="1" Expression="TU1" Name="TE1" ID="1"/>
+   </Trigger>
+  </Dataset>
+ </Core>
+</Project>

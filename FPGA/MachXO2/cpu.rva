@@ -1,0 +1,51 @@
+<!DOCTYPE ispTLA>
+<ispTLA>
+ <CreationDate>?? 12 3 16:48:51 2019</CreationDate>
+ <XCFFileName/>
+ <CableSetting>
+  <IsTRSTConnected val="false"/>
+  <TRSTSetting val="0"/>
+  <IsBSCANConnected val="false"/>
+  <BSCANSetting val="0"/>
+  <CableType val="USB2"/>
+  <PortAddress val="0"/>
+  <PortSetting val="0"/>
+  <TCKDelay val="2"/>
+ </CableSetting>
+ <DeviceCount>1</DeviceCount>
+ <Device>
+  <DeviceIndex>0</DeviceIndex>
+  <DeviceName>1. LCMXO2-2000HC</DeviceName>
+  <DeviceID>0x012BB043</DeviceID>
+  <HasIspTRACY>true</HasIspTRACY>
+  <HasJTAG2WB>false</HasJTAG2WB>
+  <SERDES/>
+  <IRBypassLen>8</IRBypassLen>
+  <RVLFileName>seq.rvl</RVLFileName>
+  <RVSFileName>seq.rvs</RVSFileName>
+  <LACoreCount>1</LACoreCount>
+  <WinUI CoreIndex="0">
+   <TraceSigTreeData>
+    <TraceSignal IsHidden="false" Name="TxRdy" NodeType="0" PortIndex="0"/>
+    <TraceSignal IsHidden="false" Name="TxBuff" NodeType="1" PortIndex="1">
+     <BusRadix Radix="0"/>
+     <IsExpanded Expand="false"/>
+    </TraceSignal>
+    <TraceSignal IsHidden="false" Name="TxBuff:0" NodeType="2" PortIndex="1"/>
+    <TraceSignal IsHidden="false" Name="TxBuff:1" NodeType="2" PortIndex="2"/>
+    <TraceSignal IsHidden="false" Name="TxBuff:2" NodeType="2" PortIndex="3"/>
+    <TraceSignal IsHidden="false" Name="TxBuff:3" NodeType="2" PortIndex="4"/>
+    <TraceSignal IsHidden="false" Name="TxBuff:4" NodeType="2" PortIndex="5"/>
+    <TraceSignal IsHidden="false" Name="TxBuff:5" NodeType="2" PortIndex="6"/>
+    <TraceSignal IsHidden="false" Name="TxBuff:6" NodeType="2" PortIndex="7"/>
+    <TraceSignal IsHidden="false" Name="TxBuff:7" NodeType="2" PortIndex="8"/>
+    <TraceSignal IsHidden="false" Name="RxD" NodeType="0" PortIndex="9"/>
+   </TraceSigTreeData>
+   <TriggerUI UserSelect="0" PreSelectType="0" PreSelect="1" UserSelectPos="0"/>
+   <CoreRun Run="true"/>
+   <CoreWndUIData>
+    <ClockFrequency Unit="ns" Frequency="-1.0"/>
+   </CoreWndUIData>
+  </WinUI>
+ </Device>
+</ispTLA>

@@ -1,0 +1,87 @@
+/* Verilog model created from schematic serialTxD.sch -- Jan 04, 2020 14:20 */
+
+module serialTxD( clk, in, reset, serialOut, TxRdy );
+ input clk;
+ input [7:0] in;
+ input reset;
+output serialOut;
+output TxRdy;
+wire N_52;
+wire N_48;
+wire N_49;
+wire N_50;
+wire N_51;
+wire N_47;
+wire N_45;
+wire N_44;
+wire N_43;
+wire N_41;
+wire N_24;
+wire N_25;
+wire N_26;
+wire N_29;
+wire N_32;
+wire N_33;
+wire N_34;
+wire N_36;
+wire N_38;
+wire N_1;
+wire N_3;
+wire N_4;
+wire N_5;
+wire N_6;
+wire N_7;
+wire N_8;
+wire N_9;
+wire N_10;
+wire N_11;
+wire N_12;
+wire N_13;
+wire N_14;
+wire N_15;
+wire N_17;
+wire N_21;
+wire N_22;
+
+
+
+INV I51 ( .A(N_48), .Z(N_52) );
+INV I33 ( .A(N_26), .Z(N_45) );
+INV I32 ( .A(N_44), .Z(N_29) );
+INV I31 ( .A(N_38), .Z(N_43) );
+INV I30 ( .A(N_36), .Z(N_47) );
+INV I29 ( .A(N_34), .Z(N_1) );
+INV I28 ( .A(N_24), .Z(N_33) );
+INV I46 ( .A(reset), .Z(N_51) );
+AND4 I34 ( .A(N_24), .B(N_1), .C(N_36), .D(N_38), .Z(TxRdy) );
+OR2 I36 ( .A(N_45), .B(TxRdy), .Z(N_48) );
+VHI I48 ( .Z(N_41) );
+VHI I47 ( .Z(N_25) );
+VHI I38 ( .Z(N_32) );
+VHI I20 ( .Z(N_49) );
+FD1P3BX I19 ( .CK(N_48), .D(N_50), .PD(N_51), .Q(serialOut), .SP(N_49) );
+FD1P3BX I49 ( .CK(N_44), .D(N_45), .PD(N_51), .Q(N_26), .SP(N_25) );
+FD1P3BX I50 ( .CK(clk), .D(N_29), .PD(N_51), .Q(N_44), .SP(N_25) );
+FD1P3DX I39 ( .CD(N_51), .CK(N_48), .D(N_43), .Q(N_38), .SP(N_32) );
+FD1P3DX I40 ( .CD(N_51), .CK(N_43), .D(N_47), .Q(N_36), .SP(N_32) );
+FD1P3DX I41 ( .CD(N_51), .CK(N_47), .D(N_1), .Q(N_34), .SP(N_32) );
+FD1P3DX I42 ( .CD(N_51), .CK(N_1), .D(N_33), .Q(N_24), .SP(N_32) );
+FD1P3DX I44 ( .CD(N_51), .CK(N_52), .D(N_41), .Q(N_14), .SP(N_41) );
+FD1P3DX I15 ( .CD(N_51), .CK(N_48), .D(N_17), .Q(N_3), .SP(N_49) );
+FD1P3DX I16 ( .CD(N_51), .CK(N_48), .D(N_15), .Q(N_13), .SP(N_49) );
+FD1P3DX I17 ( .CD(N_51), .CK(N_48), .D(N_21), .Q(N_12), .SP(N_49) );
+FD1P3DX I14 ( .CD(N_51), .CK(N_48), .D(N_11), .Q(N_22), .SP(N_49) );
+FD1P3DX I13 ( .CD(N_51), .CK(N_48), .D(N_7), .Q(N_5), .SP(N_49) );
+FD1P3DX I12 ( .CD(N_51), .CK(N_48), .D(N_8), .Q(N_6), .SP(N_49) );
+FD1P3DX I11 ( .CD(N_51), .CK(N_48), .D(N_10), .Q(N_9), .SP(N_49) );
+FD1P3DX I10 ( .CD(N_51), .CK(N_48), .D(N_4), .Q(N_50), .SP(N_49) );
+MUX21 I4 ( .D0(in[0]), .D1(N_49), .SD(N_14), .Z(N_17) );
+MUX21 I8 ( .D0(in[1]), .D1(N_3), .SD(N_14), .Z(N_15) );
+MUX21 I22 ( .D0(in[2]), .D1(N_13), .SD(N_14), .Z(N_21) );
+MUX21 I23 ( .D0(in[3]), .D1(N_12), .SD(N_14), .Z(N_11) );
+MUX21 I24 ( .D0(in[7]), .D1(N_5), .SD(N_14), .Z(N_4) );
+MUX21 I25 ( .D0(in[6]), .D1(N_6), .SD(N_14), .Z(N_7) );
+MUX21 I26 ( .D0(in[4]), .D1(N_22), .SD(N_14), .Z(N_10) );
+MUX21 I27 ( .D0(in[5]), .D1(N_9), .SD(N_14), .Z(N_8) );
+
+endmodule // serialTxD

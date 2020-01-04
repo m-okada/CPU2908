@@ -1,0 +1,82 @@
+/* Verilog model created from schematic SPI.sch -- Jan 04, 2020 14:20 */
+
+module SPI( clk, clkOut, Done, in, LClock, LorS, MISO, nReset, nStart, out );
+ input clk;
+output clkOut;
+output Done;
+ input [7:0] in;
+ input LClock;
+ input LorS;
+ input MISO;
+ input nReset;
+ input nStart;
+output [7:0] out;
+wire N_52;
+wire N_53;
+wire N_46;
+wire N_47;
+wire N_48;
+wire N_49;
+wire N_50;
+wire N_51;
+wire N_42;
+wire N_43;
+wire N_45;
+wire N_41;
+wire N_6;
+wire N_7;
+wire N_8;
+wire N_10;
+wire N_13;
+wire N_14;
+wire N_15;
+wire N_27;
+wire N_28;
+wire N_29;
+wire N_30;
+wire N_31;
+wire N_32;
+wire N_33;
+wire N_34;
+
+
+
+AND2 I54 ( .A(LClock), .B(N_52), .Z(N_53) );
+AND2 I55 ( .A(N_49), .B(N_47), .Z(N_51) );
+AND2 I59 ( .A(N_51), .B(N_41), .Z(clkOut) );
+VHI I47 ( .Z(N_46) );
+VHI I61 ( .Z(N_42) );
+VHI I38 ( .Z(N_10) );
+VHI I20 ( .Z(N_43) );
+FD1P3DX I53 ( .CD(N_50), .CK(clk), .D(N_46), .Q(N_48), .SP(N_46) );
+FD1P3DX I52 ( .CD(N_50), .CK(clk), .D(N_48), .Q(N_47), .SP(N_46) );
+FD1P3DX I58 ( .CD(nReset), .CK(clkOut), .D(MISO), .Q(N_45), .SP(N_42) );
+FD1P3DX I39 ( .CD(N_50), .CK(clkOut), .D(N_8), .Q(N_15), .SP(N_10) );
+FD1P3DX I40 ( .CD(N_50), .CK(N_8), .D(N_7), .Q(N_14), .SP(N_10) );
+FD1P3DX I41 ( .CD(N_50), .CK(N_7), .D(N_6), .Q(N_13), .SP(N_10) );
+FD1P3DX I42 ( .CD(N_50), .CK(N_6), .D(N_41), .Q(Done), .SP(N_10) );
+FD1P3DX I15 ( .CD(nReset), .CK(N_53), .D(N_34), .Q(out[0]), .SP(N_43) );
+FD1P3DX I16 ( .CD(nReset), .CK(N_53), .D(N_33), .Q(out[1]), .SP(N_43) );
+FD1P3DX I17 ( .CD(nReset), .CK(N_53), .D(N_32), .Q(out[2]), .SP(N_43) );
+FD1P3DX I14 ( .CD(nReset), .CK(N_53), .D(N_31), .Q(out[3]), .SP(N_43) );
+FD1P3DX I13 ( .CD(nReset), .CK(N_53), .D(N_28), .Q(out[6]), .SP(N_43) );
+FD1P3DX I12 ( .CD(nReset), .CK(N_53), .D(N_29), .Q(out[5]), .SP(N_43) );
+FD1P3DX I11 ( .CD(nReset), .CK(N_53), .D(N_30), .Q(out[4]), .SP(N_43) );
+FD1P3DX I10 ( .CD(nReset), .CK(N_53), .D(N_27), .Q(out[7]), .SP(N_43) );
+MUX21 I4 ( .D0(in[0]), .D1(N_45), .SD(LorS), .Z(N_34) );
+MUX21 I8 ( .D0(in[1]), .D1(out[0]), .SD(LorS), .Z(N_33) );
+MUX21 I22 ( .D0(in[2]), .D1(out[1]), .SD(LorS), .Z(N_32) );
+MUX21 I23 ( .D0(in[3]), .D1(out[2]), .SD(LorS), .Z(N_31) );
+MUX21 I24 ( .D0(in[7]), .D1(out[6]), .SD(LorS), .Z(N_27) );
+MUX21 I25 ( .D0(in[6]), .D1(out[5]), .SD(LorS), .Z(N_28) );
+MUX21 I26 ( .D0(in[4]), .D1(out[3]), .SD(LorS), .Z(N_30) );
+MUX21 I27 ( .D0(in[5]), .D1(out[4]), .SD(LorS), .Z(N_29) );
+INV I60 ( .A(clkOut), .Z(N_52) );
+INV I56 ( .A(clk), .Z(N_49) );
+INV I46 ( .A(nStart), .Z(N_50) );
+INV I31 ( .A(N_15), .Z(N_8) );
+INV I30 ( .A(N_14), .Z(N_7) );
+INV I29 ( .A(N_13), .Z(N_6) );
+INV I28 ( .A(Done), .Z(N_41) );
+
+endmodule // SPI

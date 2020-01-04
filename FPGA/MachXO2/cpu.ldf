@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BaliProject version="3.2" title="cpu" device="LCMXO2-2000HC-4TG100C" default_implementation="impl1">
+    <Options/>
+    <Implementation title="impl1" dir="impl1" description="impl1" synthesis="lse" default_strategy="Strategy1">
+        <Options def_top="SPI" top="top"/>
+        <Source name="top.v" type="Verilog" type_short="Verilog">
+            <Options top_module="top"/>
+        </Source>
+        <Source name="core.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="sequencer.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="sequencer_s.sch" type="Schematic" type_short="Schematic">
+            <Options/>
+        </Source>
+        <Source name="executer.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="executer_s.sch" type="Schematic" type_short="Schematic">
+            <Options/>
+        </Source>
+        <Source name="register.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="tristateBuff.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="mux.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="uromd.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="uromCounter.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="ALU.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="decoder.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="BusSelector.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="sram.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="xorshift.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="serialTxD.sch" type="Schematic" type_short="Schematic">
+            <Options/>
+        </Source>
+        <Source name="serialRxD.sch" type="Schematic" type_short="Schematic">
+            <Options/>
+        </Source>
+        <Source name="urom_TBL.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="bootROM.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="int_ctrl.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="SPI.sch" type="Schematic" type_short="Schematic">
+            <Options/>
+        </Source>
+        <Source name="cpu.lpf" type="Logic Preference" type_short="LPF">
+            <Options/>
+        </Source>
+        <Source name="cpu.rva" type="Reveal Analyzer Project File" type_short="RVA">
+            <Options/>
+        </Source>
+        <Source name="cpu.sdc" type="Synplify Design Constraints File" type_short="SDC">
+            <Options/>
+        </Source>
+        <Source name="cpu.tpf" type="Timing Analysis" type_short="TPF" excluded="TRUE">
+            <Options/>
+        </Source>
+        <Source name="impl1/impl1.xcf" type="Programming Project File" type_short="Programming">
+            <Options/>
+        </Source>
+        <Source name="seq.rvl" type="Reveal" type_short="Reveal" excluded="TRUE">
+            <Options/>
+        </Source>
+    </Implementation>
+    <Strategy name="Strategy1" file="cpu1.sty"/>
+</BaliProject>
