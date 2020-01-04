@@ -25,11 +25,11 @@ Open source home brew 8-bit CPU.
 
 <table>
 <tr><td>R2</td><td>R3</td></tr>
-<tr><td colspan="2">W1</td></tr>
+<tr><td align="center" colspan="2">W1</td></tr>
 </table>
 
 <table>
-<tr><td>A0</td></tr>
+<tr><td colspan="2">A0</td></tr>
 </table>
 
 <table>
