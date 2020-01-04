@@ -28,6 +28,9 @@ Open source home brew 8-bit CPU.
 |R2|R3|
 |:--:|:--:|
 
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;W0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+|:--:|
+
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 |:--:|
 
