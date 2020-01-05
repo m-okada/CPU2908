@@ -88,11 +88,10 @@ int jmp_target[1024] ;
 char inst_str[][6]={
 "LD",	"ST",	"MOV",	"ADD",	"SUB",	"ADDC",	"SUBB","CMP",
 "AND",	"OR",	"XOR",	"NOT",	"XCHG",
-"SWB",	"SXT",
 "SXT",	"SWB",	"PUSH",	"POP",
 "JC",	"JNC",	"JZ",	"JNZ",	"JS",	"JNS",	"JO",	"JNO",	"JG",	"JL",
 "JMP",	"JMPS",	"JMPN",
-"SHL","SHR","SAR",
+"SHL",	"SHR",	"SAR",
 "INC","DEC",
 "CALL",	"RET",
 "SWI",	"IRET",
@@ -319,9 +318,6 @@ int except_reg(void){
 	if(t==1) return 1 ;
 	return -1 ;
 }
-int except_comma(void){
-	return 1 ;
-}
 int except_addr_expr(void){
 	return 1 ;
 }
@@ -339,12 +335,21 @@ srcは(A0|A1|SP)、(A0|A1|SP)＋－imm、
 */
 void gen_LD(void){
 
-	if(!except_reg()) return ;
-	if(!except_comma()) return ;
-	if(!except_addr_expr()) return ;
+	if(!except_reg()){
+		errorOut("Register require.") ;
+		return ;
+	}
+	if(!except_T(6)){
+		errorOut("\',\' require.") ;
+		return ;
+	}
+	if(!except_addr_expr()){
+		errorOut("Address expr require.") ;
+		return ;
+	}
 
 
-
+/*
 	int t, r ;
 	while(1){
 		t = get_token() ;
@@ -379,6 +384,7 @@ printf("WORD REG\n") ;
 			printf("Error : ',' missing.\n") ;
 		}
 	}
+*/
 }
 
 void gen_ST(void){
