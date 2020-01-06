@@ -98,7 +98,7 @@ DWORD rom_idx[ROM_SIZE]={0} ;
 
 #define ADX_ZERO (0x0B << OP_SHIFT)
 #define ADX_THRU (0x03 << OP_SHIFT)	//	AddrReg Thru
-#define ADX_SXT (0x01 << OP_SHIFT)	//	add eign extended buff
+#define ADX_SXT (0x01 << OP_SHIFT)	//	add sign extended buff
 #define ADX_ALL1 (0x0A << OP_SHIFT)
 
 #define ADX_INC (0x07 << OP_SHIFT)	//	REG+1

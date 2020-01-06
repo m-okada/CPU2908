@@ -19,6 +19,24 @@ void errorOut(char *str){
 	printf("%d Error : %s\n", Line, str) ;
 }
 
+static char * number="0123456789ABCDEF" ;
+int char2int(char cc){
+	for(int i=0  ; i<16 ; i++){
+		if(number[i]==cc) return i ;
+	}
+	return -1 ;
+}
+
+int str2int(int radix, char*str){
+	int retval=0 ;
+
+	while(*str){
+		retval = retval * radix + char2int(*str) ;
+		str++ ;
+	}
+	return retval ;
+}
+
 //typedef uint8_t BYTE ;
 typedef uint16_t WORD ;
 typedef uint32_t DWORD ;
@@ -195,6 +213,9 @@ int register_label(char* ptr){
 //	オペランドの式評価
 /*
 A0,A1,CP,SP は予約語として、あとは定数式。定数は事前に宣言されている事
+
+上位ワード：0-7 レジスタ 8-15 レジスタ＋imm
+下位ワード：オフセット
 */
 int expr(){
 }
@@ -202,7 +223,7 @@ int expr(){
 
 int mode=0 ;	//	0:行頭 1:
 
-char fileBuff[1024] ;
+char fileBuff[128] ;
 char *buffPos=NULL ;
 char *nextPos=NULL ;
 
@@ -210,6 +231,7 @@ char lineBuff[128] ;
 
 /*
 	get_line　一行読み込んでポインタを返す。ファイルの終わりならNULLを返す
+		一行最大80バイト
 
 	buffPos : ラインの先頭ポインタ。後ろの改行位置に0を書いて先頭を返す。
 	linebuff : filebuffの途中で行が終わってるときにこっちにコピーしてfileBuffいっぱいに読み込む。の後改行までコピーして返す
@@ -224,7 +246,7 @@ char* get_line(FILE* fp){
 		if(len!=1){
 			return NULL ;
 		}
-		//	BOM
+		//	Skip BOM.
 		else if(cc==0 || cc==0xbb || cc==0xef || cc==0xff || cc==0xfe || cc==0xbf){
 			continue ;
 		}
@@ -266,11 +288,7 @@ extern char buff[128] ;
 int accept_T(int type){	//@@@
 	int t ;
 	char * ptr ;
-	while(1){
-		t = get_token() ;
-		if(t==0) continue ;
-		break ;
-	}
+	t = get_token() ;
 	if(t==type) return 1 ;
 	return -1 ;
 }
@@ -283,11 +301,7 @@ int except_T(int type){
 int accept(char *str){
 	int t ;
 	char * ptr ;
-	while(1){
-		t = get_token() ;
-		if(t==0) continue ;
-		break ;
-	}
+	t = get_token() ;
 	if(t==-1) return -1 ;
 
 	ptr = buff ;
@@ -307,35 +321,61 @@ int except(char *str){
 void get_expr(void){
 
 }
+
 int except_reg(void){
-	int t ;
-	char * ptr ;
-	while(1){
-		t = get_token() ;
-		if(t==0) continue ;
-		break ;
+	int r, t ;
+
+	t = get_token() ;
+	if(t==1){
+		r = get_register(buff) ;
+		if(r>=0) return r ;
 	}
-	if(t==1) return 1 ;
 	return -1 ;
 }
+
 int except_addr_expr(void){
-	return 1 ;
+	int r, t ;
+
+	t = get_token() ;
+	if(t==1){
+		r = get_register(buff) ;
+		if(r<4 && r>7) return -2 ;	//	not addr register
+	}
+
+	t = get_token() ;
+	if(t!=7) return r ;
+
+	t = get_token() ;
+
+	return -1 ;
 }
 
-/*
+/*　レジスタ
 char reg_str[][4]={
 "R0", "R1", "R2", "R3",
 "W0", "W1", "A0", "A1",
 "CP", "SP", ""
 } ;
 */
+// Code generate.
+
+/*
+4バイトで、あたまから
+FF.00 NOP
+FF.FF notuse
+FF.01.xx.yy addr(.ORG) yy:xx little endian
+ラベル、定数は定数テーブルに保存する。.ORGはラベルとは別に管理する。
+*/
+char code[8192][4] ;
+
+
 /*
 LD dst,src
 srcは(A0|A1|SP)、(A0|A1|SP)＋－imm、
 */
 void gen_LD(void){
-
-	if(!except_reg()){
+	int r=except_reg() ;
+	if(r==-1){
 		errorOut("Register require.") ;
 		return ;
 	}
@@ -389,18 +429,14 @@ printf("WORD REG\n") ;
 
 void gen_ST(void){
 }
-
+void gen_lop(int op){
+}
 
 
 int parse(void){
 	int t, code ;
-	while(1){
-		t = get_token() ;
+	t = get_token() ;
 printf("token[%s] type %d\n", buff, t) ;
-		//if(t==-1) break ;	//	end of line
-		if(t==0) continue ;
-		else break ;
-	}
 
 	switch(t){
 	case 1:	//	Identifyer オペコード又は定数。定数の場合後ろはEQしか対応していない。
@@ -410,19 +446,20 @@ printf("token[%s] type %d\n", buff, t) ;
 /*
 "LD",	"ST",	"MOV",	"ADD",	"SUB",	"ADDC",	"SUBB","CMP",
 "AND",	"OR",	"XOR",	"NOT",	"XCHG",
-"SWB",	"SXT",
-"SXT",	"SWB",	"PUSH",	"POP",
-"JC",	"JNC",	"JZ",	"JNZ",	"JS",	"JNS",	"JO",	"JNO",	"JG",	"JL",
-"JMP",	"JMPS",	"JMPN",
-"SHL","SHR","SAR",
-"INC","DEC",
-"CALL",	"RET",
-"SWI",	"IRET",
-"EI",	"DI",
-"STC",	"CMC",
-"LDFR",	"STFR",
-"TNS",
-"NOP",
+"SWB",	"SXT",	//	14,15
+"SXT",	"SWB",	"PUSH",	"POP",	//16-19
+"JC",	"JNC",	"JZ",	"JNZ",	"JS",	//	-14
+"JNS",	"JO",	"JNO",	"JG",	"JL",	//	-19
+"JMP",	"JMPS",	"JMPN",	// 20-22
+"SHL","SHR","SAR",	//	23-25
+"INC","DEC",	//	26,27
+"CALL",	"RET",	//	28,29
+"SWI",	"IRET",	//	30,31
+"EI",	"DI",	//	32,33
+"STC",	"CMC",	//	34,35
+"LDFR",	"STFR",	//	36,37
+"TNS",	//	38
+"NOP",	//39
 
 */
 			switch(code){
@@ -430,14 +467,45 @@ printf("token[%s] type %d\n", buff, t) ;
 				op=1 ;
 				gen_LD() ;
 				break ;
-			case 1:
+			case 1:	//	ST
 				op=2 ;
 				gen_ST() ;
+				break ;
+			case 3:	//	MOV
+				break ;
+			case 4:		//	ADD
+				gen_lop(4) ;
+				break ;
+			case 5:		//	SUB
+				break ;
+			case 6:		//	ADDC
+				break ;
+			case 7:		//	SUBB
+				break ;
+			case 8:		//	CMP
+				break ;
+			case 9:		//	AND
+				break ;
+			case 10:	//	OR
+				break ;
+			case 11:	//	XOR
+				break ;
+			case 12:	//	NOT
+				break ;
+			case 13:	//	XCHG
+				break ;
+			case 14:	//	SWapByte
+				break ;
+			case 15:	//	SignXTend
+				break ;
+			case 39:
 				break ;
 			}
 		}
 		break ;
-	case 2:
+	case 2:	//	Directive
+		break ;
+	case 5:	//	Label ラベルは後ろの:を取って識別子表に登録する。
 		break ;
 	case 7:	//	演算子(+,-)リテラルで出てくる
 		break ;
@@ -468,7 +536,7 @@ int program(void){
 		pos = get_line(src_fp) ;
 		if(pos==NULL) break ;
 
-printf("[%s]%ld\n", pos, strlen(pos)) ;
+// printf("[%s]%ld\n", pos, strlen(pos)) ;
 
 		parse() ;
 		generate() ;
@@ -478,7 +546,7 @@ printf("[%s]%ld\n", pos, strlen(pos)) ;
 
 
 
-int main(char argc, char** argv){
+int main(int argc, char** argv){
 
 
 	if(argc<=1){
@@ -499,7 +567,7 @@ int main(char argc, char** argv){
 
 	char *pos = strrchr(fname, '.') ;
 	*pos=0 ;
-	strcat(fname, ".o") ;
+	strcat(fname, ".prn") ;
 
 	obj_fp=fopen(fname, "wb") ;
 	if(obj_fp==NULL){

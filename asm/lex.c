@@ -77,6 +77,18 @@ int push_char(int cc){
 	8
 */
 int get_token(char* ptr){
+	int _get_token(char*) ;
+	int t ;
+
+	while(1){
+		t=_get_token(ptr) ;
+		if(t==0)continue ;
+		else break ;
+	}
+	return t ;
+}
+
+int _get_token(char* ptr){
 	int state=0 ;
 	int type=0 ;
 
