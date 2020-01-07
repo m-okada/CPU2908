@@ -1,0 +1,7 @@
+#Start recording tcl command: 1/7/2020 17:51:56
+#Project Location: V:/CPU2908/FPGA/MachXO2; Project name: cpu
+prj_project open "V:/CPU2908/FPGA/MachXO2/cpu.ldf"
+prj_run Synthesis -impl impl1
+prj_run Synthesis -impl impl1
+prj_project close
+#Stop recording: 1/7/2020 17:56:38

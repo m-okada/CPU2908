@@ -5,7 +5,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2016 Lattice Semiconductor Corporation,  All rights reserved.
-Sat Jan 04 15:04:37 2020
+Tue Jan 07 17:55:16 2020
 
 
 Command Line:  synthesis -f cpu_impl1_lattice.synproj -gui -msgset V:/CPU2908/FPGA/MachXO2/promote.xml 
@@ -660,8 +660,8 @@ clk0 [get_nets iclk]                    |    1.000 MHz|  317.360 MHz|     2
 All constraints were met.
 
 
-Peak Memory Usage: 64.711  MB
+Peak Memory Usage: 63.734  MB
 
 --------------------------------------------------------------
-Elapsed CPU time for LSE flow : 1.466  secs
+Elapsed CPU time for LSE flow : 1.576  secs
 --------------------------------------------------------------

@@ -14,6 +14,9 @@
     <clockitem name = "rxd01/N_38"  type = "net" />
     <clockitem name = "rxd01/N_41"  type = "net" />
     <clockitem name = "rxd01/N_43"  type = "net" />
+    <clockitem name = "nWR_I_0_84/sig[4]"  type = "net" />
+    <clockitem name = "nWR_I_0_84/sig[0]"  type = "net" />
+    <clockitem name = "nWR_I_0_84/Executer/Executer_s/N_34"  type = "net" />
     <clockitem name = "nWR_I_0_84/Sequencer/Sequencer_s/N_28"  type = "net" />
     <clockitem name = "clkQ_N_16"  type = "net" />
     <clockitem name = "txd01/N_1"  type = "net" />
@@ -22,9 +25,6 @@
     <clockitem name = "txd01/N_47"  type = "net" />
     <clockitem name = "txd01/N_48"  type = "net" />
     <clockitem name = "txd01/N_52"  type = "net" />
-    <clockitem name = "nWR_I_0_84/sig[4]"  type = "net" />
-    <clockitem name = "nWR_I_0_84/sig[0]"  type = "net" />
-    <clockitem name = "nWR_I_0_84/Executer/Executer_s/N_34"  type = "net" />
 </clocks>
 
 <!--

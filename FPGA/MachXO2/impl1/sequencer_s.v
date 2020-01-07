@@ -1,4 +1,4 @@
-/* Verilog model created from schematic sequencer_s.sch -- Jan 04, 2020 15:04 */
+/* Verilog model created from schematic sequencer_s.sch -- Jan 07, 2020 17:55 */
 
 module sequencer_s( countClk, CT, dataIn, dataOut, E, exbusCtrl, fetchOut, flagIn,
                     idx, IRQH, jumpOpe, nE, nIRQ, noJump, nQ, nReset, nReset2,

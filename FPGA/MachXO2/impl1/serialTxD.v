@@ -1,4 +1,4 @@
-/* Verilog model created from schematic serialTxD.sch -- Jan 04, 2020 15:04 */
+/* Verilog model created from schematic serialTxD.sch -- Jan 07, 2020 17:55 */
 
 module serialTxD( clk, in, reset, serialOut, TxRdy );
  input clk;
