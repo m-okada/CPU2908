@@ -3683,7 +3683,7 @@ fe 3 71 76 50*0 76 1199*0 76
       <a name="size" val="20"/>
     </comp>
     <comp lib="4" loc="(750,250)" name="Register">
-      <a name="label" val="Buff1"/>
+      <a name="label" val="Buff1(ALU-A)"/>
     </comp>
     <comp lib="0" loc="(530,480)" name="Splitter">
       <a name="incoming" val="16"/>
@@ -3938,7 +3938,7 @@ fe 3 71 76 50*0 76 1199*0 76
       <a name="enable" val="false"/>
     </comp>
     <comp lib="4" loc="(750,320)" name="Register">
-      <a name="label" val="Buff2"/>
+      <a name="label" val="Buff2(ALU-B)"/>
     </comp>
     <comp lib="1" loc="(1280,100)" name="NOT Gate">
       <a name="size" val="20"/>

@@ -27,7 +27,7 @@ int char2int(char cc){
 	return -1 ;
 }
 
-int str2int(int radix, char*str){
+int str2int(int radix, char *str){
 	int retval=0 ;
 
 	while(*str){
@@ -37,11 +37,7 @@ int str2int(int radix, char*str){
 	return retval ;
 }
 
-//typedef uint8_t BYTE ;
-typedef uint16_t WORD ;
-typedef uint32_t DWORD ;
-
-typedef WORD ADDR_T ;
+typedef uint16_t ADDR_T ;
 
 #define IDENT_TBL_SIZE 1024
 
@@ -124,7 +120,10 @@ char inst_str[][6]={
 char reg_str[][4]={
 "R0", "R1", "R2", "R3",
 "W0", "W1", "A0", "A1",
-"CP", "SP", ""
+"CP", "SP",
+"A", "B", "C", "D",
+"V", "W", "X", "Y",
+"PC", "U", ""
 } ;
 
 char directive_str[][8]={
@@ -161,7 +160,7 @@ int get_register(char *ptr){
 	char *p ;
 	while(reg_str[i][0]){
 		char *inst=reg_str[i] ;
-		char f=1 ;	//	一致
+		char f=1 ;	//	一致なら1のまま返る
 		p=ptr ;
 		while(*inst){
 			if(*inst!=*p){
@@ -171,6 +170,9 @@ int get_register(char *ptr){
 			p++ ; inst++ ;
 		}
 		if(f==1){	//	見つかった
+			if(f>=10 && f<20){	//	別名変換
+				f-=10 ;
+			}
 			return i ;
 		}
 		i++ ;
