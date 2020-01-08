@@ -349,6 +349,15 @@ int except_addr_expr(void){
 
 	t = get_token() ;
 
+
+	if(t==2){
+	}
+	else if(t==3){	//	dec
+	}
+	else if(t==4){	//	hex
+		op2 ;
+	}
+
 	return -1 ;
 }
 
@@ -381,6 +390,9 @@ void gen_LD(void){
 		errorOut("Register require.") ;
 		return ;
 	}
+
+	op1=r ;
+
 	if(!except_T(6)){
 		errorOut("\',\' require.") ;
 		return ;
@@ -389,44 +401,6 @@ void gen_LD(void){
 		errorOut("Address expr require.") ;
 		return ;
 	}
-
-
-/*
-	int t, r ;
-	while(1){
-		t = get_token() ;
-printf("token[%s]=%d\n", buff, t) ;
-		if(t==0) continue ;
-		if(t==1){
-			r = get_register(buff) ;
-printf("reg(%d) %d\n", t, r) ;
-			if(r!=-1){
-				if(r>=0 && r<4){	//	BYTE REG
-printf("BYTE REG\n") ;
-					break ;
-				}
-				else if(r>=4 && r<8){	//	BYTE REG
-printf("WORD REG\n") ;
-					break ;
-				}
-				else{
-					sprintf(msg, "%s is not register.", buff) ;
-					errorOut(msg) ;
-					return ;
-				}
-			}
-		}
-		else{
-			errorOut("") ;
-			return ;
-		}
-	}
-	if(r>=0 && r<8){
-		if(!except(",")){
-			printf("Error : ',' missing.\n") ;
-		}
-	}
-*/
 }
 
 void gen_ST(void){
