@@ -161,7 +161,7 @@ U 1 1 5DC82A54
 P 3950 4950
 F 0 "U4" H 3950 5431 50  0000 C CNN
 F 1 "93C56" H 3700 4650 50  0000 C CNN
-F 2 "Housings_SOIC:SO-8_5.3x6.2mm_Pitch1.27mm" H 3950 4950 50  0001 C CNN
+F 2 "Housings_SOIC:SOIC-8_3.9x4.9mm_Pitch1.27mm" H 3950 4950 50  0001 C CNN
 F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/20001749K.pdf" H 3950 4950 50  0001 C CNN
 	1    3950 4950
 	1    0    0    -1  

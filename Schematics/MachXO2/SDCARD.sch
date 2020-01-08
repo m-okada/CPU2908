@@ -271,7 +271,7 @@ U 1 1 5E6BE885
 P 4500 5100
 F 0 "U9" H 4250 5350 50  0000 C CNN
 F 1 "AT25xxx" H 4700 4850 50  0000 C CNN
-F 2 "Package_SO:SOIC-8_5.23x5.23mm_P1.27mm" H 4500 5100 50  0001 C CNN
+F 2 "Housings_SOIC:SOIC-8_3.9x4.9mm_Pitch1.27mm" H 4500 5100 50  0001 C CNN
 F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-8707-SEEPROM-AT25010B-020B-040B-Datasheet.pdf" H 4500 5100 50  0001 C CNN
 	1    4500 5100
 	1    0    0    -1  
