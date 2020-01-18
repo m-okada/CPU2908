@@ -158,7 +158,7 @@ DWORD rom_idx[ROM_SIZE]={0} ;
 
 //	Flag fetch control.
 #define FR_NONE 0
-#define FR_LATCH 1	//	DIN_EN=1 常にE↓でラッチしているので、アドレスを変えたサイクルのQ↓で前回サイクルのデータをもらうことが出来る。
+#define FR_LATCH 1
 
 //	Temp register latch control.
 #define FB_NONE 0x00
@@ -167,6 +167,8 @@ DWORD rom_idx[ROM_SIZE]={0} ;
 //#define FB_FETCH 0x03
 #define FB_LOCK 0x03	//	バスロック
 
+//	DIN_EN=1の時専用バッファからデータをもらう。
+//	常にE↓でラッチしているので、アドレスを変えたサイクルのQ↓で前回サイクルのデータをもらうことが出来る。
 //	DataIn latch enable
 #define DIN_NONE 0x00
 #define DIN_EN 0x01

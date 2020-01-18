@@ -1,8 +1,11 @@
 ﻿; Echo back.
-		ld r0,ao+32
+constdef eq $ffff
+		.org 0
+		test eq $aa12
+		ld r0,a0+32
 		mov a0,0f01
 loop:
-		ld r0,[a0]
+		ld r0,a0
 		mov r1,r0
 		or r0,r0
 		jz loop

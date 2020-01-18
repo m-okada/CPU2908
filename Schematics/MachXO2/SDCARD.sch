@@ -37,9 +37,11 @@ Wire Wire Line
 Text HLabel 4200 2450 0    50   Input ~ 0
 SD_CLK
 $Comp
-L Timer_RTC:PCF2129AT U7
+L o2_breakout-rescue:PCF2129AT-Timer_RTC U7
 U 1 1 5DF2754E
 P 6200 3900
+AR Path="/5DF2754E" Ref="U7"  Part="1" 
+AR Path="/5DD58257/5DF2754E" Ref="U7"  Part="1" 
 F 0 "U7" H 5950 4450 50  0000 L CNN
 F 1 "PCF2129AT" H 6000 3250 50  0000 L CNN
 F 2 "Housings_SOIC:SOIC-20W_7.5x12.8mm_Pitch1.27mm" H 6200 4225 50  0001 C CNN

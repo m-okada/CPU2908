@@ -28,9 +28,11 @@ F 3 "http://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_FT2232D.pdf" H 
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:USB_B_Micro J3
+L o2_breakout-rescue:USB_B_Micro-Connector J3
 U 1 1 5E6AAFE7
 P 3450 1700
+AR Path="/5E6AAFE7" Ref="J3"  Part="1" 
+AR Path="/5E6A6650/5E6AAFE7" Ref="J3"  Part="1" 
 F 0 "J3" H 3507 2167 50  0000 C CNN
 F 1 "USB_B_Micro" H 3507 2076 50  0000 C CNN
 F 2 "digikey-footprints:HRS_ZX62R-B-5P" H 3600 1650 50  0001 C CNN
@@ -228,7 +230,7 @@ Wire Wire Line
 	4500 5050 4450 5050
 Connection ~ 4450 5050
 $Comp
-L Oscillator:SG-8002CA X?
+L o2_breakout-rescue:SG-8002CA-Oscillator X?
 U 1 1 5DC12BA3
 P 3550 3850
 AR Path="/5DC12BA3" Ref="X?"  Part="1" 
@@ -291,7 +293,7 @@ U 1 1 5DC44DC8
 P 4450 3350
 F 0 "R6" V 4400 3500 50  0000 C CNN
 F 1 "1.5K" V 4350 3350 50  0000 C CNN
-F 2 "Capacitors_SMD:C_0805" V 4380 3350 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0603" V 4380 3350 50  0001 C CNN
 F 3 "~" H 4450 3350 50  0001 C CNN
 	1    4450 3350
 	-1   0    0    1   
@@ -305,7 +307,7 @@ U 1 1 5DC205B4
 P 4300 2950
 F 0 "R4" V 4093 2950 50  0000 C CNN
 F 1 "27" V 4184 2950 50  0000 C CNN
-F 2 "Capacitors_SMD:C_0805" V 4230 2950 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0603" V 4230 2950 50  0001 C CNN
 F 3 "~" H 4300 2950 50  0001 C CNN
 	1    4300 2950
 	0    1    1    0   
@@ -316,18 +318,18 @@ U 1 1 5DC208A7
 P 4300 3150
 F 0 "R5" V 4250 3000 50  0000 C CNN
 F 1 "27" V 4200 3150 50  0000 C CNN
-F 2 "Capacitors_SMD:C_0805" V 4230 3150 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0603" V 4230 3150 50  0001 C CNN
 F 3 "~" H 4300 3150 50  0001 C CNN
 	1    4300 3150
 	0    1    1    0   
 $EndComp
 $Comp
-L Device:Ferrite_Bead FB1
+L o2_breakout-rescue:Ferrite_Bead-Device FB1
 U 1 1 5DC565F5
 P 4650 1500
 F 0 "FB1" V 4376 1500 50  0000 C CNN
 F 1 "Ferrite_Bead" V 4467 1500 50  0000 C CNN
-F 2 "Capacitors_SMD:C_0603" V 4580 1500 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0805" V 4580 1500 50  0001 C CNN
 F 3 "~" H 4650 1500 50  0001 C CNN
 	1    4650 1500
 	0    1    1    0   

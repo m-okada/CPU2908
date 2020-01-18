@@ -72,9 +72,11 @@ int push_char(int cc){
 	3 Decimal
 	4 Hex
 	5 Label
-	6
-	7
-	8
+	6 ','
+	7 '+'
+	8 '-'
+	9 '@'	Location
+
 */
 int get_token(char* ptr){
 	int _get_token(char*) ;
@@ -113,9 +115,17 @@ int _get_token(char* ptr){
 				push_char(cc) ;
 				state=2 ;
 			}
-			else if(cc=='+' || cc=='-'){
+			else if(cc=='+'){
 				push_char(cc) ;
 				return 7 ;
+			}
+			else if(cc=='-'){
+				push_char(cc) ;
+				return 8 ;
+			}
+			else if(cc=='@'){
+				push_char(cc) ;
+				return 9 ;
 			}
 			else if(cc=='$') state=4 ;	//	hex
 			else if(cc==';') while(take_char()!=-1) ;	//	comment

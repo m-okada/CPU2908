@@ -197,20 +197,20 @@ Wire Wire Line
 $Comp
 L power:GND #PWR09
 U 1 1 5DC5EC0E
-P 9150 2100
-F 0 "#PWR09" H 9150 1850 50  0001 C CNN
-F 1 "GND" H 9155 1927 50  0000 C CNN
-F 2 "" H 9150 2100 50  0001 C CNN
-F 3 "" H 9150 2100 50  0001 C CNN
-	1    9150 2100
+P 8850 2100
+F 0 "#PWR09" H 8850 1850 50  0001 C CNN
+F 1 "GND" H 8855 1927 50  0000 C CNN
+F 2 "" H 8850 2100 50  0001 C CNN
+F 3 "" H 8850 2100 50  0001 C CNN
+	1    8850 2100
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	9150 1950 9150 2000
+	8850 1950 8850 2000
 Wire Wire Line
 	9650 6050 9650 6150
 $Comp
-L Oscillator:SG-8002CA X1
+L o2_breakout-rescue:SG-8002CA-Oscillator X1
 U 1 1 5DCCEBCB
 P 6450 5800
 F 0 "X1" H 6250 6050 50  0000 L CNN
@@ -296,12 +296,12 @@ $EndSheet
 $Comp
 L Power_Supervisor:TCM809 U3
 U 1 1 5DC41577
-P 9250 1550
-F 0 "U3" H 9020 1596 50  0000 R CNN
-F 1 "TCM809" H 9020 1505 50  0000 R CNN
-F 2 "digikey-footprints:SOT-23-3" H 8850 1700 50  0001 C CNN
-F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/21661E.pdf" H 8950 1800 50  0001 C CNN
-	1    9250 1550
+P 8950 1550
+F 0 "U3" H 8720 1596 50  0000 R CNN
+F 1 "TCM809" H 8720 1505 50  0000 R CNN
+F 2 "digikey-footprints:SOT-23-3" H 8550 1700 50  0001 C CNN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/21661E.pdf" H 8650 1800 50  0001 C CNN
+	1    8950 1550
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -316,7 +316,7 @@ F 3 "" H 9650 6200 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+3V6 #PWR?
+L o2_breakout-rescue:+3V6-power #PWR?
 U 1 1 5DE300A4
 P 9350 900
 AR Path="/5E6A6650/5DE300A4" Ref="#PWR?"  Part="1" 
@@ -362,10 +362,6 @@ F10 "~CTS_FT" I R 8850 4250 50
 $EndSheet
 Text Label 10500 1450 2    50   ~ 0
 nReset
-Text Label 8950 4850 0    50   ~ 0
-nReset
-Wire Wire Line
-	8950 4850 8850 4850
 $Comp
 L sram:CY7C1010 U5
 U 1 1 5DF577DD
@@ -711,7 +707,7 @@ Wire Wire Line
 	4250 7100 4250 7050
 Connection ~ 5850 7050
 $Comp
-L Switch:SW_DPST_x2 SW3
+L o2_breakout-rescue:SW_DPST_x2-Switch SW3
 U 1 1 5DEE7A37
 P 8250 1300
 F 0 "SW3" H 8250 1535 50  0000 C CNN
@@ -1049,7 +1045,7 @@ Wire Wire Line
 Text Label 5600 6100 2    50   ~ 0
 SPI_CLK
 Wire Wire Line
-	9950 1350 9950 1100
+	9950 1350 9950 1150
 Text Label 1800 4100 0    50   ~ 0
 clkE
 Text Label 1800 4200 0    50   ~ 0
@@ -1302,7 +1298,7 @@ Connection ~ 2150 4700
 Wire Wire Line
 	2150 4700 2150 5800
 $Comp
-L FPGA_Lattice:LCMXO2-2000HC-4TG100C U1
+L o2_breakout-rescue:LCMXO2-2000HC-4TG100C-FPGA_Lattice U1
 U 1 1 5DC03110
 P 2300 1500
 F 0 "U1" H 3650 1800 60  0000 C CNN
@@ -1665,19 +1661,15 @@ Wire Wire Line
 Wire Wire Line
 	8250 1100 8500 1100
 Wire Wire Line
-	9550 1550 9600 1550
-Wire Wire Line
 	9600 1400 9600 1550
 Wire Wire Line
-	8500 700  9150 700 
+	8500 700  8850 700 
 Wire Wire Line
-	9150 700  9150 1150
+	8850 700  8850 1150
 Connection ~ 8500 700 
+Connection ~ 8850 2000
 Wire Wire Line
-	8500 2000 9150 2000
-Connection ~ 9150 2000
-Wire Wire Line
-	9150 2000 9150 2100
+	8850 2000 8850 2100
 Connection ~ 6200 7050
 Connection ~ 6200 7500
 Connection ~ 6550 7050
@@ -1892,6 +1884,38 @@ Wire Wire Line
 Connection ~ 10700 5950
 Wire Wire Line
 	10500 5650 11050 5650
+Wire Wire Line
+	8500 2000 8850 2000
+Wire Wire Line
+	9250 1550 9350 1550
+Text Label 9300 1550 0    50   ~ 0
+FT_Reset
+Text Label 9350 4850 2    50   ~ 0
+FT_Reset
+Wire Wire Line
+	8850 4850 9350 4850
+$Comp
+L CPU2908CLocal:R R?
+U 1 1 5E34444C
+P 9350 1350
+AR Path="/5E6A6650/5E34444C" Ref="R?"  Part="1" 
+AR Path="/5E34444C" Ref="R12"  Part="1" 
+F 0 "R12" H 9420 1396 50  0000 L CNN
+F 1 "10K" H 9420 1305 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0402" V 9280 1350 50  0001 C CNN
+F 3 "~" H 9350 1350 50  0001 C CNN
+	1    9350 1350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9350 1500 9350 1550
+Connection ~ 9350 1550
+Wire Wire Line
+	9350 1550 9600 1550
+Wire Wire Line
+	9350 1200 9350 1150
+Wire Wire Line
+	9350 1150 9950 1150
 Wire Bus Line
 	8000 1200 8000 3100
 Wire Bus Line
@@ -1900,4 +1924,7 @@ Wire Bus Line
 	7950 1100 7950 3450
 Wire Bus Line
 	6050 1100 6050 3500
+Connection ~ 9950 1150
+Wire Wire Line
+	9950 1150 9950 1100
 $EndSCHEMATC

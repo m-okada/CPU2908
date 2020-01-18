@@ -16,7 +16,8 @@ asq:asq.c
 int Line = 0 ;
 char msg[128] ;
 void errorOut(char *str){
-	printf("%d Error : %s\n", Line, str) ;
+	printf("Line %d :  Error %s\n", Line, str) ;
+	// exit(1) ;
 }
 
 static char * number="0123456789ABCDEF" ;
@@ -42,7 +43,7 @@ typedef uint16_t ADDR_T ;
 #define IDENT_TBL_SIZE 1024
 
 int locate=0 ;
-short mem[8192] ;
+char mem[16*1024] ;
 
 /*
 
@@ -57,6 +58,7 @@ short mem[8192] ;
 
 ラベル
 Identifier:
+識別子は30バイトまで比較する。Case非センシティブ
 
 .db
 .dw
@@ -181,23 +183,231 @@ int get_register(char *ptr){
 }
 
 
+
+/*
+
+
+*/
 int op ;
 int op1, op2 ;
-int op_type ;	// オペランドタイプ
+
+// オペランドタイプ　0:即値 1:レジスタ 2:アドレスレジスタ＋即値
+int op1_type ;
+int op2_type ;
+
+/*
+ラベル
+
+・定義
+識別子とアドレスを登録
+register_label
+
+
+・参照
+参照された時に定義されているかどうかチェック
+未定義：ロケーション-1でラベルを登録。参照位置を登録。
+
+定義済み：ロケーションとラベルのアドレスでオペランドを計算
+ロケーション確定：label_posの中を手繰ってその位置とラベルのロケーションとでオフセットを計算する。
+
+
+二重定義を許す。
+Jccで後方ラベルを参照する時に -Label で指定すると後方で一番近い同名ラベルを Label なら前方で一番近いラベルを参照
+8ビットオフセットで届かない場合はLabelで後方参照。
+
+*/
+int label_cmp(char *label, char* str){
+	int i ;
+	if(*str==0 || *label==0) return 0 ;
+	for(i=0 ; i<31 ; i++){
+		if(label[i]==0 && str[i]==0) return 1 ;
+		if(label[i]!=str[i]) return 0 ;
+	}
+	return 1 ;	//	30バイト比べておなじなら一致にする。
+}
+
+void label_cpy(char *label, char *str){
+	int i ;
+	for(i=0 ; i<31 ; i++){
+		if(str[i]==0){
+			label[i]=0 ;
+			return ;
+		}
+		label[i] = str[i] ;
+	}
+	label[31]=0 ;
+	return ;
+}
+
+int currentIdentifier=-1 ;
 
 int label_idx=0 ;	//	要素最大値
-int label_loc[1024] ;
-int label_value[1024] ;
-char label[2014][32] ;
+int label_ref_pos[1024] ;	//	label_pos のデータの先頭へのインデックス
+int label_value[1024] ;	//	-1:未定義　参照のみで定義されてない。前方参照。
+char label[1024][32] ;	//	ラベル名 index はlabel_value と同じ
+
+//	ラベルの参照位置
+//	[0]labelへのインデックス位置:-1なら未使用
+//　[1]次のデータのインデックス　 [3]型1:バイト2:ワード3:絶対位置（ワード）
+int label_pos[8192][4] ;
+
+char constant[1024][32] ;
+int const_value[1024] ;	//	定数　-1なら定数未定義　定数は直後の eq で定義するので。
+
+/*
+code[addr]から4バイト
+3バイト命令なら次はcode[i+3]にある
+
+4バイトで、あたまから
+FF.00 NOP
+FF.FF notuse
+FF.01.xx.yy addr(.ORG) yy:xx little endian
+FF.02.xx.yy .orgで指定されたアドレス
+ラベル、定数は定数テーブルに保存する。.ORGはラベルとは別に管理する。
+*/
+int codePos=0 ;
+unsigned char code[16*1024][4] ;
+
+
+
+int get_const_value(char *str){
+	int i ;
+	for(i=0 ; i<1024 ; i++){
+		if(label_cmp(constant[i], str)){
+			return const_value[i] ;
+		}
+	}
+	return -1 ;
+}
+
+
+int register_const(char *str){
+	int i ;
+	for(i=0 ; i<1024 ; i++){
+		if(label_cmp(constant[i], str)){
+			//	Error:定数二重定義	@@@
+			return -1 ;
+		}
+	}
+	for(i=0 ; i<1024 ; i++){
+		if(const_value[i]==-1){
+			label_cpy(constant[i], str) ;
+			currentIdentifier=i ;
+			const_value[i]=0 ;
+			return i ;
+		}
+	}
+	return -1 ;
+}
+
+
 
 int location=0 ;
 
-int register_label(char* ptr){
-	if(label_idx<1024){
-		label_loc[label_idx]=location ;
-		strcpy(label[label_idx], ptr) ;
-		label_idx++ ;
+//	ラベルの定義位置を求める labelの中から定義されていたらインデックスを返す
+int label_ref(char* ptr){
+	int i ;
+	for(i=0 ; i<1024 ; i++){
+		if(label_cmp(label[i], ptr)){
+			return i ;
+		}
 	}
+	return -1 ;
+}
+/*
+	定数参照があるのは
+		LD,STの+imm8、
+		MOVのBR,imm8、
+		MOVのWR,imm16、
+		ROP R0,imm8、
+		Jccのimm8、
+		CALL、JMPのimm16、
+		SWIのimm8。
+*/
+//	ラベルが定義されたら登録してあるかどうかチェックして登録
+int register_label(char* ptr){
+	int i ;
+
+	if(label_idx==1024){
+		errorOut("Label table Overflow.") ;
+		return -1 ;	//	満員です
+	}
+
+	i=label_ref(ptr) ;
+
+	if(i==-1){	//	参照が先なら登録済みのはずなので、ここはラベル初登場
+
+		label_value[label_idx]=location ;
+		label_cpy(label[label_idx], ptr) ;
+
+		label_idx++ ;
+		return label_idx ;
+	}
+	else{//	既に登録されていた。参照が先か二重登録
+		for(i=0 ; i<8192 ; i++){	//	参照位置一覧にあるかな？
+			if(label_pos[i][0]==label_idx){
+				//	参照位置をたどって書き換える
+				int ref_pos = label_pos[i]
+				code[i] ;
+			}
+		}
+		if(i==8192){
+			//	Error @@@
+			errorOut("Label ref table overflow.") ;
+			return -1 ;
+		}
+
+		//	label_pos に参照があるかどうか調べて、あったら書き換え
+	}
+	return 0 ;	//	get_locationしてオフセット計算
+}
+
+
+/*
+ラベルのロケーション
+labelから一致したエントリーを探す。-1なら未定義。
+*/
+
+int get_label_value(char* str){
+	int i ;
+	for(i=0 ; i<1024 ; i++){
+		if(label_cmp(label[i], str)){
+			return label_value[i] ;
+		}
+	}
+	return -1 ;
+}
+
+//　参照された時。空いてるところをさがして登録
+int set_label_pos(char *str, int pos){
+	int t, i ;
+
+	t=label_ref(str) ;
+	if(t==-1){
+	}
+
+	//	参照位置一覧に登録する
+	for(i=0 ; i<8192 ; i++){
+
+	}
+
+}
+
+//
+int get_label_pos(char *str){
+	int i ;
+	for(i=0 ; i<label_idx ; i++){
+		int n ;
+		for(n=0 ; n<32 ; n++){
+			if(label[label_idx][n]==0 || str[n]==0){
+				return label_idx ;
+			}
+			if(str[n] != label[label_idx][n]){
+				break ;
+			}
+		}
+	}
+	return -1 ;
 }
 
 /*
@@ -338,14 +548,16 @@ int except_reg(void){
 int except_addr_expr(void){
 	int r, t ;
 
-	t = get_token() ;
-	if(t==1){
-		r = get_register(buff) ;
-		if(r<4 && r>7) return -2 ;	//	not addr register
+	t = except_reg() ;
+	if(t<4 && t>7){
+		return -2 ;	//	not addr register
 	}
 
 	t = get_token() ;
-	if(t!=7) return r ;
+	if(t!=7){
+		op1 ; // @@@
+		return r ;
+	}
 
 	t = get_token() ;
 
@@ -361,23 +573,10 @@ int except_addr_expr(void){
 	return -1 ;
 }
 
-/*　レジスタ
-char reg_str[][4]={
-"R0", "R1", "R2", "R3",
-"W0", "W1", "A0", "A1",
-"CP", "SP", ""
-} ;
-*/
+
+
 // Code generate.
 
-/*
-4バイトで、あたまから
-FF.00 NOP
-FF.FF notuse
-FF.01.xx.yy addr(.ORG) yy:xx little endian
-ラベル、定数は定数テーブルに保存する。.ORGはラベルとは別に管理する。
-*/
-char code[8192][4] ;
 
 
 /*
@@ -405,6 +604,8 @@ void gen_LD(void){
 
 void gen_ST(void){
 }
+
+
 void gen_lop(int op){
 }
 
@@ -412,13 +613,13 @@ void gen_lop(int op){
 int parse(void){
 	int t, code ;
 	t = get_token() ;
-printf("token[%s] type %d\n", buff, t) ;
+printf("\ntoken[%s] type %d ", buff, t) ;
 
 	switch(t){
 	case 1:	//	Identifyer オペコード又は定数。定数の場合後ろはEQしか対応していない。
 		code=get_opcode(buff) ;
 		if(code!=-1){	//	オペコードらしい
-			printf("Opecode[%s]", buff) ;
+			printf("\nOpecode[%s]", buff) ;
 /*
 "LD",	"ST",	"MOV",	"ADD",	"SUB",	"ADDC",	"SUBB","CMP",
 "AND",	"OR",	"XOR",	"NOT",	"XCHG",
@@ -478,27 +679,59 @@ printf("token[%s] type %d\n", buff, t) ;
 				break ;
 			}
 		}
+		else{	//	Identifier　たぶんこのあとeq定数が続く
+			//	constantテーブルに登録してカレントにする。続くeqで定数定義
+			int t ;
+
+
+			t=register_const(buff) ;
+printf("Const(%s):%d ", buff, t) ;
+			if(t!=-1){
+				currentIdentifier=t ;
+				t=get_token() ;
+				if(t!=1 && label_cmp("EQ", buff)==0){
+					errorOut("EQ Required.\n") ;
+					return -1 ;
+				}
+				else{
+					int val ;
+
+					t=get_token() ;
+					if(t==3){
+						val=str2int(10, buff) ;
+					}
+					else if(t==4){
+						val=str2int(16, buff) ;
+					}
+					else{
+						//	error
+						errorOut("literal required.\n") ;
+						return -1 ;
+					}
+printf("idx(%d) val:%X ", currentIdentifier, val) ;
+					const_value[currentIdentifier]=val ;
+					currentIdentifier=-1 ;
+				}
+			}
+			else{
+				currentIdentifier=-1 ;	//	Error @@@
+			}
+		}
 		break ;
 	case 2:	//	Directive
 		break ;
-	case 5:	//	Label ラベルは後ろの:を取って識別子表に登録する。
+	case 5:	//	Label ラベルは後ろの:を取って識別子表に登録されている。
+		t = register_label(buff) ;
+printf("label(%d)", t) ;
 		break ;
-	case 7:	//	演算子(+,-)リテラルで出てくる
+	default:
+		errorOut("Syntax error") ;
 		break ;
 	}
 
 	return 0 ;
 }
 
-int generate(void){
-	switch(op){
-	case 1:
-		break ;
-	}
-
-
-	return 0 ;
-}
 
 FILE* src_fp ;
 FILE* mem_fp ;
@@ -509,13 +742,14 @@ extern char* pos ;
 
 int program(void){
 	while(1){
+		currentIdentifier=-1 ;	//	カレント識別子　改行時にクリア
+
 		pos = get_line(src_fp) ;
 		if(pos==NULL) break ;
 
 // printf("[%s]%ld\n", pos, strlen(pos)) ;
 
 		parse() ;
-		generate() ;
 	}
 	return 0 ;
 }
@@ -523,7 +757,6 @@ int program(void){
 
 
 int main(int argc, char** argv){
-
 
 	if(argc<=1){
 		printf("Usage : asq FILENAME\n") ;
@@ -551,6 +784,22 @@ int main(int argc, char** argv){
 		printf("Error : Obj file Can't open.\n") ;
 		exit(1) ;
 	}
+
+	int i ;
+	for(i=0 ; i<8192 ; i++){
+		label_pos[i][0]=-1 ;
+	}
+
+	for(i=0 ; i<1024 ; i++){
+		label_ref_pos[i]=-1 ;
+		constant[i][0]=0 ;
+		const_value[i]=-1 ;
+	}
+	for(i=0 ; i<16*1024 ; i++){
+		code[i][0] = code[i][1]=0xff ;
+	}
+	const_value[0]=-1 ;
+	label_pos[0][1]=-1 ;
 
 	program() ;
 }
