@@ -1362,10 +1362,7 @@ UM5
 Text Label 9800 4750 0    50   ~ 0
 UM4
 Wire Wire Line
-	10950 5150 10950 4150
-Wire Wire Line
 	10950 2850 10950 3950
-Connection ~ 10950 4150
 Wire Wire Line
 	10950 1850 10950 2750
 Connection ~ 10950 2850
@@ -1374,8 +1371,6 @@ Wire Wire Line
 	10500 1850 10950 1850
 Wire Wire Line
 	10500 2850 10950 2850
-Wire Wire Line
-	10500 4150 10950 4150
 Wire Wire Line
 	10500 5150 10950 5150
 Wire Wire Line
@@ -1576,7 +1571,6 @@ NoConn ~ 10000 5250
 NoConn ~ 10500 5250
 NoConn ~ 10500 5350
 NoConn ~ 10500 5750
-NoConn ~ 10000 1850
 NoConn ~ 10000 2050
 NoConn ~ 10000 2150
 NoConn ~ 10000 3550
@@ -1615,13 +1609,11 @@ Wire Wire Line
 Connection ~ 10850 3750
 Wire Wire Line
 	10850 3750 10850 3650
-NoConn ~ 10500 5050
 NoConn ~ 2300 3500
 NoConn ~ 2300 3100
 NoConn ~ 2300 2900
 NoConn ~ 2300 4300
 NoConn ~ 5100 4800
-NoConn ~ 5100 5300
 NoConn ~ 2300 5700
 NoConn ~ 2300 5900
 NoConn ~ 2300 5200
@@ -1722,8 +1714,6 @@ Wire Wire Line
 Wire Wire Line
 	9850 3950 10950 3950
 Connection ~ 10950 3950
-Wire Wire Line
-	10950 3950 10950 4150
 Wire Wire Line
 	10000 1850 9850 1850
 Wire Wire Line
@@ -1830,7 +1820,7 @@ Wire Wire Line
 Wire Wire Line
 	10500 4850 10700 4850
 Wire Wire Line
-	11100 4650 11100 6150
+	11100 4650 11100 5050
 Wire Wire Line
 	11100 6150 10700 6150
 Wire Wire Line
@@ -1888,7 +1878,7 @@ Wire Wire Line
 	8500 2000 8850 2000
 Wire Wire Line
 	9250 1550 9350 1550
-Text Label 9300 1550 0    50   ~ 0
+Text Label 9700 1700 2    50   ~ 0
 FT_Reset
 Text Label 9350 4850 2    50   ~ 0
 FT_Reset
@@ -1916,6 +1906,26 @@ Wire Wire Line
 	9350 1200 9350 1150
 Wire Wire Line
 	9350 1150 9950 1150
+Connection ~ 9950 1150
+Wire Wire Line
+	9950 1150 9950 1100
+Wire Wire Line
+	9350 1550 9350 1700
+Wire Wire Line
+	9350 1700 9700 1700
+Wire Wire Line
+	5100 5300 5600 5300
+Text Label 5600 5300 2    50   ~ 0
+~SD_CD
+Wire Wire Line
+	10950 3950 10950 5150
+Wire Wire Line
+	10500 4150 11100 4150
+Wire Wire Line
+	11100 4150 11100 4650
+Connection ~ 11100 4650
+Wire Wire Line
+	10500 5050 11100 5050
 Wire Bus Line
 	8000 1200 8000 3100
 Wire Bus Line
@@ -1924,7 +1934,7 @@ Wire Bus Line
 	7950 1100 7950 3450
 Wire Bus Line
 	6050 1100 6050 3500
-Connection ~ 9950 1150
+Connection ~ 11100 5050
 Wire Wire Line
-	9950 1150 9950 1100
+	11100 5050 11100 6150
 $EndSCHEMATC
