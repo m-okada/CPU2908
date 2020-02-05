@@ -513,20 +513,20 @@ F 3 "" H 4350 2550 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	6700 3850 7100 3850
+	6700 3850 6850 3850
 Wire Wire Line
-	6700 3950 7100 3950
+	6700 3950 6850 3950
 Wire Wire Line
-	6700 4050 7100 4050
+	6700 4050 6850 4050
 Wire Wire Line
-	6700 4150 7100 4150
-Text HLabel 7100 3850 2    50   Output ~ 0
+	6700 4150 6850 4150
+Text HLabel 6850 3850 2    50   Output ~ 0
 TxD_FT
-Text HLabel 7100 3950 2    50   Input ~ 0
+Text HLabel 6850 3950 2    50   Input ~ 0
 RxD_FT
-Text HLabel 7100 4050 2    50   Output ~ 0
+Text HLabel 6850 4050 2    50   Output ~ 0
 ~RTS_FT
-Text HLabel 7100 4150 2    50   Input ~ 0
+Text HLabel 6850 4150 2    50   Input ~ 0
 ~CTS_FT
 Text HLabel 7300 2350 2    50   Output ~ 0
 TCK_FT
@@ -547,8 +547,6 @@ NoConn ~ 6700 4450
 NoConn ~ 6700 4550
 NoConn ~ 6700 4750
 NoConn ~ 6700 4850
-NoConn ~ 6700 4950
-NoConn ~ 6700 5050
 NoConn ~ 6700 5150
 Wire Wire Line
 	2100 7300 2150 7300
@@ -1065,4 +1063,84 @@ F 3 "~" H 850 7550 50  0001 C CNN
 	1    850  7550
 	1    0    0    -1  
 $EndComp
+$Comp
+L CPU2908CLocal:LED D8
+U 1 1 5E4339D9
+P 7700 4700
+F 0 "D8" V 7739 4583 50  0000 R CNN
+F 1 "LED" V 7648 4583 50  0000 R CNN
+F 2 "Capacitors_SMD:C_0402" H 7700 4700 50  0001 C CNN
+F 3 "~" H 7700 4700 50  0001 C CNN
+	1    7700 4700
+	0    -1   -1   0   
+$EndComp
+$Comp
+L CPU2908CLocal:LED D7
+U 1 1 5E4350D2
+P 7450 4700
+F 0 "D7" V 7489 4583 50  0000 R CNN
+F 1 "LED" V 7398 4583 50  0000 R CNN
+F 2 "Capacitors_SMD:C_0402" H 7450 4700 50  0001 C CNN
+F 3 "~" H 7450 4700 50  0001 C CNN
+	1    7450 4700
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:+3V3 #PWR024
+U 1 1 5E4533E1
+P 7700 4050
+F 0 "#PWR024" H 7700 3900 50  0001 C CNN
+F 1 "+3V3" H 7715 4223 50  0000 C CNN
+F 2 "" H 7700 4050 50  0001 C CNN
+F 3 "" H 7700 4050 50  0001 C CNN
+	1    7700 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L CPU2908CLocal:R R28
+U 1 1 5E4533E7
+P 7700 4350
+F 0 "R28" H 7770 4396 50  0000 L CNN
+F 1 "22K" H 7770 4305 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0402" V 7630 4350 50  0001 C CNN
+F 3 "~" H 7700 4350 50  0001 C CNN
+	1    7700 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L CPU2908CLocal:R R27
+U 1 1 5E4533ED
+P 7450 4350
+F 0 "R27" H 7520 4396 50  0000 L CNN
+F 1 "22K" H 7520 4305 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0402" V 7380 4350 50  0001 C CNN
+F 3 "~" H 7450 4350 50  0001 C CNN
+	1    7450 4350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7700 4200 7700 4100
+Wire Wire Line
+	7450 4200 7450 4100
+Wire Wire Line
+	7450 4500 7450 4550
+Wire Wire Line
+	7450 4100 7700 4100
+Connection ~ 7700 4100
+Wire Wire Line
+	7700 4100 7700 4050
+Wire Wire Line
+	7700 4500 7700 4550
+Wire Wire Line
+	6700 4950 7450 4950
+Wire Wire Line
+	7450 4950 7450 4850
+Wire Wire Line
+	6700 5050 7700 5050
+Wire Wire Line
+	7700 5050 7700 4850
+Text Label 6850 4950 0    50   ~ 0
+~RxLED
+Text Label 6850 5050 0    50   ~ 0
+~TxLED
 $EndSCHEMATC
