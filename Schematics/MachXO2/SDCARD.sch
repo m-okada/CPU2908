@@ -141,9 +141,7 @@ Wire Wire Line
 	5550 1800 5550 1950
 Connection ~ 5550 1950
 Wire Wire Line
-	5550 1950 5400 1950
-NoConn ~ 5700 2150
-NoConn ~ 5700 2050
+	5550 1950 5300 1950
 $Comp
 L Device:C C23
 U 1 1 5DF3704B
@@ -156,7 +154,7 @@ F 3 "~" H 4400 1650 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	4200 2250 5700 2250
+	4200 2250 4700 2250
 Text HLabel 4200 2250 0    50   Input ~ 0
 ~SD_CS
 Wire Wire Line
@@ -169,9 +167,9 @@ Connection ~ 4900 2350
 Wire Wire Line
 	4900 2350 5700 2350
 Wire Wire Line
-	5400 1950 5400 2150
+	5300 1950 5300 2150
 Wire Wire Line
-	5400 2150 5100 2150
+	5300 2150 5100 2150
 Text HLabel 4200 2150 0    50   Input ~ 0
 SD_DO
 Wire Wire Line
@@ -656,4 +654,32 @@ Wire Wire Line
 Connection ~ 7200 3500
 Wire Wire Line
 	7200 3500 7850 3500
+Wire Wire Line
+	5450 2050 5700 2050
+Wire Wire Line
+	5450 2150 5700 2150
+Text Label 5450 2050 0    50   ~ 0
+DAT1_NC
+Text Label 5450 2150 0    50   ~ 0
+DAT2_NC
+$Comp
+L CPU2908CLocal:R R29
+U 1 1 5E6CE917
+P 4700 1900
+F 0 "R29" H 4770 1946 50  0000 L CNN
+F 1 "10K" H 4770 1855 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0402" V 4630 1900 50  0001 C CNN
+F 3 "~" H 4700 1900 50  0001 C CNN
+	1    4700 1900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4700 2050 4700 2250
+Connection ~ 4700 2250
+Wire Wire Line
+	4700 2250 5700 2250
+Wire Wire Line
+	4700 1750 4700 1350
+Wire Wire Line
+	4700 1350 4900 1350
 $EndSCHEMATC
