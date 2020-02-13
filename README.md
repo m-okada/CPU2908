@@ -42,7 +42,7 @@ CPU2908は、主に部品数を減らすためとコード密度を高くする�
 ====
 
 回路は
-- Logisimのドキュメント CPU2908/Document/CPU2908C.circ
+- Logisimのドキュメント CPU2908/Document/CPU2908C3.circ
 - KiCadの回路図 CPU2908/blob/master/Schematics/74HC/RevC3/CPU2908C3.sch
 
 の2つで、どちらも同じ回路です。
