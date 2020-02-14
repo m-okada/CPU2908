@@ -1,3 +1,3 @@
 ﻿
-asq:asq.c lex.c
-	cc -o asq asq.c lex.c
+asq:asq.c token.c
+	cc -o asq asq.c token.c -Wno-format-security

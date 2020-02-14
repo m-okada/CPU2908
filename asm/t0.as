@@ -1,8 +1,11 @@
 ﻿; Echo back.
+
+
+		;
 constdef eq $ffff
 		.org 0
 		test eq $aa12
-		ld r0,a0+32
+		ld r2,a0+32
 		mov a0,0f01
 loop:
 		ld r0,a0
@@ -17,3 +20,8 @@ wait:
 		inc a0
 		st[a0],r1
 		jmps loop
+		jc loop
+		nop
+
+
+
