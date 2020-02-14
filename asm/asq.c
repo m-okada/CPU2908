@@ -19,8 +19,7 @@ t02.as
 int Line = 0 ;
 char msg[128] ;
 void errorOut(char *str){
-	printf("Line %d :  Error %s\n", Line, str) ;
-	// exit(1) ;
+	fprintf(stderr, "Line %d :  Error %s\n", Line, str) ;
 }
 
 
@@ -154,9 +153,9 @@ char inst_str[][6]={
 } ;
 
 char reg_str[][4]={
-"R0", "R1", "R2", "R3",
-"W0", "W1", "A0", "A1",
-"CP", "SP",
+"R0", "R1", "R2", "R3",	// 0,1,2,3
+"W0", "W1", "A0", "A1",	// 4,5,6,7
+"CP", "SP",				// 8,9
 
 //	Alternative
 "A", "B", "C", "D",
@@ -351,13 +350,13 @@ int get_token_value(int t, char *str){
 		if(n==-1){	//	label
 			return -1 ;
 		}
-		return sign*n ;
+		return (sign*n) & 0x0ffff ;
 	}
 	else if(t==3){	//	decimal
-		return sign*str2int(10, str) ;
+		return (sign*str2int(10, str)) & 0x0ffff ;
 	}
 	else if(t==4){	//	hex
-		return sign*str2int(16, str) ;
+		return (sign*str2int(16, str)) & 0x0ffff ;
 	}
 	else{
 		return -1 ;
@@ -439,7 +438,8 @@ reftype:0 8bit offset
 */
 int label_add_ref(int codePos, int idx, int reftype){
 	int i ;
-printf("AddRef(%d:%x) "	, idx, codePos) ;
+
+//printf("AddRef(%d:%x) "	, idx, codePos) ;
 	for(i=0 ; i<2048 ; i++){
 		if(label_pos[i][0]==-1){
 			label_pos[i][0]=idx ;
@@ -463,92 +463,38 @@ int label_rewrite(int idx){
 		if(label_pos[i][0]==idx){
 			pos = label_pos[i][1] ;
 			loc = label_pos[i][2] ;
+
+//printf("RWoffset %d(%d) loc:%d type(%d) ", pos, label_value[idx], loc, label_pos[i][3]) ;
+
 			switch(label_pos[i][3]){
 			case 1:	//	byte ;
 				c1 = 0 ;
 				offset=label_value[idx] -(loc+2) ;
-printf("RWoffset (%d:%d) ", label_value[idx], loc) ;
 				c0 = offset & 0x00ff ;
 				break ;
 			case 2:	//	word ;
-				offset=loc - (code_loc[pos]+2) ;
+				offset=label_value[idx] -(loc+3) ;
+				c0=offset & 0x00ff ;
+				c1=(offset >> 8) & 0x00ff ;
 				break ;
 			case 3:	// absolute ;
-				c0=loc & 0x00ff ;
-				c1=(loc >> 8) & 0x00ff ;
+				c0=label_value[idx] & 0x00ff ;
+				c1=(label_value[idx] >> 8) & 0x00ff ;
 				break ;
 			}
-			break ;
+			// break ;
 		}
-	}
-	if(pos!=-1){
-		code[pos][2]=c0;
-		code[pos][3]=c1;
-printf("ReWrite Pos(%d:%d)->(%d) ", idx, pos, (((int)c0<<8) | c1) & 0x00ffff) ;
+		if(pos!=-1){
+			code[pos][2]=c0;
+			code[pos][3]=c1;
+//printf("ReWrite Pos(%d:%d)->(%04X) ", idx, pos, (((int)c1<<8) | c0) & 0x00ffff) ;
+		}
+		pos=-1 ;
 	}
 	return i ;
 }
 
 
-
-//	ラベルが定義されたら登録してあるかどうかチェックして登録　登録までやる版はあとでいねーぶる
-int _register_label(char* ptr){
-	int i ;
-	int idx ;
-
-	idx=get_label_index(ptr) ;
-
-	if(idx==-1){	//	参照が先なら登録済みのはずなので、ここはラベル初登場
-		idx = register_label(ptr) ;
-		; //@@@
-	}
-	else{//	既に登録されていた。参照が先で呼ばれた（二重登録チェックは定義の場所でやること）
-		for(i=0 ; i<1024 ; i++){	//	参照位置一覧にあるかな？
-			if(label_pos[i][0]==idx){	//@@@
-				int pos ;
-				//	参照位置をたどって書き換える
-
-
-				int n ;
-
-				while(1){	//	次の空きを探す。削除されて空いてる所があるかもしれない
-					if(label_pos[pos][1]==-1){
-						break ;	//	けつまで行ってだめだった
-					}
-					label_pos[pos][3]=0 ;	//	マーク
-					pos=label_pos[pos][1] ;
-				}
-				if(pos>=2047){
-					//	error @@@
-					errorOut("Table full.") ;
-					return -1 ;	//	参照元テーブルが満員です
-				}
-				code[n] ;
-				for(n=0 ; n<2048 ; n++){	//	次の空きを探す。削除されて空いてる所があるかもしれない
-
-				}
-			}
-		}
-		if(i==2048){
-			//	Error @@@
-			errorOut("Label ref table overflow.") ;
-			return -1 ;
-		}
-
-		//	label_pos に参照があるかどうか調べて、あったら書き換え
-	}
-	return 0 ;	//	get_locationしてオフセット計算
-}
-
-//	ラベルが参照されたら呼ぶ。
-int register_ref_pos(char *str, int ref, char type){
-	int t ;
-
-	t=get_label_index(str) ;
-	if(t==-1){	//	登録されてないので前方参照
-		t = register_label(str) ;
-	}
-}
 
 /*
 ラベルのロケーション
@@ -568,34 +514,6 @@ int get_label_value(char* str){
 
 
 /*
-　データレジスタ
-　ワードレジスタ
-　アドレスレジスタ
-　アドレス＋オフセット
-　8ビットimm
-　16ビットimm
-　R0のみ、R0、R1、R0-3
-　なし
-*/
-
-
-/*
-式評価
-四則演算、定数、ロケーションを定数に変換して返す
-*/
-int expr(){
-}
-
-
-int mode=0 ;	//	0:行頭 1:
-
-char fileBuff[128] ;
-char *buffPos=NULL ;
-char *nextPos=NULL ;
-
-char lineBuff[128] ;
-
-/*
 	get_line　一行読み込んでポインタを返す。ファイルの終わりならNULLを返す
 		一行最大80バイト
 
@@ -606,13 +524,20 @@ char lineBuff[128] ;
 	linebuff : filebuffの途中で行が終わってるときにこっちにコピーしてfileBuffいっぱいに読み込む。の後改行までコピーして返す
 
 */
+int mode=0 ;	//	0:行頭 1:
+char fileBuff[128] ;
+char *buffPos=NULL ;
+char *nextPos=NULL ;
+
+char lineBuff[128] ;
+
 char* get_line(FILE* fp, int skip_tab){
 	int i, len ;
 
 	while(1){
 		unsigned char cc ;
 		len = fread(&cc, 1, 1, fp) ;
-//printf("(%x)", cc) ;
+		//printf("(%x)", cc) ;
 		if(len!=1){
 			return NULL ;
 		}
@@ -626,14 +551,14 @@ char* get_line(FILE* fp, int skip_tab){
 		}
 	}
 	for(i=0 ; i<80 ; i++){
-//printf("[%x]", fileBuff[i]) ;
+		//printf("[%x]", fileBuff[i]) ;
 		fileBuff[i+1]=0 ;
 		if(fileBuff[i]==0x0a){
 			fileBuff[i]=0 ;
 			Line++ ;
 			return fileBuff ;
 		}
-		if(fileBuff[i]==';'){
+		if(fileBuff[i]==';' && skip_tab==1){
 			fileBuff[i]=0 ;
 			break ;
 		}
@@ -691,9 +616,6 @@ int except(char *str){
 	else return 0 ;
 }
 
-void get_expr(void){
-
-}
 
 int except_reg(void){
 	int r, t ;
@@ -706,40 +628,12 @@ int except_reg(void){
 	return -1 ;
 }
 
-int except_addr_expr(void){
-	int r, t ;
-
-	t = except_reg() ;
-	if(t<4 && t>7){
-		return -2 ;	//	not addr register
-	}
-
-	t = get_token() ;
-	if(t!=7){
-		op1 ; // @@@
-		return r ;
-	}
-
-	t = get_token() ;
-
-
-	if(t==2){
-	}
-	else if(t==3){	//	dec
-	}
-	else if(t==4){	//	hex
-		op2 ;
-	}
-
-	return -1 ;
-}
-
 
 
 // Code generate.
 
 void emit(int pos, int loc, char code0, char code1, char code2, char code3){
-printf("emit %04X : [%02X %02X %d %d]\n", loc, (unsigned char)code0, (unsigned char)code1, code2, code3) ;
+	//printf("emit %04X : [%02X %02X %d %d]\n", loc, (unsigned char)code0, (unsigned char)code1, code2, code3) ;
 	code_loc[pos]=loc ;
 	code[pos][0]=code0 ;
 	code[pos][1]=code1 ;
@@ -752,16 +646,25 @@ LD dst,src
 srcは(A0|A1|SP)、(A0|A1|SP)＋－imm、
 */
 int gen_LD(void){
-	int r, t ;
-printf("(%s)", lineBuff) ;
+	int r, t, base ;
+
+	//printf("(%s)", lineBuff) ;
 	r=except_reg() ;
 	if(r==-1){
 		errorOut("Register require.") ;
 		return 0 ;
 	}
 
+	if(r==4 || r==5){	//	WReg
+		;
+	}
+	else if(r<0 && r>3){
+		errorOut("Byte register require.") ;
+		return 0 ;
+	}
 	op1=r ;
-printf("Dist(%d) ", op1) ;
+
+	//printf("Dist(%d) ", op1) ;
 	if(!except_T(6)){
 		errorOut("\',\' require.") ;
 		return 0 ;
@@ -772,19 +675,22 @@ printf("Dist(%d) ", op1) ;
 		errorOut("Register require.") ;
 		return 0 ;
 	}
+	else if(op1==4 || op1==5){
+		if(r==6 || r==7){
+			emit(codePos, location, 1, 0x24 +(r-6)*2 + op1-4, 0, 0) ;
+			return 1 ;
+		}
+		return 0 ;
+	}
 	else{
 		op2 = r ;
-printf("Src(%d) ", op2) ;
-printf("{%s}", buff) ;
 
 		t = get_token() ;
-
-printf(".{%s}", buff) ;
 
 		if(t==7 || t==8){	// +-
 			//	後ろにオフセットが付くはず
 			t = get_token() ;
-printf(".{%s}", buff) ;
+
 			if(t==3){	//	decimal
 				op3=str2int(10, buff) ;
 			}
@@ -795,14 +701,22 @@ printf(".{%s}", buff) ;
 				errorOut("Offset must be number.") ;
 				return 0 ;
 			}
-printf("+offset:%d ", op3) ;
+
+			base = 0x10+(op2-6)*4 ;
+			if(op2==9){
+				base = 0x20 ;
+			}
+
+			emit(codePos, location, 2, base + op1, op3, 0) ;
 			return 2 ;
 		}
 		else{	//	オフセット無し
-			;	// Addr register.
+			if(op2==9){	// Addr register.
+				errorOut("Offset reqired.") ;
+				return 0 ;
+			}
 			int src ;
 
-printf("no offset ") ;
 			if(op2==6){
 				emit(codePos, location, 1, 0x00 + op1, 0, 0) ;
 			}
@@ -813,12 +727,250 @@ printf("no offset ") ;
 	return 0 ;
 }
 
+
+
 int gen_ST(void){
+	int r, t, base, sign ;
+
+	//printf("(%s)", lineBuff) ;
+	sign=1 ;
+	r=except_reg() ;
+	if(r==-1){
+		errorOut("Register require.") ;
+		return 0 ;
+	}
+	op1=r-6 ;
+
+	//printf("Dist(%d) ", op1) ;
+
+	op3=0 ;
+	t = get_token() ;
+	if(t==7 || t==8){	// +-
+		if(t==8) sign=-1 ;
+		t = get_token() ;
+		//printf(".{%s}", buff) ;
+		if(t==3){	//	decimal
+			op3=str2int(10, buff) ;
+		}
+		else if(t==4){	//	hex
+			op3=str2int(16, buff) ;
+		}
+		else{
+			errorOut("Offset must be number.") ;
+			return 0 ;
+		}
+		op3 = op3 * sign ;
+		t = get_token() ;
+	}
+
+	//printf("offset(%d) ", op3) ;
+
+	if(t!=6){
+		errorOut("\',\' require.") ;
+		return 0 ;
+	}
+
+	r=except_reg() ;
+	//printf("src(%d) ", r) ;
+	if(r==-1){	//
+		errorOut("Register require.") ;
+		return 0 ;
+	}
+	if(r==4 || r==5){	//	WReg
+		emit(codePos, location, 1, 0x2c + op1*2 + r - 4, 0, 0) ;
+		return 1 ;
+	}
+	else if(r<0 && r>3){
+		errorOut("Byte register require.") ;
+		return 0 ;
+	}
+	if(op1==9){
+		emit(codePos, location, 2, 0x28 + r, op3, 0) ;
+		return 2 ;
+	}
+	else{
+		if(op3==0){
+			emit(codePos, location, 1, 0x08 + op1*4 + r, 0, 0) ;
+			return 1 ;
+		}
+		else{
+			emit(codePos, location, 2, 0x18 + op1*4 + r, op3, 0) ;
+			return 2 ;
+		}
+	}
+
 	return 0 ;
 }
 
 
 int gen_lop(int op){	//	return opecode
+	int t, op1, op2 ;
+
+	op1 = get_token() ;
+	if(!except_T(6)){
+		errorOut("\',\' require.") ;
+		return 0 ;
+	}
+	op2 = get_token() ;
+	t = get_register(buff) ;
+
+	if(t==-1){
+		op2 = get_token_value(op2, buff) ;
+		// printf("token value %d ", op2) ;
+		emit(codePos, location, 2, op+5, op2, 0) ;
+		return 2 ;
+	}
+	else{
+		emit(codePos, location, 1, op+(op1 & 1)*2 + op2, 0, 0) ;
+		return 1 ;
+	}
+
+	return 0 ;
+}
+
+//	1 operand instruction
+int gen_1ope(int op){
+	int t, op1 ;
+
+	op1 = get_token() ;
+
+	t = get_register(buff) ;
+
+	if(t!=-1){
+		emit(codePos, location, 1, op+t, 0, 0) ;
+		return 1 ;
+	}
+
+	return 0 ;
+}
+
+int gen_INC_DEC(int op){
+	int t, op1 ;
+
+	op1 = get_token() ;
+
+	t = get_register(buff) ;
+
+	if(t!=-1){
+		if(t<8){
+			emit(codePos, location, 1, op+t, 0, 0) ;
+			return 1 ;
+		}
+	}
+
+	return 0 ;
+}
+
+
+char MOVCodeTbl[]={
+
+} ;
+
+int gen_XCHG(void){
+	int t, r, op, imm ;
+
+	t = get_token() ;
+	op1 = get_register(buff) ;
+
+	if(!except_T(6)){
+		errorOut("\',\' require.") ;
+		return 0 ;
+	}
+
+	t = get_token() ;
+	op2 = get_register(buff) ;
+	if((op1==4 && op2==5) || (op1==5 && op2==4)){
+		op=0x74 ;
+	}
+	else if((op1==6 && op2==7) || (op1==7 && op2==6)){
+		op=0x75 ;
+	}
+	else if((op1==6 && op2==4) || (op1==4 && op2==6)){
+		op=0x76 ;
+	}
+	else if((op1==5 && op2==7) || (op1==7 && op2==5)){
+		op=0x77 ;
+	}
+	else{
+		errorOut("Illigual oprand.") ;
+		return 0 ;
+	}
+	emit(codePos, location, 1, op, 0, 0) ;
+	return 3 ;
+}
+
+
+int gen_MOV(void){
+	int t, r, op, imm ;
+
+	t = get_token() ;
+	op1 = get_register(buff) ;
+
+	if(!except_T(6)){
+		errorOut("\',\' require.") ;
+		return 0 ;
+	}
+
+	t = get_token() ;
+	op2 = get_register(buff) ;
+	if(op2==-1){
+		imm = get_token_value(t, buff) ;
+
+		if(op1>=6 && op1<=9){
+			op=0x7c+op1-6 ;
+		}
+		emit(codePos, location, 3, op, imm & 0x00ff,  (imm >> 8) & 0x00ff) ;
+		return 3 ;
+	}
+
+	switch(op1*10+op2){
+	case  2: op=0x40 ; break ;
+	case  3: op=0x41 ; break ;
+	case 12: op=0x42 ; break ;
+	case 13: op=0x43 ; break ;
+
+	case 20: op=0x44 ; break ;
+	case 21: op=0x45 ; break ;
+	case 30: op=0x46 ; break ;
+	case 31: op=0x47 ; break ;
+
+	case  1: op=0x48 ; break ;
+	case 10: op=0x49 ; break ;
+	case 23: op=0x4A ; break ;
+	case 32: op=0x4B ; break ;
+
+	case 86: op=0x4C ; break ;
+	case 96: op=0x4D ; break ;
+	case 87: op=0x4E ; break ;
+	case 97: op=0x4F ; break ;
+
+	case 46: op=0x50 ; break ;
+	case 47: op=0x51 ; break ;
+	case 56: op=0x52 ; break ;
+	case 57: op=0x53 ; break ;
+
+	case 64: op=0x54 ; break ;
+	case 74: op=0x55 ; break ;
+	case 65: op=0x56 ; break ;
+	case 75: op=0x57 ; break ;
+
+	case 45: op=0x58 ; break ;
+	case 54: op=0x59 ; break ;
+	case 67: op=0x5A ; break ;
+	case 76: op=0x5B ; break ;
+
+	case 68: op=0x5C ; break ;
+	case 69: op=0x5D ; break ;
+	case 78: op=0x5E ; break ;
+	case 79: op=0x5F ; break ;
+
+	default:
+		errorOut("Illigual operand.") ;
+		return 0 ;
+		break ;
+	}
+	emit(codePos, location, 1, op, 0, 0) ;
+	return 1 ;
 }
 
 
@@ -826,13 +978,13 @@ int gen_lop(int op){	//	return opecode
 int gen_Jcc(void){	//	return offset
 	int offset=0 ;
 	int sign=1 ;
-	int t, id, pos ;
+	int id, pos ;
 
-	t=get_token() ;	//	ラベルは後ろの:が無いから識別子で返って来る
+	int t=get_token() ;	//	ラベルは後ろの:が無いから識別子で返って来る
 	if(t==1){	//	ident
 		id = get_const_index(buff) ;	//	定数に登録されているか（定数は先に定義しておかないといけない）
 		if(id==-1){
-printf(" label?(%s) ", buff) ;
+			//printf(" label?(%s) ", buff) ;
 			t=get_label_index(buff) ;	//	なかったら定数ではないのでラベルを探す
 			if(t==-1){
 				id = register_label(buff) ;	//	初登場のラベル
@@ -849,7 +1001,8 @@ printf(" label?(%s) ", buff) ;
 		}
 
 		pos = get_label_value(buff) ;
-printf(" label value(%d) loc %d ", pos, location) ;
+		//printf(" label value(%d) loc %d ", pos, location) ;
+
 		if(pos>=0){	//	位置がわかってる=定義されている
 			offset = pos - (location+2) ;
 		}
@@ -864,8 +1017,78 @@ printf(" label value(%d) loc %d ", pos, location) ;
 		offset = offset*sign ;
 	}
 
-printf("offset(%s : %d)", buff, offset) ;
+	//printf("offset(%s : %d)", buff, offset) ;
 	return offset ;
+}
+
+int get_offset16(int t){
+	int offset=0 ;
+	int sign=1 ;
+	int id, pos ;
+
+	// t=get_token() ;	//	ラベルは後ろの:が無いから識別子で返って来る
+	if(t==1){	//	ident
+		id = get_const_index(buff) ;	//	定数に登録されているか（定数は先に定義しておかないといけない）
+		if(id==-1){
+			//printf(" label?(%s) ", buff) ;
+			t=get_label_index(buff) ;	//	なかったら定数ではないのでラベルを探す
+			if(t==-1){
+				id = register_label(buff) ;	//	初登場のラベル
+			}
+			else{
+				id = t ;
+			}
+		}
+		else{	//	定数だった
+			offset=get_token_value(t, buff) ;
+
+			offset = offset*sign ;
+			return offset ;
+		}
+
+		pos = get_label_value(buff) ;
+		//printf(" label value(%d) loc %d ", pos, location) ;
+
+		if(pos>=0){	//	位置がわかってる=定義されている
+			offset = pos - (location+3) ;
+		}
+		else{	// 参照位置の登録
+			label_add_ref(codePos, id, 2) ;
+		}
+	}
+	else if(t!=-1){
+		offset=get_token_value(t, buff) ;
+		//	error 処理　@@@
+
+		offset = offset*sign ;
+	}
+
+	//printf("offset(%s : %d)", buff, offset) ;
+	return offset ;
+}
+
+int gen_CALL(void){
+	int offset=0 ;
+	int r, t  ;
+
+	t=get_token() ;	//	ラベルは後ろの:が無いから識別子で返って来る
+	if(t==1){	//	ident
+		r = get_register(buff) ;
+		if(r==6){
+			emit(codePos, location, 1, 0xf8, 0, 0) ;
+			return 1 ;
+		}
+		else if(r==7){
+			emit(codePos, location, 1, 0xf9, 0, 0) ;
+			return 1 ;
+		}
+		else{
+			offset = get_offset16(t) ;
+			emit(codePos, location, 3, 0xfa, offset & 0x00ff, (offset >> 8) & 0x00ff) ;
+			return 3 ;
+		}
+	}
+	return 0 ;
 }
 
 
@@ -875,6 +1098,7 @@ int code_gen(void){
 	int codeByte=0 ;
 	int idx ;
 	int offset ;
+	int cc ;
 
 	t = get_token() ;
 // printf("\ntoken[%s] type %d ", buff, t) ;
@@ -883,7 +1107,7 @@ int code_gen(void){
 	case 1:	//	Identifyer オペコード又は定数。定数の場合後ろはEQしか対応していない。
 		code=get_opcode(buff) ;
 		if(code!=-1){	//	オペコードらしい
-			printf("Opecode[%s]:%d ", buff, code) ;
+//printf("Opecode[%s]:%d ", buff, code) ;
 
 			code++ ;
 			gen=1 ;
@@ -898,27 +1122,37 @@ int code_gen(void){
 				codeByte = gen_ST() ;
 				break ;
 			case 3:	//	MOV
+				codeByte = gen_MOV() ;
 				break ;
 			case 4:		//	ADD
-				gen_lop(4) ;
+				codeByte = gen_lop(0x80) ;
 				break ;
 			case 5:		//	SUB
+				codeByte = gen_lop(0x88) ;
 				break ;
 			case 6:		//	ADDC
+				codeByte = gen_lop(0x90) ;
 				break ;
 			case 7:		//	SUBB
+				codeByte = gen_lop(0x98) ;
 				break ;
 			case 8:		//	CMP
+				codeByte = gen_lop(0xa8) ;
 				break ;
 			case 9:		//	AND
+				codeByte = gen_lop(0xa0) ;
 				break ;
 			case 10:	//	OR
+				codeByte = gen_lop(0xb8) ;
 				break ;
 			case 11:	//	XOR
+				codeByte = gen_lop(0xb0) ;
 				break ;
 			case 12:	//	NOT
+				codeByte = gen_1ope(0xc0) ;
 				break ;
 			case 13:	//	XCHG
+				codeByte = gen_XCHG() ;
 				break ;
 			case 14:	//	SWapByte
 
@@ -936,43 +1170,60 @@ int code_gen(void){
 			case 26:
 			case 27:
 			case 29:	//	JPS
-printf(" Jcc %d ", code) ;
-				int cc ;
-
 				if(code==27) cc=0xe8 ;
 				else if(code==28) cc=0xe9 ;
+				else if(code==29) cc=0xee ;
 				else cc=code-18+0xe0 ;
 
 				offset=gen_Jcc() ;
 				emit(codePos, location, 2, cc, offset, 0) ;
 				codeByte=2 ;
 				break ;
-			case 28:
-printf(" JMP ") ;
+			case 28:	//	JMP i16
+				offset = get_offset16(get_token()) ;
+				emit(codePos, location, 3, 0xfe, offset & 0x00ff, (offset >> 8) & 0x00ff) ;
+				codeByte = 3 ;
 				break ;
 			case 30:	//	JPN
 				emit(codePos, location, 2, 0xef, 0, 0) ;
 				codeByte=1 ;
 				break ;
 			case 31:	//	SHL
+				codeByte = gen_1ope(0xc4) ;
 				break ;
 			case 32:	//	SHR
+				codeByte = gen_1ope(0xc8) ;
 				break ;
 			case 33:	//	SAR
+				codeByte = gen_1ope(0xcc) ;
 				break ;
 			case 34:	//	INC
+				codeByte = gen_INC_DEC(0xd0) ;
 				break ;
 			case 35:	//	DEC
+				codeByte = gen_INC_DEC(0xd8) ;
 				break ;
 			case 36:	//	CALL
+				codeByte=gen_CALL() ;
 				break ;
 			case 37:	//	RET
 				emit(codePos, location, 1, 0x6e, 0, 0) ;	//	RETは POP CP
+				codeByte=1 ;
 				break ;
 			case 38:	//	SWI
-
+				t = get_token() ;
+				if(t!=-1){
+					t = get_token_value(t, buff) ;
+					emit(codePos, location, 2, 0xed, (char)t, 0) ;
+					codeByte=2 ;
+				}
+				else{
+					codeByte=0 ;
+				}
 				break ;
 			case 39:	//	IRET
+				emit(codePos, location, 1, 0xfd, 0, 0) ;
+				codeByte=1 ;
 				break ;
 			case 40:	//	EI
 				emit(codePos, location, 1, 0xf5, 0, 0) ;
@@ -1007,7 +1258,6 @@ printf(" JMP ") ;
 				codeByte=1 ;
 				break ;
 			case 47:
-printf(" NOP ") ;
 				emit(codePos, location, 1, 0xff, 0, 0) ;
 				codeByte=1 ;
 				break ;
@@ -1016,17 +1266,18 @@ printf(" NOP ") ;
 				codeByte=0 ;
 				break ;
 			}
-//			codePos++ ; // =codeByte ;
-printf(" Code Pos(%d) ", codePos) ;
+			//printf(" Code Pos(%d) ", codePos) ;
+			if(codeByte==0){
+				return 0 ;
+			}
 			location+=codeByte ;
 		}
 		else{	//	Identifier　たぶんこのあとeq定数が続く
 			//	constantテーブルに登録してカレントにする。続くeqで定数定義
 			int t ;
 
-
 			t=register_const(buff) ;
-printf("Const(%s):%d ", buff, t) ;
+
 			if(t!=-1){
 				currentIdt=t ;
 				t=get_token() ;
@@ -1044,7 +1295,7 @@ printf("Const(%s):%d ", buff, t) ;
 						errorOut("literal required.\n") ;
 						return -1 ;
 					}
-printf("idx(%d) val:%X ", currentIdt, t) ;
+
 					set_const_value(currentIdt,t) ;
 					currentIdt=-1 ;
 				}
@@ -1056,12 +1307,12 @@ printf("idx(%d) val:%X ", currentIdt, t) ;
 		break ;
 	case 2:	//	Directive
 		t = get_directive(buff) ;
-if(t!=-1) printf(" Directive(%s) type:%d ", buff, t) ;
+		//if(t!=-1) printf(" Directive(%s) type:%d ", buff, t) ;
 		switch(t){
 		case 0:	//	.org
 			t = get_token() ;
 			n = get_token_value(t, buff) ;
-printf(" Value(%d) ", n) ;
+
 			if(n==-1){
 				errorOut("Not a number.") ;
 			}
@@ -1069,9 +1320,11 @@ printf(" Value(%d) ", n) ;
 				location = n ;
 			}
 			break ;
+		case 1:
+			break ;
 		}
 		break ;
-	case 5:	//	Label ラベルは後ろの:を取って識別子表に登録されている。
+	case 5:	//	Label
 		idx=get_label_index(buff) ;
 		if(idx<0){
 			idx = register_label(buff) ;
@@ -1079,7 +1332,8 @@ printf(" Value(%d) ", n) ;
 		label_value[idx] = location ;
 		label_rewrite(idx) ;
 
-printf("register label(%d):%d ", idx, location) ;
+		//	printf("register label(%d):%d ", idx, location) ;
+		gen=-1 ;
 		break ;
 	default:
 		//buff[0] ;
@@ -1113,7 +1367,7 @@ int program(void){
 		if(pos==NULL) break ;
 
 		t = code_gen() ;
-printf("line(%d:%d) : ", t, i) ;
+		//printf("line(%d:%d) : ", t, i) ;
 
 		if(t<1){ //	空行Pack
 			if(codePos > 0 && code[codePos-1][0]==0){
@@ -1131,10 +1385,8 @@ printf("line(%d:%d) : ", t, i) ;
 		code[codePos][0]=0xff ;
 
 		i++ ;
-		printf("\n") ;
+//		printf("\n") ;
 	}
-
-	//　最後にコードとリスティングの出力
 
 	return 0 ;
 }
@@ -1146,14 +1398,13 @@ void show_label_list(void){
 	printf("\nLabel list ***\n") ;
 	for(i=0 ; i<1024 ; i++){
 		if(label[i][0]!=0){
-			printf("%4d : ", i) ;
-			printf("(%s) -> %d\n", label[i], label_value[i]) ;
+			printf(" %04X = %s\n", label_value[i], label[i]) ;
 		}
 	}
 }
 
 void print_spc(int n){
-	printf("          "+(2*n)) ;
+	printf("        "+(2*n)) ;
 }
 
 void dumpCode(FILE *fp, FILE* out_fp){
@@ -1174,12 +1425,12 @@ void dumpCode(FILE *fp, FILE* out_fp){
 //				printf("*[%d]", code[i][1]) ;
 				int n ;
 				for(n=0 ; n<code[i][1] ; n++){
-					printf("                  %s\n",pos) ;
+					printf("                %s\n",pos) ;
 					pos = get_line(fp, 0) ;
 				}
 			}
 			else{
-				printf(" %04X : ", code_loc[i]) ;
+				printf(" %04X ", code_loc[i]) ;
 				int n ;
 				for(n=0 ; n<code[i][0] ; n++){
 					printf("%02X", code[i][n+1]) ;
