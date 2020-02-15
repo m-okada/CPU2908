@@ -17,8 +17,11 @@ t02.as
 #include "token.h"
 
 int Line = 0 ;
-char msg[128] ;
+int errorCount=0 ;
+//char msg[128] ;
+
 void errorOut(char *str){
+	errorCount++ ;
 	fprintf(stderr, "Line %d :  Error %s\n", Line, str) ;
 }
 
@@ -636,7 +639,7 @@ LD dst,src
 srcは(A0|A1|SP)、(A0|A1|SP)＋－imm、
 */
 int gen_LD(void){
-	int r, t, base ;
+	int r, t, base, sign=1 ;
 
 	//printf("(%s)", lineBuff) ;
 	r=except_reg() ;
@@ -674,35 +677,34 @@ int gen_LD(void){
 	}
 	else{
 		op2 = r ;
-		//t = get_token() ;
-
+		t = get_token() ;
+		//printf("t(%d) ", t) ;
 		if(t==7 || t==8){	// +-
+			if(t==8) sign=-1 ;
 			//	後ろにオフセットが付くはず
 			t = get_token() ;
 
-			if(t==3){	//	decimal
-				op3=str2int(10, buff) ;
-			}
-			else if(t==4){	//	hex
-				op3=str2int(16, buff) ;
-			}
-			else{
+			op3 = get_token_value(t, buff) ;
+
+			if(op3==-1){
 				errorOut("Offset must be number.") ;
 				return 0 ;
 			}
+
+			op3*=sign ;
 
 			base = 0x10+(op2-6)*4 ;
 			if(op2==9){
 				base = 0x20 ;
 			}
-
+			//printf("offset(%d) ", op3) ;
 			emit(codePos, Location, 2, base + op1, op3, 0) ;
 			return 2 ;
 		}
-		else{	//	オフセット無し
+		else{	//	+-が無い場合はオフセット無しとして後ろは読み飛ばす
 			int src ;
 			//printf("no offset ") ;
-			if(op2==9){	// Addr register.
+			if(op2==9){	// Stack pointer. SPなら必ずオフセットつけなくちゃだめ
 				errorOut("Offset reqired SP base addressing.") ;
 				return 0 ;
 			}
@@ -1382,7 +1384,7 @@ int code_gen(void){
 			t = get_token() ;
 			//printf("t:%d ", t) ;
 			if(t==10){
-				printf("string{%s} ", buff) ;
+				//printf("string{%s} ", buff) ;
 				for(int i=0 ; i<256 ; i++){
 					if(strings[i][0]==0){
 						t = str_cpy(strings[i], buff) ;
@@ -1399,7 +1401,7 @@ int code_gen(void){
 			break ;
 		case 2:{ // .db
 				int n=0 ;
-				printf("DB ") ;
+				//printf("DB ") ;
 				t = get_token() ;
 				if(t!=-1){
 					n = get_token_value(t, buff) ;
@@ -1493,10 +1495,21 @@ int program(void){
 void show_label_list(FILE *fp){
 	int i ;
 
-	fprintf(fp, "\nLabel list ***\n") ;
+	fprintf(fp, "\nLabel ***\n") ;
 	for(i=0 ; i<1024 ; i++){
 		if(label[i][0]!=0){
 			fprintf(fp, " %04X = %s\n", label_value[i], label[i]) ;
+		}
+	}
+}
+
+void show_const_list(FILE *fp){
+	int i ;
+
+	fprintf(fp, "\nConstant ***\n") ;
+	for(i=0 ; i<1024 ; i++){
+		if(constant[i][0]!=0){
+			fprintf(fp, " %04X = %s\n", const_value[i], constant[i]) ;
 		}
 	}
 }
@@ -1615,9 +1628,18 @@ int main(int argc, char** argv){
 	label_pos[0][1]=-1 ;
 
 	program() ;
+	if(errorCount!=0){
+		fclose(src_fp) ;
+		fclose(prn_fp) ;
+		fclose(mem_fp) ;
+		return 0 ;
+	}
 
 	show_label_list(stdout) ;
 	show_label_list(prn_fp) ;
+
+	show_const_list(stdout) ;
+	show_const_list(prn_fp) ;
 
 	rewind(src_fp) ;
 	dumpCode(src_fp, stdout) ;

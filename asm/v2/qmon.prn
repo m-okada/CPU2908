@@ -1,12 +1,17 @@
 
-Label list ***
+Label ***
  0100 = START
  0116 = TXSTR
  0107 = LOOP
  0108 = WAIT
  0114 = HALT
 
+Constant ***
+ FF00 = RXBUFF
+
 Listing ***
+                ;
+                ;
                 rxbuff eq $ff00
                 ;
                 .org 0

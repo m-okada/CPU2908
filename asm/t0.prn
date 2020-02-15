@@ -1,7 +1,7 @@
 
 Label list ***
- 0005 = LOOP
- 000E = WAIT
+ 0001 = LOOP
+ 000A = WAIT
 
 Listing ***
                 ; Echo back.
@@ -10,21 +10,21 @@ Listing ***
                 .org 0
                 test eq $aa12
                 
- 0000 1220    		ld r2,a0+32
- 0002 7C010F  		mov a0,$0f01
+ 0000 02        		ld r2,a0+32
+                		mov a0,$0f01
                 loop:
- 0005 00      		ld r0,a0
- 0006 49      		mov r1,r0
- 0007 BB      		or r0,r0
- 0008 E2FB    		jz loop
- 000A DE      		dec a0
- 000B 77      		xchg w1,a1
+ 0001 00        		ld r0,a0
+ 0002 49        		mov r1,r0
+ 0003 BB        		or r0,r0
+ 0004 E2FB      		jz loop
+ 0006 DE        		dec a0
+ 0007 77        		xchg w1,a1
                 wait:
- 000E 00      		ld r0, [a0]
- 000F A508    		and r0, $08
- 0011 E2FB    		jz wait
- 0013 D6      		inc a0
- 0014 09      		st[a0],r1
- 0015 EEEE    		jmps loop
- 0017 E0EC    		jc loop
- 0019 FF      		nop
+ 000A 00        		ld r0, [a0]
+ 000B A508      		and r0, $08
+ 000D E2FB      		jz wait
+ 000F D6        		inc a0
+ 0010 09        		st[a0],r1
+ 0011 EEEE      		jmps loop
+ 0013 E0EC      		jc loop
+ 0015 FF        		nop

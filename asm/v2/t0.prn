@@ -1,0 +1,32 @@
+
+Label list ***
+ 0005 = LOOP
+ 000E = WAIT
+
+Listing ***
+                ; Echo back.
+                ;
+                constdef eq $ffff
+                a32 eq 32
+                .org 0
+                test eq $aa12
+                
+ 0000 12E0      		ld r2,a0-a32
+                
+ 0002 7C010F    		mov a0,$0f01
+                loop:
+ 0005 00        		ld r0,a0
+ 0006 49        		mov r1,r0
+ 0007 BB        		or r0,r0
+ 0008 E2FB      		jz loop
+ 000A DE        		dec a0
+ 000B 77        		xchg w1,a1
+                wait:
+ 000E 00        		ld r0, [a0]
+ 000F A508      		and r0, $08
+ 0011 E2FB      		jz wait
+ 0013 D6        		inc a0
+ 0014 09        		st[a0],r1
+ 0015 EEEE      		jmps loop
+ 0017 E0EC      		jc loop
+ 0019 FF        		nop
