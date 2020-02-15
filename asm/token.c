@@ -87,6 +87,7 @@ int take_char(int cc){
 	7 '+'
 	8 '-'
 	9 '@'	Location
+	10
 
 */
 int get_token(char* ptr){

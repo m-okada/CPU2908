@@ -44,26 +44,27 @@ int str2int(int radix, char *str){
 }
 
 
-int str_cmp(char *label, char* str){
+int str_cmp(char *str1, char* str2){
 	int i ;
-	if(*str==0 || *label==0) return 0 ;
-	for(i=0 ; i<31 ; i++){
-		if(label[i]==0 && str[i]==0) return 1 ;
-		if(label[i]!=str[i]) return 0 ;
+	if(*str1==0 || *str2==0) return 0 ;
+	for(i=0 ; i<30 ; i++){
+		if(str1[i]==0 && str2[i]==0) return 1 ;
+		if(str1[i]!=str2[i]) return 0 ;
 	}
-	return 1 ;	//	30バイト比べておなじなら一致にする。
+	//	30バイト比べておなじなら一致にする。（そもそも30バイトしかコピーしてない）
+	return 1 ;
 }
 
-void str_cpy(char *label, char *str){
+void str_cpy(char *dst, char *src){
 	int i ;
-	for(i=0 ; i<31 ; i++){
-		if(str[i]==0){
-			label[i]=0 ;
+	for(i=0 ; i<30 ; i++){
+		if(src[i]==0){
+			dst[i]=0 ;
 			return ;
 		}
-		label[i] = str[i] ;
+		dst[i] = src[i] ;
 	}
-	label[31]=0 ;
+	dst[30]=0 ;
 	return ;
 }
 
@@ -97,7 +98,7 @@ Identifier:
 .db byte, ...
 .dw word, ...
 
-.org location
+.org Location
 .global label
 
 オフセット計算
@@ -148,7 +149,6 @@ char inst_str[][6]={
 "TNS",	//	46
 "NOP",	//	47
 "SWI8",	// 48
-
 ""
 } ;
 
@@ -164,7 +164,7 @@ char reg_str[][4]={
 } ;
 
 char directive_str[][8]={
-".ORG", ".DB", ".DW","EQ",
+".ORG", ".DB", ".DW","EQ",".GLOBAL",
 ""
 } ;
 
@@ -268,7 +268,6 @@ register_label
 
 int label_value[1024] ;	//	-1:未定義　参照のみで定義されてない。前方参照。
 char label[1024][32] ;	//	ラベル名 index はlabel_value と同じ
-
 
 /*
 ラベルの参照位置
@@ -384,7 +383,7 @@ int register_const(char *str){
 
 
 
-int location=0 ;
+int Location=0 ;
 
 /*
 	定数参照があるのは
@@ -444,7 +443,7 @@ int label_add_ref(int codePos, int idx, int reftype){
 		if(label_pos[i][0]==-1){
 			label_pos[i][0]=idx ;
 			label_pos[i][1]=codePos ;
-			label_pos[i][2]=location ;
+			label_pos[i][2]=Location ;
 			label_pos[i][3]=reftype ;
 			break ;
 		}
@@ -502,12 +501,8 @@ labelから一致したエントリーを探す。-1なら未定義。
 */
 
 int get_label_value(char* str){
-	int i ;
-	for(i=0 ; i<1024 ; i++){
-		if(str_cmp(label[i], str)){
-			return label_value[i] ;
-		}
-	}
+	int t = get_label_index(str) ;
+	if(t!=-1) return label_value[t] ;
 	return -1 ;
 }
 
@@ -677,7 +672,7 @@ int gen_LD(void){
 	}
 	else if(op1==4 || op1==5){
 		if(r==6 || r==7){
-			emit(codePos, location, 1, 0x24 +(r-6)*2 + op1-4, 0, 0) ;
+			emit(codePos, Location, 1, 0x24 +(r-6)*2 + op1-4, 0, 0) ;
 			return 1 ;
 		}
 		return 0 ;
@@ -707,7 +702,7 @@ int gen_LD(void){
 				base = 0x20 ;
 			}
 
-			emit(codePos, location, 2, base + op1, op3, 0) ;
+			emit(codePos, Location, 2, base + op1, op3, 0) ;
 			return 2 ;
 		}
 		else{	//	オフセット無し
@@ -718,7 +713,7 @@ int gen_LD(void){
 			int src ;
 
 			if(op2==6){
-				emit(codePos, location, 1, 0x00 + op1, 0, 0) ;
+				emit(codePos, Location, 1, 0x00 + op1, 0, 0) ;
 			}
 			return 1 ;
 		}
@@ -777,7 +772,7 @@ int gen_ST(void){
 		return 0 ;
 	}
 	if(r==4 || r==5){	//	WReg
-		emit(codePos, location, 1, 0x2c + op1*2 + r - 4, 0, 0) ;
+		emit(codePos, Location, 1, 0x2c + op1*2 + r - 4, 0, 0) ;
 		return 1 ;
 	}
 	else if(r<0 && r>3){
@@ -785,16 +780,16 @@ int gen_ST(void){
 		return 0 ;
 	}
 	if(op1==9){
-		emit(codePos, location, 2, 0x28 + r, op3, 0) ;
+		emit(codePos, Location, 2, 0x28 + r, op3, 0) ;
 		return 2 ;
 	}
 	else{
 		if(op3==0){
-			emit(codePos, location, 1, 0x08 + op1*4 + r, 0, 0) ;
+			emit(codePos, Location, 1, 0x08 + op1*4 + r, 0, 0) ;
 			return 1 ;
 		}
 		else{
-			emit(codePos, location, 2, 0x18 + op1*4 + r, op3, 0) ;
+			emit(codePos, Location, 2, 0x18 + op1*4 + r, op3, 0) ;
 			return 2 ;
 		}
 	}
@@ -817,11 +812,11 @@ int gen_lop(int op){	//	return opecode
 	if(t==-1){
 		op2 = get_token_value(op2, buff) ;
 		// printf("token value %d ", op2) ;
-		emit(codePos, location, 2, op+5, op2, 0) ;
+		emit(codePos, Location, 2, op+5, op2, 0) ;
 		return 2 ;
 	}
 	else{
-		emit(codePos, location, 1, op+(op1 & 1)*2 + op2, 0, 0) ;
+		emit(codePos, Location, 1, op+(op1 & 1)*2 + op2, 0, 0) ;
 		return 1 ;
 	}
 
@@ -837,15 +832,43 @@ int gen_1ope(int op){
 	t = get_register(buff) ;
 
 	if(t!=-1){
-		emit(codePos, location, 1, op+t, 0, 0) ;
+		emit(codePos, Location, 1, op+t, 0, 0) ;
 		return 1 ;
 	}
 
 	return 0 ;
 }
 
+int gen_PUSH(void){
+	int t ;
+
+	op1 = get_token() ;
+	t = get_register(buff) ;
+	switch(t){
+	case 4: case 5: op=0x60+t-4 ; break ;
+	case 6: case 7: case 8: op=0x64+t-6 ; break ;
+	default: return 0 ;
+	}
+	emit(codePos, Location, 1, op, 0, 0) ;
+	return 1 ;
+}
+
+int gen_POP(void){
+	int t ;
+
+	op1 = get_token() ;
+	t = get_register(buff) ;
+	switch(t){
+	case 4: case 5: op=0x68+t-4 ; break ;
+	case 6: case 7: case 8: case 9: op=0x6C+t-6 ; break ;
+	default: return 0 ;
+	}
+	emit(codePos, Location, 1, op, 0, 0) ;
+	return 1 ;
+}
+
 int gen_INC_DEC(int op){
-	int t, op1 ;
+	int t ;
 
 	op1 = get_token() ;
 
@@ -853,7 +876,7 @@ int gen_INC_DEC(int op){
 
 	if(t!=-1){
 		if(t<8){
-			emit(codePos, location, 1, op+t, 0, 0) ;
+			emit(codePos, Location, 1, op+t, 0, 0) ;
 			return 1 ;
 		}
 	}
@@ -862,9 +885,6 @@ int gen_INC_DEC(int op){
 }
 
 
-char MOVCodeTbl[]={
-
-} ;
 
 int gen_XCHG(void){
 	int t, r, op, imm ;
@@ -895,7 +915,7 @@ int gen_XCHG(void){
 		errorOut("Illigual oprand.") ;
 		return 0 ;
 	}
-	emit(codePos, location, 1, op, 0, 0) ;
+	emit(codePos, Location, 1, op, 0, 0) ;
 	return 3 ;
 }
 
@@ -919,7 +939,7 @@ int gen_MOV(void){
 		if(op1>=6 && op1<=9){
 			op=0x7c+op1-6 ;
 		}
-		emit(codePos, location, 3, op, imm & 0x00ff,  (imm >> 8) & 0x00ff) ;
+		emit(codePos, Location, 3, op, imm & 0x00ff,  (imm >> 8) & 0x00ff) ;
 		return 3 ;
 	}
 
@@ -969,7 +989,7 @@ int gen_MOV(void){
 		return 0 ;
 		break ;
 	}
-	emit(codePos, location, 1, op, 0, 0) ;
+	emit(codePos, Location, 1, op, 0, 0) ;
 	return 1 ;
 }
 
@@ -1001,10 +1021,10 @@ int gen_Jcc(void){	//	return offset
 		}
 
 		pos = get_label_value(buff) ;
-		//printf(" label value(%d) loc %d ", pos, location) ;
+		//printf(" label value(%d) loc %d ", pos, Location) ;
 
 		if(pos>=0){	//	位置がわかってる=定義されている
-			offset = pos - (location+2) ;
+			offset = pos - (Location+2) ;
 		}
 		else{	// 参照位置の登録
 			label_add_ref(codePos, id, 1) ;
@@ -1047,10 +1067,10 @@ int get_offset16(int t){
 		}
 
 		pos = get_label_value(buff) ;
-		//printf(" label value(%d) loc %d ", pos, location) ;
+		//printf(" label value(%d) loc %d ", pos, Location) ;
 
 		if(pos>=0){	//	位置がわかってる=定義されている
-			offset = pos - (location+3) ;
+			offset = pos - (Location+3) ;
 		}
 		else{	// 参照位置の登録
 			label_add_ref(codePos, id, 2) ;
@@ -1075,16 +1095,16 @@ int gen_CALL(void){
 	if(t==1){	//	ident
 		r = get_register(buff) ;
 		if(r==6){
-			emit(codePos, location, 1, 0xf8, 0, 0) ;
+			emit(codePos, Location, 1, 0xf8, 0, 0) ;
 			return 1 ;
 		}
 		else if(r==7){
-			emit(codePos, location, 1, 0xf9, 0, 0) ;
+			emit(codePos, Location, 1, 0xf9, 0, 0) ;
 			return 1 ;
 		}
 		else{
 			offset = get_offset16(t) ;
-			emit(codePos, location, 3, 0xfa, offset & 0x00ff, (offset >> 8) & 0x00ff) ;
+			emit(codePos, Location, 3, 0xfa, offset & 0x00ff, (offset >> 8) & 0x00ff) ;
 			return 3 ;
 		}
 	}
@@ -1155,9 +1175,34 @@ int code_gen(void){
 				codeByte = gen_XCHG() ;
 				break ;
 			case 14:	//	SWapByte
-
+				get_token() ;
+				op1=get_register(buff) ;
+				if(op1==4){
+					emit(codePos, Location, 1, 0x62, 0, 0) ;
+					codeByte = 1 ;
+				}
+				else if(op1==5){
+					emit(codePos, Location, 1, 0x63, 0, 0) ;
+					codeByte = 1 ;
+				}
 				break ;
 			case 15:	//	SignXTend
+				get_token() ;
+				op1=get_register(buff) ;
+				if(op1==4){
+					emit(codePos, Location, 1, 0x6A, 0, 0) ;
+					codeByte = 1 ;
+				}
+				else if(op1==5){
+					emit(codePos, Location, 1, 0x6B, 0, 0) ;
+					codeByte = 1 ;
+				}
+				break ;
+			case 16:	//	PUSH
+				codeByte = gen_PUSH() ;
+				break ;
+			case 17:	//	POP
+				codeByte = gen_POP() ;
 				break ;
 			case 18:	//	JC
 			case 19:	//	JNC
@@ -1176,16 +1221,16 @@ int code_gen(void){
 				else cc=code-18+0xe0 ;
 
 				offset=gen_Jcc() ;
-				emit(codePos, location, 2, cc, offset, 0) ;
+				emit(codePos, Location, 2, cc, offset, 0) ;
 				codeByte=2 ;
 				break ;
 			case 28:	//	JMP i16
 				offset = get_offset16(get_token()) ;
-				emit(codePos, location, 3, 0xfe, offset & 0x00ff, (offset >> 8) & 0x00ff) ;
+				emit(codePos, Location, 3, 0xfe, offset & 0x00ff, (offset >> 8) & 0x00ff) ;
 				codeByte = 3 ;
 				break ;
 			case 30:	//	JPN
-				emit(codePos, location, 2, 0xef, 0, 0) ;
+				emit(codePos, Location, 2, 0xef, 0, 0) ;
 				codeByte=1 ;
 				break ;
 			case 31:	//	SHL
@@ -1207,14 +1252,14 @@ int code_gen(void){
 				codeByte=gen_CALL() ;
 				break ;
 			case 37:	//	RET
-				emit(codePos, location, 1, 0x6e, 0, 0) ;	//	RETは POP CP
+				emit(codePos, Location, 1, 0x6e, 0, 0) ;	//	RETは POP CP
 				codeByte=1 ;
 				break ;
 			case 38:	//	SWI
 				t = get_token() ;
 				if(t!=-1){
 					t = get_token_value(t, buff) ;
-					emit(codePos, location, 2, 0xed, (char)t, 0) ;
+					emit(codePos, Location, 2, 0xed, (char)t, 0) ;
 					codeByte=2 ;
 				}
 				else{
@@ -1222,43 +1267,43 @@ int code_gen(void){
 				}
 				break ;
 			case 39:	//	IRET
-				emit(codePos, location, 1, 0xfd, 0, 0) ;
+				emit(codePos, Location, 1, 0xfd, 0, 0) ;
 				codeByte=1 ;
 				break ;
 			case 40:	//	EI
-				emit(codePos, location, 1, 0xf5, 0, 0) ;
+				emit(codePos, Location, 1, 0xf5, 0, 0) ;
 				codeByte=1 ;
 				break ;
 			case 41:	//	DI
-				emit(codePos, location, 1, 0xf4, 0, 0) ;
+				emit(codePos, Location, 1, 0xf4, 0, 0) ;
 				codeByte=1 ;
 				break ;
 			case 42:	//	STC
-				emit(codePos, location, 1, 0xf6, 0, 0) ;
+				emit(codePos, Location, 1, 0xf6, 0, 0) ;
 				codeByte=1 ;
 				break ;
 			case 43:	//	CMC
-				emit(codePos, location, 1, 0xf7, 0, 0) ;
+				emit(codePos, Location, 1, 0xf7, 0, 0) ;
 				codeByte=1 ;
 				break ;
 			case 44:	//	LDFR
-				emit(codePos, location, 1, 0xea, 0, 0) ;
+				emit(codePos, Location, 1, 0xea, 0, 0) ;
 				codeByte=1 ;
 				break ;
 			case 45:	//	STFR
-				emit(codePos, location, 1, 0xeb, 0, 0) ;
+				emit(codePos, Location, 1, 0xeb, 0, 0) ;
 				codeByte=1 ;
 				break ;
 			case 46:	//	TNS
-				emit(codePos, location, 1, 0xfc, 0, 0) ;
+				emit(codePos, Location, 1, 0xfc, 0, 0) ;
 				codeByte=1 ;
 				break ;
 			case 48:	//	SWI8
-				emit(codePos, location, 1, 0xec, 0, 0) ;
+				emit(codePos, Location, 1, 0xec, 0, 0) ;
 				codeByte=1 ;
 				break ;
 			case 47:
-				emit(codePos, location, 1, 0xff, 0, 0) ;
+				emit(codePos, Location, 1, 0xff, 0, 0) ;
 				codeByte=1 ;
 				break ;
 			default:
@@ -1270,7 +1315,7 @@ int code_gen(void){
 			if(codeByte==0){
 				return 0 ;
 			}
-			location+=codeByte ;
+			Location+=codeByte ;
 		}
 		else{	//	Identifier　たぶんこのあとeq定数が続く
 			//	constantテーブルに登録してカレントにする。続くeqで定数定義
@@ -1317,7 +1362,7 @@ int code_gen(void){
 				errorOut("Not a number.") ;
 			}
 			else{
-				location = n ;
+				Location = n ;
 			}
 			break ;
 		case 1:
@@ -1329,10 +1374,10 @@ int code_gen(void){
 		if(idx<0){
 			idx = register_label(buff) ;
 		}
-		label_value[idx] = location ;
+		label_value[idx] = Location ;
 		label_rewrite(idx) ;
 
-		//	printf("register label(%d):%d ", idx, location) ;
+		//	printf("register label(%d):%d ", idx, Location) ;
 		gen=-1 ;
 		break ;
 	default:
@@ -1392,52 +1437,49 @@ int program(void){
 }
 
 
-void show_label_list(void){
+void show_label_list(FILE *fp){
 	int i ;
 
-	printf("\nLabel list ***\n") ;
+	fprintf(fp, "\nLabel list ***\n") ;
 	for(i=0 ; i<1024 ; i++){
 		if(label[i][0]!=0){
-			printf(" %04X = %s\n", label_value[i], label[i]) ;
+			fprintf(fp, " %04X = %s\n", label_value[i], label[i]) ;
 		}
 	}
 }
 
-void print_spc(int n){
-	printf("        "+(2*n)) ;
+void print_spc(FILE *fp, int n){
+	fprintf(fp, "        "+(2*n)) ;
 }
 
-void dumpCode(FILE *fp, FILE* out_fp){
+void dumpCode(FILE *fp, FILE *out_fp){
 	int i ;
 	int loc=0 ;
 
 	char *pos = get_line(fp, 0) ;
 
-	printf("\nListing ***\n") ;
+	fprintf(out_fp, "\nListing ***\n") ;
 	for(i=0 ; i<16*1024 ; i++){
-//		if(pos==NULL) break ;
-
 		if(code[i][0]==0xff){
 			break ;
 		}
 		else{
 			if(code[i][0]==0){
-//				printf("*[%d]", code[i][1]) ;
 				int n ;
 				for(n=0 ; n<code[i][1] ; n++){
-					printf("                %s\n",pos) ;
+					fprintf(out_fp, "                %s\n",pos) ;
 					pos = get_line(fp, 0) ;
 				}
 			}
 			else{
-				printf(" %04X ", code_loc[i]) ;
+				fprintf(out_fp, " %04X ", code_loc[i]) ;
 				int n ;
 				for(n=0 ; n<code[i][0] ; n++){
-					printf("%02X", code[i][n+1]) ;
+					fprintf(out_fp, "%02X", code[i][n+1]) ;
 				}
-				print_spc(code[i][0]) ;
+				print_spc(out_fp, code[i][0]) ;
 				loc+=code[i][0] ;
-				printf("%s\n", pos) ;
+				fprintf(out_fp, "%s\n", pos) ;
 				pos = get_line(fp, 0) ;
 			}
 		}
@@ -1495,18 +1537,18 @@ int main(int argc, char** argv){
 		const_value[i]=-1 ;
 		label[i][0]=0 ;
 	}
-	for(i=0 ; i<16*1024 ; i++){
-//		code[i][0] = 0xff ;
-	}
 	const_value[0]=-1 ;
 	label_pos[0][1]=-1 ;
 
 	program() ;
 
-	show_label_list() ;
+	show_label_list(stdout) ;
+	show_label_list(prn_fp) ;
 
 	rewind(src_fp) ;
-	dumpCode(src_fp, mem_fp) ;
+	dumpCode(src_fp, stdout) ;
+	rewind(src_fp) ;
+	dumpCode(src_fp, prn_fp) ;
 
 	fclose(src_fp) ;
 	fclose(mem_fp) ;

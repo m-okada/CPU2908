@@ -22,6 +22,3 @@ wait:
 		jmps loop
 		jc loop
 		nop
-
-
-
