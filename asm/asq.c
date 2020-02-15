@@ -55,29 +55,21 @@ int str_cmp(char *str1, char* str2){
 	return 1 ;
 }
 
-void str_cpy(char *dst, char *src){
+int str_cpy(char *dst, char *src){
 	int i ;
 	for(i=0 ; i<30 ; i++){
 		if(src[i]==0){
 			dst[i]=0 ;
-			return ;
+			return i ;
 		}
 		dst[i] = src[i] ;
 	}
 	dst[30]=0 ;
-	return ;
+	return 30 ;
 }
 
 
 
-/*
-.o フォーマット
-ラベルセクション
-バイナリーセクション（複数）
-
-*/
-int locate=0 ;
-char mem[64*1024] ;
 
 /*
 
@@ -164,7 +156,7 @@ char reg_str[][4]={
 } ;
 
 char directive_str[][8]={
-".ORG", ".DB", ".DW","EQ",".GLOBAL",
+".ORG", ".DS", ".DB", ".DW","EQ",".GLOBAL",
 ""
 } ;
 
@@ -269,6 +261,8 @@ register_label
 int label_value[1024] ;	//	-1:未定義　参照のみで定義されてない。前方参照。
 char label[1024][32] ;	//	ラベル名 index はlabel_value と同じ
 
+char strings[256][32] ;
+int strings_pos[256] ;	//	Location
 /*
 ラベルの参照位置
 
@@ -287,13 +281,14 @@ int const_value[1024] ;	//	定数　-1なら定数未定義　定数は直後の
 
 /*
 
-code[addr][4]
+code[codePos][4]
 4バイトで、あたまから
 00.nn 空行、またはコメント行　nn:飛ばす行数（256行を超えて飛ばす時はもう1つ新たにエントリーを作成する予定）@@@
 01.xx 1バイトコード
 02.xx.xx ２バイトコード
 03.xx.xx.xx ３バイトコード
 0F.nn.mm	.ORGでアドレス指定が来た。（アドレスは重複するかもしれないけど、後ろにあるデータ優先で処理する。）
+FE.nn.ll	.DBで文字列が来た。strings[nn],長さll
 FF.xx 未使用。テーブル終端
 ラベル、定数はそれぞれテーブルに保存する。
 
@@ -679,8 +674,7 @@ int gen_LD(void){
 	}
 	else{
 		op2 = r ;
-
-		t = get_token() ;
+		//t = get_token() ;
 
 		if(t==7 || t==8){	// +-
 			//	後ろにオフセットが付くはず
@@ -706,16 +700,17 @@ int gen_LD(void){
 			return 2 ;
 		}
 		else{	//	オフセット無し
+			int src ;
+			//printf("no offset ") ;
 			if(op2==9){	// Addr register.
-				errorOut("Offset reqired.") ;
+				errorOut("Offset reqired SP base addressing.") ;
 				return 0 ;
 			}
-			int src ;
 
-			if(op2==6){
-				emit(codePos, Location, 1, 0x00 + op1, 0, 0) ;
+			if(op2==6 || op2==7){
+				emit(codePos, Location, 1, 0x00 + op1 + (op2-6)*4, 0, 0) ;
+				return 1 ;
 			}
-			return 1 ;
 		}
 	}
 
@@ -1257,13 +1252,13 @@ int code_gen(void){
 				break ;
 			case 38:	//	SWI
 				t = get_token() ;
-				if(t!=-1){
+				if(t==-1){
+					codeByte=0 ;
+				}
+				else{
 					t = get_token_value(t, buff) ;
 					emit(codePos, Location, 2, 0xed, (char)t, 0) ;
 					codeByte=2 ;
-				}
-				else{
-					codeByte=0 ;
 				}
 				break ;
 			case 39:	//	IRET
@@ -1302,7 +1297,7 @@ int code_gen(void){
 				emit(codePos, Location, 1, 0xec, 0, 0) ;
 				codeByte=1 ;
 				break ;
-			case 47:
+			case 47:	//	NOP
 				emit(codePos, Location, 1, 0xff, 0, 0) ;
 				codeByte=1 ;
 				break ;
@@ -1365,8 +1360,47 @@ int code_gen(void){
 				Location = n ;
 			}
 			break ;
-		case 1:
+		case 1: // .ds
+			//printf("{%s} ", buff) ;
+			t = get_token() ;
+			//printf("t:%d ", t) ;
+			if(t==10){
+				printf("string{%s} ", buff) ;
+				for(int i=0 ; i<256 ; i++){
+					if(strings[i][0]==0){
+						t = str_cpy(strings[i], buff) ;
+						strings_pos[i]=Location ;
+
+						emit(codePos, Location, 0xfe, i, t, 0) ;
+						break ;
+					}
+				}
+			}
+			gen=1 ;
+			Location +=t+1 ;
+
 			break ;
+		case 2:{ // .db
+				int n=0 ;
+				printf("DB ") ;
+				t = get_token() ;
+				if(t!=-1){
+					n = get_token_value(t, buff) ;
+//printf("value(%d) ", n) ;
+					emit(codePos, Location, 0xfd, (char)n, 0, 0) ;
+					gen=1 ;
+					Location++ ;
+				}
+//				while(1){
+/*					t = get_token() ;
+					if(t==-1) break ;
+					printf("[%s]", buff) ;
+					t = get_token_value(t, buff) ;
+					t = get_token() ;
+					if(t!=6) break ;
+*/ //			}
+				break ;
+			}
 		}
 		break ;
 	case 5:	//	Label
@@ -1408,15 +1442,18 @@ int program(void){
 		currentIdt=-1 ;	//	カレント識別子　改行時にクリア
 
 		pos = get_line(src_fp, 1) ;
-
 		if(pos==NULL) break ;
 
 		t = code_gen() ;
-		//printf("line(%d:%d) : ", t, i) ;
-
 		if(t<1){ //	空行Pack
 			if(codePos > 0 && code[codePos-1][0]==0){
+				if(code[codePos-1][1]==255){
+					code[codePos-1][2]++ ;
+					code[codePos-1][1]=0 ;
+				}
+				else{
 					code[codePos-1][1]++ ;
+				}
 			}
 			else{
 				code[codePos][0]=0 ;
@@ -1430,7 +1467,6 @@ int program(void){
 		code[codePos][0]=0xff ;
 
 		i++ ;
-//		printf("\n") ;
 	}
 
 	return 0 ;
@@ -1449,8 +1485,11 @@ void show_label_list(FILE *fp){
 }
 
 void print_spc(FILE *fp, int n){
-	fprintf(fp, "        "+(2*n)) ;
+	fprintf(fp, "          "+(2*n)) ;
 }
+
+int locate=0 ;
+short mem[64*1024] ;
 
 void dumpCode(FILE *fp, FILE *out_fp){
 	int i ;
@@ -1462,6 +1501,21 @@ void dumpCode(FILE *fp, FILE *out_fp){
 	for(i=0 ; i<16*1024 ; i++){
 		if(code[i][0]==0xff){
 			break ;
+		}
+		else if(code[i][0]==0xfe){	//	string
+			fprintf(out_fp, " %04X ", code_loc[i]) ;
+			for(int n=0 ; n<code[i][2] ; n++){
+				fprintf(out_fp, "%02X", strings[code[i][1]][n]) ;
+			}
+			fprintf(out_fp, "\n") ;
+			fprintf(out_fp, "                %s\n", pos) ;
+			pos = get_line(fp, 0) ;
+		}
+		else if(code[i][0]==0xfd){	//	db
+			fprintf(out_fp, " %04X ", code_loc[i]) ;
+			fprintf(out_fp, "%02X\n", code[i][1]) ;
+			fprintf(out_fp, "                %s\n", pos) ;
+			pos = get_line(fp, 0) ;
 		}
 		else{
 			if(code[i][0]==0){
@@ -1530,6 +1584,9 @@ int main(int argc, char** argv){
 
 	for(i=0 ; i<2048 ; i++){
 		label_pos[i][0]=-1 ;
+	}
+	for(i=0 ; i<256 ; i++){
+		strings[i][0]=0 ;
 	}
 
 	for(i=0 ; i<1024 ; i++){

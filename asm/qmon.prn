@@ -1,0 +1,27 @@
+
+Label list ***
+ 0100 = START
+ 0104 = LOOP
+ 0107 = TXSTR
+
+Listing ***
+                rxbuff eq $ff00
+                ;
+                .org 0
+ 0000 FEFD00    	jmp start
+                .org $100
+                start:
+ 0100 7C010F    	mov a0,$0f01
+                ;	mov a1,txstr
+ 0103 04        	ld r0,a1
+                loop:
+ 0104 FF        	nop
+ 0105 EEFD      	jmps loop
+                txstr:
+ 0107 514255472056312E30
+                .ds 'QBUG V1.0'
+ 0111 0A
+                .db $0a
+ 0112 00
+                .db 0
+ 0113 FF        	nop

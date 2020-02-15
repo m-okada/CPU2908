@@ -87,7 +87,7 @@ int take_char(int cc){
 	7 '+'
 	8 '-'
 	9 '@'	Location
-	10
+	10 string
 
 */
 int get_token(char* ptr){
@@ -107,10 +107,11 @@ int _get_token(char* ptr){
 	int type=0 ;
 
 	int cc ;
+	int rc ;
 	buff_pos=0 ; buff[0]=0 ;
 
-	while(cc=get_char()){
-		cc = to_upper(cc) ;
+	while(rc=get_char()){
+		cc = to_upper(rc) ;
 
 		switch(state){
 		case 0:		//	top
@@ -143,10 +144,16 @@ int _get_token(char* ptr){
 				//take_char(cc) ;
 				state=4 ;	//	hex
 			}
-			else if(cc==';') while(get_char()!=-1) ;	//	comment
+			else if(cc==';'){
+				while(get_char()!=-1) ;	//	comment
+				return -1 ;
+			}
 			else if(cc==','){	//
 				take_char(cc) ;
 				return 6 ;
+			}
+			else if(cc=='\''){	//	string
+				state=5 ;
 			}
 			else if(cc=='\t' || cc==' ') continue ;
 			else continue ; // return 0 ;
@@ -189,6 +196,10 @@ int _get_token(char* ptr){
 				unget_char(cc) ;
 				return 4 ;
 			}
+			break ;
+		case 5:	//	string
+			if(cc=='\'') return 10 ;
+			take_char(rc) ;
 			break ;
 		}
 	}
