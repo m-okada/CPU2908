@@ -1,9 +1,9 @@
 ﻿/*
-CPU2908 asm
-asm-q
 
-asq:asq.c
-	cc -o asq asq.c lex.c
+CPU2908 assembler
+
+asq:asq.c token.c
+	cc -o asq asq.c token.c -Wno-format-security
 
 t02.as
 
@@ -18,14 +18,13 @@ t02.as
 
 int Line = 0 ;
 int errorCount=0 ;
-//char msg[128] ;
 
 void errorOut(char *str){
 	errorCount++ ;
 	fprintf(stderr, "Line %d :  Error %s\n", Line, str) ;
 }
 
-
+// 16進文字から整数へ
 int char2int(char cc){
 	if('0'<=cc && cc<='9'){
 		return cc-'0' ;
@@ -46,7 +45,7 @@ int str2int(int radix, char *str){
 	return retval ;
 }
 
-
+//	30バイト比べておなじなら一致にする。（そもそも30バイトしかコピーしてない）
 int str_cmp(char *str1, char* str2){
 	int i ;
 	if(*str1==0 || *str2==0) return 0 ;
@@ -54,7 +53,6 @@ int str_cmp(char *str1, char* str2){
 		if(str1[i]==0 && str2[i]==0) return 1 ;
 		if(str1[i]!=str2[i]) return 0 ;
 	}
-	//	30バイト比べておなじなら一致にする。（そもそも30バイトしかコピーしてない）
 	return 1 ;
 }
 
@@ -131,8 +129,8 @@ char inst_str[][6]={
 "AND",	"OR",	"XOR",	"NOT",	"XCHG",	// 9-13
 "SWB",	"SXT",	//	14,15
 "PUSH",	"POP",	//16-17
-"JC",	"JNC",	"JZ",	"JNZ",	"JS",	//	-22
-"JNS",	"JO",	"JNO",	"JG",	"JL",	//	-27
+"JNC",	"JC",	"JNO",	"JO",	"JNZ",	//	-22
+"JZ",	"JNS",	"JS",	"JL",	"JG",	//	-27
 "JMP",	"JMPS",	"JMPN",	// -30
 "SHL","SHR","SAR",	//	-33
 "INC","DEC",	//	34,35
@@ -712,17 +710,20 @@ int gen_ST(void){
 int gen_lop(int op){	//	return opecode
 	int t, op1, op2 ;
 
-	op1 = get_token() ;
+	t = get_token() ;
+	op1 = get_register(buff) ;
+
 	if(!except_T(6)){
 		errorOut("\',\' require.") ;
 		return 0 ;
 	}
-	op2 = get_token() ;
-	t = get_register(buff) ;
 
-	if(t==-1){
-		op2 = get_token_value(op2, buff) ;
-		// printf("token value %d ", op2) ;
+	t = get_token() ;
+	op2 = get_register(buff) ;
+
+	if(op2==-1){
+		op2 = get_token_value(t, buff) ;
+
 		emit(codePos, Location, 2, op+5, op2, 0) ;
 		return 2 ;
 	}
@@ -1450,8 +1451,40 @@ void print_spc(FILE *fp, int n){
 int locate=0 ;
 short mem[64*1024] ;
 
-void dumpCode(FILE *fp){
+void dumpCode(FILE *out_fp){
+	int i ;
+	int loc=0 ;
 
+	for(i=0 ; i<16*1024 ; i++){
+		if(code[i][0]==0xff){
+			break ;
+		}
+		else if(code[i][0]==0xfe){	//	string
+			fprintf(out_fp, "%04X : ", code_loc[i]) ;
+			loc = code_loc[i]+code[i][2] ;
+			for(int n=0 ; n<code[i][2] ; n++){
+				fprintf(out_fp, "%02X ", strings[code[i][1]][n]) ;
+			}
+			fprintf(out_fp, "\n") ;
+		}
+		else if(code[i][0]==0xfd){	//	db
+			fprintf(out_fp, "%04X : ", code_loc[i]) ;
+			loc = code_loc[i]+code[i][2] ;
+			fprintf(out_fp, "%02X\n", code[i][1]) ;
+		}
+		else{
+			if(code[i][0]!=0){
+				fprintf(out_fp, "%04X : ", code_loc[i]) ;
+				loc = code_loc[i] ;
+				int n ;
+				for(n=0 ; n<code[i][0] ; n++){
+					fprintf(out_fp, "%02X ", code[i][n+1]) ;
+				}
+				fprintf(out_fp, "\n") ;
+				loc+=code[i][0] ;
+			}
+		}
+	}
 }
 
 void outListing(FILE *fp, FILE *out_fp){
@@ -1467,6 +1500,7 @@ void outListing(FILE *fp, FILE *out_fp){
 		}
 		else if(code[i][0]==0xfe){	//	string
 			fprintf(out_fp, " %04X ", code_loc[i]) ;
+			loc = code_loc[i]+code[i][2] ;
 			for(int n=0 ; n<code[i][2] ; n++){
 				fprintf(out_fp, "%02X", strings[code[i][1]][n]) ;
 			}
@@ -1476,6 +1510,7 @@ void outListing(FILE *fp, FILE *out_fp){
 		}
 		else if(code[i][0]==0xfd){	//	db
 			fprintf(out_fp, " %04X ", code_loc[i]) ;
+			loc = code_loc[i]+code[i][2] ;
 			fprintf(out_fp, "%02X\n", code[i][1]) ;
 			fprintf(out_fp, "                %s\n", pos) ;
 			pos = get_line(fp, 0) ;
@@ -1490,6 +1525,7 @@ void outListing(FILE *fp, FILE *out_fp){
 			}
 			else{
 				fprintf(out_fp, " %04X ", code_loc[i]) ;
+				loc = code_loc[i] ;
 				int n ;
 				for(n=0 ; n<code[i][0] ; n++){
 					fprintf(out_fp, "%02X", code[i][n+1]) ;
@@ -1501,6 +1537,7 @@ void outListing(FILE *fp, FILE *out_fp){
 			}
 		}
 	}
+	fprintf(out_fp, " %04X\n\nEND ***\n", loc) ;
 }
 
 unsigned char l=0 ;
@@ -1579,7 +1616,7 @@ int main(int argc, char** argv){
 		fclose(src_fp) ;
 		fclose(prn_fp) ;
 		fclose(mem_fp) ;
-		return 0 ;
+		exit(1) ;
 	}
 
 	if(l){
@@ -1588,6 +1625,8 @@ int main(int argc, char** argv){
 		rewind(src_fp) ;
 		outListing(src_fp, stdout) ;
 	}
+
+	dumpCode(mem_fp) ;
 
 	show_label_list(prn_fp) ;
 	show_const_list(prn_fp) ;
