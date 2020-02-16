@@ -168,7 +168,6 @@ int get_opcode(char *str){
 
 	while(inst_str[i][0]){
 		char *inst=inst_str[i] ;
-
 		if(str_cmp(str, inst)==1){	//	見つかった
 			return i ;
 		}
@@ -176,6 +175,7 @@ int get_opcode(char *str){
 	}
 	return -1 ;
 }
+
 
 int get_register(char *ptr){
 	int i=0 ;
