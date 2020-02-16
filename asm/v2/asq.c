@@ -1404,7 +1404,7 @@ int code_gen(void){
 				int n=0, i ;
 				int pos ;
 
-printf("DB ") ;
+				//printf("DB ") ;
 				//	空きを探しておく
 				for(i=0 ; i<256 ; i++){
 					if(strings[i][0]==0){
@@ -1426,13 +1426,13 @@ printf("DB ") ;
 						break ;
 					}
 					else if(t==10){
-printf("string{%s} ", buff) ;
+					//printf("string{%s} ", buff) ;
 						t = str_cpy(strings[i]+n, buff) ;
 						n+=t ;
 					}
 					else{
 						t = get_token_value(t, buff) ;
-printf("value(%d) ", n) ;
+						//printf("value(%d) ", n) ;
 						strings[i][n]=t ;
 						n++ ;
 					}
