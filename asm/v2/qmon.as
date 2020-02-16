@@ -55,6 +55,7 @@ skip4h01:
 
 out2h:	; r2 to hex
 
+outstring: ; A0 ptr of ascz string.
 
 outchar:
 

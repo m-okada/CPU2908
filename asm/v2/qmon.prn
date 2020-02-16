@@ -45,15 +45,15 @@ Code ***
                 wait:
  010B 00        	ld r0,a0
  010C A5FE      	and r0, $fe
- 010E E2FA      	jz loop
+ 010E E5FA      	jz loop
  0110 EEF9      	jmps wait
  0112 D7        	inc a1
                 
  0113 04        	ld r0,[a1]
- 0114 A3        	and r0,r0
- 0115 E3F3      	jnz loop
+ 0114 A0        	and r0,r0
+ 0115 E4F3      	jnz loop
                 halt:
- 0117 CB1701    	mov pc,halt
+ 0117 621701    	mov pc,halt
  011A EEFB      	jmps halt
                 out4h:	; w1 to hex
  011C 41        	mov r0, r3
@@ -61,7 +61,7 @@ Code ***
  011F 8530      	add r0,$30
                 
  0121 AD0A      	cmp r0, 10
- 0123 E000      	jc skip4h
+ 0123 E100      	jc skip4h
  0125 8537      	add r0,$37 ; 'A'-10
                 skip4h00:
  0127 8530      	add r0,$30
