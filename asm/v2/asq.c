@@ -1399,27 +1399,51 @@ int code_gen(void){
 			Location +=t+1 ;
 
 			break ;
-		case 2:{ // .db
-				int n=0 ;
-				//printf("DB ") ;
-				t = get_token() ;
-				if(t!=-1){
-					n = get_token_value(t, buff) ;
-//printf("value(%d) ", n) ;
-					emit(codePos, Location, 0xfd, (char)n, 0, 0) ;
-					gen=1 ;
-					Location++ ;
+		case 2: // .db
+			{
+				int n=0, i ;
+				int pos ;
+
+printf("DB ") ;
+				//	空きを探しておく
+				for(i=0 ; i<256 ; i++){
+					if(strings[i][0]==0){
+						pos = i ;
+						break ;
+					}
 				}
-//				while(1){
-/*					t = get_token() ;
-					if(t==-1) break ;
-					printf("[%s]", buff) ;
-					t = get_token_value(t, buff) ;
+
+				if(pos==-1){
+					errorOut("Full up string store.") ;
+					gen=-1 ;
+					break ;
+				}
+
+				strings_pos[pos]=Location ;
+				while(1){
 					t = get_token() ;
-					if(t!=6) break ;
-*/ //			}
-				break ;
-			}
+					if(t==-1){
+						break ;
+					}
+					else if(t==10){
+printf("string{%s} ", buff) ;
+						t = str_cpy(strings[i]+n, buff) ;
+						n+=t ;
+					}
+					else{
+						t = get_token_value(t, buff) ;
+printf("value(%d) ", n) ;
+						strings[i][n]=t ;
+						n++ ;
+					}
+
+					t = get_token() ;
+					if(t!=6) break ;	//	accept(',') ;
+				}
+				emit(codePos, Location, 0xfe, pos, n, 0) ;
+				gen=1 ;
+				Location+=n ;
+			}	//	end of directive switch.
 		}
 		break ;
 	case 5:	//	Label
@@ -1521,7 +1545,7 @@ void print_spc(FILE *fp, int n){
 int locate=0 ;
 short mem[64*1024] ;
 
-void dumpCode(FILE *fp, FILE *out_fp){
+void outListing(FILE *fp, FILE *out_fp){
 	int i ;
 	int loc=0 ;
 
@@ -1570,6 +1594,7 @@ void dumpCode(FILE *fp, FILE *out_fp){
 	}
 }
 
+unsigned char v=0 ;
 
 int main(int argc, char** argv){
 	int i ;
@@ -1579,11 +1604,24 @@ int main(int argc, char** argv){
 		exit(1) ;
 	}
 
-	if(strlen(fname)>=256){
+	for(int i=1 ; i<argc ; i++){
+		if(argv[i][0]=='-'){
+			switch(argv[i][1]){
+			case 'v': v=1 ; break ;
+			default:
+				printf(" Unknown opetion %c. \n", argv[i][1]) ;
+				exit(1) ;
+				break ;
+			}
+		}
+	}
+
+	strcpy(fname, argv[1]) ;
+	if(strlen(fname)>=80){
 		printf("Error : Filename too long.\n") ;
 		exit(1) ;
 	}
-	strcpy(fname, argv[1]) ;
+
 	src_fp=fopen(fname, "r") ;
 	if(src_fp==NULL){
 		printf("Error : Src file Can't open.\n") ;
@@ -1635,20 +1673,23 @@ int main(int argc, char** argv){
 		return 0 ;
 	}
 
-	show_label_list(stdout) ;
-	show_label_list(prn_fp) ;
+	if(v){
+		show_label_list(stdout) ;
+		show_const_list(stdout) ;
+		rewind(src_fp) ;
+		outListing(src_fp, stdout) ;
+	}
 
-	show_const_list(stdout) ;
+	show_label_list(prn_fp) ;
 	show_const_list(prn_fp) ;
 
 	rewind(src_fp) ;
-	dumpCode(src_fp, stdout) ;
-	rewind(src_fp) ;
-	dumpCode(src_fp, prn_fp) ;
+	outListing(src_fp, prn_fp) ;
 
 	fclose(src_fp) ;
+	fclose(prn_fp) ;
 	fclose(mem_fp) ;
 
-//	printf("\n") ;
+	exit(0) ;
 }
 

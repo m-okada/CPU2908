@@ -560,6 +560,15 @@ void make_rom(void){
 		set_code(END_MARK) ;
 	}
 
+	set_opecode(0x67) ;
+	set_code(CPOUT) ;	//	CP->ADDR
+	set_code(DATAIN_BUFF1_CPINC) ;	//	imm8 -> Buff1
+
+	code = make_code(END_MARK, 0, 0, ADX_SXT, 0, WR_SP, REGW_EN, WB_SP, 0, 0, 0, 0, 0) ; // @@@ test
+
+	set_code(code) ;
+
+
 
 	//	68-69 POP Wx
 	for(n=0 ; n<2 ; n++){

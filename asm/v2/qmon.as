@@ -24,7 +24,5 @@ wait:
 halt:
 	jmps halt
 txstr:
-.ds 'QBUG V1.0'
-.db $0a
-.db 0
-	nop
+	.db 'QBUG V1.0',$0a,0
+
