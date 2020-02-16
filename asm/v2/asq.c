@@ -1365,6 +1365,9 @@ int code_gen(void){
 }
 
 
+/*
+
+*/
 FILE* src_fp ;
 FILE* mem_fp ;
 FILE* prn_fp ;
@@ -1419,7 +1422,12 @@ void show_label_list(FILE *fp){
 	fprintf(fp, "\nLabel ***\n") ;
 	for(i=0 ; i<1024 ; i++){
 		if(label[i][0]!=0){
-			fprintf(fp, " %04X = %s\n", label_value[i], label[i]) ;
+			if(label_value[i]==-1){
+				fprintf(fp, "*UDEF = %s\n", label[i]) ;
+			}
+			else{
+				fprintf(fp, " %04X = %s\n", label_value[i], label[i]) ;
+			}
 		}
 	}
 }
@@ -1442,13 +1450,17 @@ void print_spc(FILE *fp, int n){
 int locate=0 ;
 short mem[64*1024] ;
 
+void dumpCode(FILE *fp){
+
+}
+
 void outListing(FILE *fp, FILE *out_fp){
 	int i ;
 	int loc=0 ;
 
 	char *pos = get_line(fp, 0) ;
 
-	fprintf(out_fp, "\nListing ***\n") ;
+	fprintf(out_fp, "\nCode ***\n") ;
 	for(i=0 ; i<16*1024 ; i++){
 		if(code[i][0]==0xff){
 			break ;
@@ -1491,7 +1503,7 @@ void outListing(FILE *fp, FILE *out_fp){
 	}
 }
 
-unsigned char v=0 ;
+unsigned char l=0 ;
 
 int main(int argc, char** argv){
 	int i ;
@@ -1504,7 +1516,7 @@ int main(int argc, char** argv){
 	for(int i=1 ; i<argc ; i++){
 		if(argv[i][0]=='-'){
 			switch(argv[i][1]){
-			case 'v': v=1 ; break ;
+			case 'v': case 'l': l=1 ; break ;
 			default:
 				printf(" Unknown opetion %c. \n", argv[i][1]) ;
 				exit(1) ;
@@ -1570,7 +1582,7 @@ int main(int argc, char** argv){
 		return 0 ;
 	}
 
-	if(v){
+	if(l){
 		show_label_list(stdout) ;
 		show_const_list(stdout) ;
 		rewind(src_fp) ;
