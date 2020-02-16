@@ -1,6 +1,4 @@
-﻿;
-;
-rxbuff eq $ff00
+﻿rxbuff eq $ff00
 ;
 .org 0
 	jmp start
