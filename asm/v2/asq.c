@@ -51,6 +51,8 @@ $HEX
 #include <string.h>
 
 #include "token.h"
+#include "get_word.h"
+
 
 int Line = 0 ;
 int errorCount=0 ;
@@ -109,101 +111,6 @@ int str_cpy(char *dst, char *src){
 }
 
 
-
-
-
-char inst_str[][6]={
-"LD",	"ST",	"MOV",	"ADD",	"SUB",	"ADDC",	"SUBB","CMP",	//	1-8
-"AND",	"OR",	"XOR",	"NOT",	"XCHG",	// 9-13
-"SWB",	"SXT",	//	14,15
-"PUSH",	"POP",	//16-17
-"JNC",	"JC",	"JNO",	"JO",	"JNZ",	//	-22
-"JZ",	"JNS",	"JS",	"JL",	"JG",	//	-27
-"JMP",	"JMPS",	"JMPN",	// -30
-"SHL","SHR","SAR",	//	-33
-"INC","DEC",	//	34,35
-"CALL",	"RET",	//	36,37
-"SWI",	"IRET",	//	38,39
-"EI",	"DI",	//	40,41
-"STC",	"CMC",	//	42,43
-"LDFR",	"STFR",	//	44,45
-"TNS",	//	46
-"NOP",	//	47
-"SWI8",	// 48
-""
-} ;
-
-char reg_str[][4]={
-"R0", "R1", "R2", "R3",	// 0,1,2,3
-"W0", "W1", "A0", "A1",	// 4,5,6,7
-"CP", "SP",				// 8,9
-
-//	Alternative
-"A", "B", "C", "D",
-"W", "V", "X", "Y",
-"PC", "U", ""
-} ;
-
-char directive_str[][8]={
-".ORG", ".DS", ".DB", ".DW",".EQ",".GLOBAL",
-""
-} ;
-
-
-
-int get_opcode(char *str){
-	int i=0 ;
-
-	while(inst_str[i][0]){
-		char *inst=inst_str[i] ;
-		if(str_cmp(str, inst)==1){	//	見つかった
-			return i ;
-		}
-		i++ ;
-	}
-	return -1 ;
-}
-
-
-int get_register(char *ptr){
-	int i=0 ;
-	char *p ;
-	while(reg_str[i][0]){
-		char *inst=reg_str[i] ;
-		char f=1 ;	//	一致なら1のまま返る
-		p=ptr ;
-		while(*inst){
-			if(*inst!=*p){
-				f=0 ;
-				break ;
-			}
-			p++ ; inst++ ;
-		}
-		if(f==1){	//	見つかった
-			if(f>=10 && f<20){	//	別名変換
-				f-=10 ;
-			}
-			return i ;
-		}
-		i++ ;
-	}
-	return -1 ;
-}
-
-
-int get_directive(char *str){
-	int i=0 ;
-
-	while(directive_str[i][0]){
-		char *inst=directive_str[i] ;
-
-		if(str_cmp(str, inst)==1){	//	見つかった
-			return i ;
-		}
-		i++ ;
-	}
-	return -1 ;
-}
 
 /*
 コード出力用ワーク
@@ -716,7 +623,7 @@ int gen_lop(int op){	//	return opecode
 		return 2 ;
 	}
 	else{
-		emit(codePos, Location, 1, op+(op1 & 1)*2 + op2, 0, 0) ;
+		emit(codePos, Location, 1, op+(op1 & 1)*4 + op2, 0, 0) ;
 		return 1 ;
 	}
 
@@ -853,7 +760,12 @@ int gen_MOV(void){
 				imm=0 ;
 			}
 		}
-		if(op1>=6 && op1<=9){
+
+		if(op1>=0 && op1<=3){
+			emit(codePos, Location, 2, 0x78+op1, imm & 0x00ff,  0) ;
+			return 2 ;
+		}
+		else if(op1>=6 && op1<=9){
 			op=0x7c+op1-6 ;
 		}
 		emit(codePos, Location, 3, op, imm & 0x00ff,  (imm >> 8) & 0x00ff) ;

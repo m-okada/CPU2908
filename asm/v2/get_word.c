@@ -39,9 +39,23 @@ int get_word(char * str, char *tbl){
 	return -1 ;
 }
 
+int get_register(char *ptr){
+	return get_word(ptr, reg_str) ;
+}
+
+int get_opcode(char *ptr){
+	return get_word(ptr, inst_str) ;
+}
+
+int get_directive(char *ptr){
+	return get_word(ptr, directive_str) ;
+}
+
+/*
 int main(void){
 	printf("%d\n", get_word("MOV", inst_str)) ;
 	printf("%d\n", get_word("NOP", inst_str)) ;
 	printf("%d\n", get_word("R0", reg_str)) ;
 	return 0 ;
 }
+*/
