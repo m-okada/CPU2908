@@ -1,13 +1,49 @@
 ﻿/*
 
 CPU2908 assembler
+Ver 1.0 M.Okada
 
 asq:asq.c token.c
 	cc -o asq asq.c token.c -Wno-format-security
 
-t02.as
+*/
+
+/*
+
+行頭はラベル定義（宣言）、ディレクティブ、オペコード
+ラベル定義のあとは行末まで読み飛ばす
+
+ディレクティブは　. で始まる予約語と "EQ"
+そのあとはパラメータ ,  パラメータリスト…
+
+オペコードは全て予約語で　オペコード＋必要ならオペランド , オペランドリスト
+オペランドは、無し、レジスタ名、レジスタ名＋－定数、定数、ラベルなど。
+
+識別子 eq 定数　で定数定義。
+
+ラベルはコロンで終わる
+Identifier:
+識別子は30バイトまで比較する。Case非センシティブ
+
+.db
+バイト定数、または文字列（'文字列はシングルクォーテーションで囲む'）を','で区切って並べる
+
+.org Location
+コードのロケーションを指定する。
+
+.global label　グローバルラベル（未対応）
+
+
+・数値リテラル
+
+#bin（未対応）
+$HEX
+0-9 ではじまるのはDEC
+
+;　行末までコメント
 
 */
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,6 +81,9 @@ int str2int(int radix, char *str){
 	return retval ;
 }
 
+char *str_rchar(char *str, char cc){
+}
+
 //	30バイト比べておなじなら一致にする。（そもそも30バイトしかコピーしてない）
 int str_cmp(char *str1, char* str2){
 	int i ;
@@ -70,40 +109,6 @@ int str_cpy(char *dst, char *src){
 }
 
 
-
-
-/*
-
-行頭はラベル定義（宣言）、ディレクティブ、オペコード
-ラベル定義のあとは行末まで読み飛ばす
-
-ディレクティブは　. で始まる予約語と "EQ"
-そのあとはパラメータ ,  パラメータリスト…
-
-オペコードは全て予約語で　オペコード＋必要ならオペランド , オペランドリスト
-オペランドは、無し、レジスタ名、レジスタ名＋－定数、定数、ラベルなど。
-
-識別子 eq 定数　で定数定義。
-
-ラベルはコロンで終わる
-Identifier:
-識別子は30バイトまで比較する。Case非センシティブ
-
-.db
-バイト定数、または文字列（'もじれつはシングルクォーテーションで囲む'）を','で区切って並べる
-
-.org Location
-コードのロケーションを指定する。
-
-.global label　グローバルラベル（未対応）
-
-#bin（未対応）
-$HEX
-0-9 ではじまるのはデシマル
-
-;　行末までコメント
-
-*/
 
 
 
@@ -140,7 +145,7 @@ char reg_str[][4]={
 } ;
 
 char directive_str[][8]={
-".ORG", ".DS", ".DB", ".DW","EQ",".GLOBAL",
+".ORG", ".DS", ".DB", ".DW",".EQ",".GLOBAL",
 ""
 } ;
 
@@ -1116,7 +1121,7 @@ int code_gen(void){
 			case 18: case 19: case 20: case 21:
 			case 22: case 23: case 24: case 25:
 			case 26: case 27: // JL,JG
-			case 29:	//	JPS
+			case 29:	//	JumP Short
 				if(code==27) cc=0xe8 ;
 				else if(code==28) cc=0xe9 ;
 				else if(code==29) cc=0xee ;
@@ -1131,7 +1136,7 @@ int code_gen(void){
 				emit(codePos, Location, 3, 0xfe, offset & 0x00ff, (offset >> 8) & 0x00ff) ;
 				codeByte = 3 ;
 				break ;
-			case 30:	//	JPN
+			case 30:	//	JumP Never
 				emit(codePos, Location, 2, 0xef, 0, 0) ;
 				codeByte=1 ;
 				break ;
@@ -1536,7 +1541,7 @@ int main(int argc, char** argv){
 	for(int i=1 ; i<argc ; i++){
 		if(argv[i][0]=='-'){
 			switch(argv[i][1]){
-			case 'v': case 'l': l=1 ; break ;
+			case 'v': case 'l': l=1 ; break ;	//	l or v option : Display listing.
 			default:
 				printf(" Unknown opetion %c. \n", argv[i][1]) ;
 				exit(1) ;
@@ -1595,6 +1600,7 @@ int main(int argc, char** argv){
 	label_pos[0][1]=-1 ;
 
 	program() ;
+
 	if(errorCount!=0){
 		fclose(src_fp) ;
 		fclose(prn_fp) ;
@@ -1609,7 +1615,7 @@ int main(int argc, char** argv){
 		outListing(src_fp, stdout) ;
 	}
 
-	dumpCode(mem_fp) ;
+	dumpCode(mem_fp) ;	//	MEM file for Lattice Diamond.
 
 	show_label_list(prn_fp) ;
 	show_const_list(prn_fp) ;
