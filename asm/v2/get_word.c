@@ -1,4 +1,11 @@
-﻿#include <stdio.h>
+﻿
+#ifdef DEBUG_ALONE
+#define DEBUG_ALONE
+
+#include <stdio.h>
+
+#endif
+
 
 
 char *inst_str=
@@ -51,11 +58,12 @@ int get_directive(char *ptr){
 	return get_word(ptr, directive_str) ;
 }
 
-/*
+#ifdef DEBUG_ALONE
 int main(void){
 	printf("%d\n", get_word("MOV", inst_str)) ;
 	printf("%d\n", get_word("NOP", inst_str)) ;
 	printf("%d\n", get_word("R0", reg_str)) ;
 	return 0 ;
 }
-*/
+#endif
+

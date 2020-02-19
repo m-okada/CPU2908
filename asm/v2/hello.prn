@@ -1,55 +1,70 @@
 
 Label ***
- 0026 = MSG
+ 0027 = MSG
  0008 = LOOP
- 001B = TX
- 0010 = HALT
- 0012 = RX
- 0015 = RX00
+ 0012 = L001
+ 0016 = TX
+ 0014 = HALT
+ 0025 = TXEXIT
  001E = TX00
 
 Constant ***
+ 003E = PROMPT
 
 Code ***
+                prompt eq $3e
+                
                 ; Disp message.
  0000 7F0000    	mov sp,0
  0003 7B00      	mov r3,0
- 0005 7D2600    	mov a1,msg
+ 0005 7D2700    	mov a1,msg
                 loop:
  0008 05        	ld r1,[a1]
- 0009 FA0F00    	call tx
+ 0009 BF        	or r1,r3
+ 000A E506      	jz L001
  000C D7        	inc a1
- 000D BF        	or r1,r3
- 000E E4F8      	jnz loop
+                ;	jmp tx
+ 000D FA0600    	call tx
+ 0010 EEF6      	jmps loop
                 
+                L001:
+ 0012 7A3E      	mov r2,prompt
                 halt:
- 0010 EEFE      	jmps halt
+ 0014 EEFE      	jmps halt
                 
-                rx:
- 0012 7C010F    	mov a0,$0f01
-                rx00:
- 0015 00        	ld r0,[a0]
- 0016 49        	mov r1,r0
- 0017 B8        	or r0,r0
- 0018 E5FB      	jz rx00
+                ;rx:
+                ;	mov a0,$0f01
+                ;rx00:
+                ;	ld r0,[a0]
+                ;	mov r1,r0
+                ;	or r0,r0
+                ;	jz rx00
                 
- 001A 6E        	ret
+                ;	ret
                 
                 ; r1 : Ascii code of send.
                 tx:
+ 0016 7B00      	mov r3,0
+ 0018 BF        	or r1, r3
+ 0019 E50A      	jz txexit
+                
  001B 7C000F    	mov a0,$0f00
                 tx00:
  001E 00        	ld r0, [a0]
  001F A508      	and r0, $08
  0021 E5FB      	jz tx00
  0023 D6        	inc a0
- 0024 09        	st[a0],r1
+ 0024 09        	st [a0],r1
+                
+                txexit:
  0025 6E        	ret
+ 0026 FF        	nop
+                
                 
                 msg:
- 0026 48656C6C6F20776F726C64210A00
-                	.db 'Hello world!', $0a, 0
+ 0027 4D6F6E69746F722D512056312E300A00
+                	.db 'Monitor-Q V1.0', $0a, 0
                 
- 0034
+ 0037
 
 END ***

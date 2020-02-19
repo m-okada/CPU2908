@@ -440,14 +440,19 @@ int except_reg(void){
 
 
 // Code generate.
-void emit(int pos, int loc, char code0, char code1, char code2, char code3){
-	//printf("emit %04X : [%02X %02X %d %d]\n", loc, (unsigned char)code0, (unsigned char)code1, code2, code3) ;
+void emit(int pos, int loc, char nByte, char code1, char code2, char code3){
 	code_loc[pos]=loc ;
-	code[pos][0]=code0 ;
+	code[pos][0]=nByte ;
 	code[pos][1]=code1 ;
 	code[pos][2]=code2 ;
 	code[pos][3]=code3 ;
 }
+
+int emit1(int codePos, int location, char code){
+	emit(codePos, Location, 1, code, 0, 0) ;
+	return 1 ;
+}
+
 
 /*
 LD dst,src
@@ -491,10 +496,10 @@ int gen_LD(void){
 	else{
 		op2 = r ;
 		t = get_token() ;
-		//printf("t(%d) ", t) ;
-		if(t==7 || t==8){	// +-
-			if(t==8) sign=-1 ;
+
+		if(t==8 && (sign=-1) || t==7){	//	- または +
 			//	後ろにオフセットが付くはず
+
 			t = get_token() ;
 
 			op3 = get_token_value(t, buff) ;
@@ -510,7 +515,6 @@ int gen_LD(void){
 			if(op2==9){
 				base = 0x20 ;
 			}
-			//printf("offset(%d) ", op3) ;
 			emit(codePos, Location, 2, base + op1, op3, 0) ;
 			return 2 ;
 		}
@@ -631,7 +635,7 @@ int gen_lop(int op){	//	return opecode
 }
 
 //	1 operand instruction
-int gen_1ope(int op){
+int gen_SH(int op){
 	int t, op1 ;
 
 	op1 = get_token() ;
@@ -719,7 +723,7 @@ int gen_XCHG(void){
 		op=0x77 ;
 	}
 	else{
-		errorOut("Illigual oprand.") ;
+		errorOut("Illegal oprand.") ;
 		return 0 ;
 	}
 	emit(codePos, Location, 1, op, 0, 0) ;
@@ -814,7 +818,7 @@ int gen_MOV(void){
 	case 79: op=0x5F ; break ;
 
 	default:
-		errorOut("Illigual operand.") ;
+		errorOut("Illegal operand.") ;
 		return 0 ;
 		break ;
 	}
@@ -872,7 +876,6 @@ int gen_Jcc(void){	//	return offset
 
 int get_offset16(int t){
 	int offset=0 ;
-	int sign=1 ;
 	int id, pos ;
 
 	// t=get_token() ;	//	ラベルは後ろの:が無いから識別子で返って来る
@@ -890,8 +893,6 @@ int get_offset16(int t){
 		}
 		else{	//	定数だった
 			offset=get_token_value(t, buff) ;
-
-			offset = offset*sign ;
 			return offset ;
 		}
 
@@ -907,12 +908,12 @@ int get_offset16(int t){
 	}
 	else if(t!=-1){
 		offset=get_token_value(t, buff) ;
+		if(offset==-1){
+			errorOut("Illegal offset.") ;
+		}
 		//	error 処理　@@@
-
-		offset = offset*sign ;
 	}
 
-	//printf("offset(%s : %d)", buff, offset) ;
 	return offset ;
 }
 
@@ -971,31 +972,18 @@ int code_gen(void){
 				codeByte = gen_MOV() ;
 				break ;
 			case 4:		//	ADD
-				codeByte = gen_lop(0x80) ;
-				break ;
 			case 5:		//	SUB
-				codeByte = gen_lop(0x88) ;
-				break ;
 			case 6:		//	ADDC
-				codeByte = gen_lop(0x90) ;
-				break ;
 			case 7:		//	SUBB
-				codeByte = gen_lop(0x98) ;
-				break ;
 			case 8:		//	CMP
-				codeByte = gen_lop(0xa8) ;
-				break ;
 			case 9:		//	AND
-				codeByte = gen_lop(0xa0) ;
-				break ;
 			case 10:	//	OR
-				codeByte = gen_lop(0xb8) ;
-				break ;
 			case 11:	//	XOR
-				codeByte = gen_lop(0xb0) ;
-				break ;
 			case 12:	//	NOT
-				codeByte = gen_1ope(0xc0) ;
+				{
+					char code_tbl[]={0x80, 0x88, 0x90, 0x98, 0xa8, 0xa0, 0xb8, 0xb0, 0xc0} ;
+					codeByte = gen_lop(code_tbl[code-4]) ;
+				}
 				break ;
 			case 13:	//	XCHG
 				codeByte = gen_XCHG() ;
@@ -1053,13 +1041,13 @@ int code_gen(void){
 				codeByte=1 ;
 				break ;
 			case 31:	//	SHL
-				codeByte = gen_1ope(0xc4) ;
+				codeByte = gen_SH(0xc4) ;
 				break ;
 			case 32:	//	SHR
-				codeByte = gen_1ope(0xc8) ;
+				codeByte = gen_SH(0xc8) ;
 				break ;
 			case 33:	//	SAR
-				codeByte = gen_1ope(0xcc) ;
+				codeByte = gen_SH(0xcc) ;
 				break ;
 			case 34:	//	INC
 				codeByte = gen_INC_DEC(0xd0) ;
@@ -1078,6 +1066,8 @@ int code_gen(void){
 				t = get_token() ;
 				if(t==-1){
 					codeByte=0 ;
+					errorOut("IMM8 require.") ;
+					return -1 ;
 				}
 				else{
 					t = get_token_value(t, buff) ;
@@ -1086,45 +1076,20 @@ int code_gen(void){
 				}
 				break ;
 			case 39:	//	IRET
-				emit(codePos, Location, 1, 0xfd, 0, 0) ;
-				codeByte=1 ;
-				break ;
 			case 40:	//	EI
-				emit(codePos, Location, 1, 0xf5, 0, 0) ;
-				codeByte=1 ;
-				break ;
 			case 41:	//	DI
-				emit(codePos, Location, 1, 0xf4, 0, 0) ;
-				codeByte=1 ;
-				break ;
 			case 42:	//	STC
-				emit(codePos, Location, 1, 0xf6, 0, 0) ;
-				codeByte=1 ;
-				break ;
 			case 43:	//	CMC
-				emit(codePos, Location, 1, 0xf7, 0, 0) ;
-				codeByte=1 ;
-				break ;
 			case 44:	//	LDFR
-				emit(codePos, Location, 1, 0xea, 0, 0) ;
-				codeByte=1 ;
-				break ;
 			case 45:	//	STFR
-				emit(codePos, Location, 1, 0xeb, 0, 0) ;
-				codeByte=1 ;
-				break ;
 			case 46:	//	TNS
-				emit(codePos, Location, 1, 0xfc, 0, 0) ;
-				codeByte=1 ;
-				break ;
-			case 48:	//	SWI8
-				emit(codePos, Location, 1, 0xec, 0, 0) ;
-				codeByte=1 ;
-				break ;
 			case 47:	//	NOP
-				emit(codePos, Location, 1, 0xff, 0, 0) ;
-				codeByte=1 ;
-				break ;
+			case 48:	//	SWI8
+				{
+					char code_tbl[]={0xfd,0xf5,0xf4,0xf6,0xf7,0xea,0xeb,0xfc,0xff,0xec} ;
+					codeByte = emit1(codePos, Location, code_tbl[code-39]) ;
+					break ;
+				}
 			default:
 				gen=0 ;
 				codeByte=0 ;
@@ -1135,6 +1100,7 @@ int code_gen(void){
 				return 0 ;
 			}
 			Location+=codeByte ;
+
 		}
 		else{	//	Identifier　たぶんこのあとeq定数が続く
 			//	constantテーブルに登録してカレントにする。続くeqで定数定義
@@ -1145,7 +1111,7 @@ int code_gen(void){
 			if(t!=-1){
 				currentIdt=t ;
 				t=get_token() ;
-				if(t!=1 && str_cmp("EQ", buff)==0){
+				if(t!=1 || str_cmp("EQ", buff)==0){
 					errorOut("EQ Required.\n") ;
 					return -1 ;
 				}
@@ -1156,7 +1122,7 @@ int code_gen(void){
 					t = get_token_value(t, buff) ;
 					if(t==-1){
 						//	error
-						errorOut("literal required.\n") ;
+						errorOut("Literal required.\n") ;
 						return -1 ;
 					}
 
@@ -1165,7 +1131,9 @@ int code_gen(void){
 				}
 			}
 			else{
-				currentIdt=-1 ;	//	Error @@@
+				currentIdt=-1 ;
+				errorOut("Identiyer required.\n") ;
+				return -1 ;
 			}
 		}
 		break ;
@@ -1215,7 +1183,7 @@ int code_gen(void){
 				}
 
 				if(pos==-1){
-					errorOut("Full up string store.") ;
+					errorOut("String store over flow.") ;
 					gen=-1 ;
 					break ;
 				}
@@ -1237,7 +1205,7 @@ int code_gen(void){
 					}
 
 					t = get_token() ;
-					if(t!=6) break ;	//	accept(',') ;
+					if(t!=6) break ;	//	eccept(',') ;
 				}
 				emit(codePos, Location, 0xfe, pos, n, 0) ;
 				gen=1 ;
@@ -1348,9 +1316,6 @@ void print_spc(FILE *fp, int n){
 	fprintf(fp, "          "+(2*n)) ;
 }
 
-int locate=0 ;
-short mem[64*1024] ;
-
 void dumpCode(FILE *out_fp){
 	int i ;
 	int loc=0 ;
@@ -1440,7 +1405,12 @@ void outListing(FILE *fp, FILE *out_fp){
 	fprintf(out_fp, " %04X\n\nEND ***\n", loc) ;
 }
 
-unsigned char l=0 ;
+
+/*
+Command line options.
+	option_l : echo listing to stdout.
+*/
+unsigned char option_l=0 ;
 
 int main(int argc, char** argv){
 	int i ;
@@ -1453,7 +1423,7 @@ int main(int argc, char** argv){
 	for(int i=1 ; i<argc ; i++){
 		if(argv[i][0]=='-'){
 			switch(argv[i][1]){
-			case 'v': case 'l': l=1 ; break ;	//	l or v option : Display listing.
+			case 'v': case 'l': option_l=1 ; break ;	//	l or v option : Display listing.
 			default:
 				printf(" Unknown opetion %c. \n", argv[i][1]) ;
 				exit(1) ;
@@ -1520,7 +1490,7 @@ int main(int argc, char** argv){
 		exit(1) ;
 	}
 
-	if(l){
+	if(option_l){
 		show_label_list(stdout) ;
 		show_const_list(stdout) ;
 		rewind(src_fp) ;

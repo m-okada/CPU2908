@@ -829,6 +829,7 @@ void make_rom(void){
 	}
 
 
+
 	//	D4,D5 INC Wx
 	for(i=0 ; i<2 ; i++){
 		set_opecode(0xD4+i) ;
@@ -841,6 +842,8 @@ void make_rom(void){
 	//	D6,D7 INC Ax
 	for(i=0 ; i<2 ; i++){
 		set_opecode(0xD6+i) ;
+		code = make_code(0, 0, 0, ADX_INC, 0, WR_A0+i, 0, WB_A0+i, 0, 0, 0, 0, 0) ;
+		set_code(code) ;
 		code = make_code(END_MARK, 0, 0, ADX_INC, 0, WR_A0+i, REGW_EN, WB_A0+i, 0, 0, 0, 0, 0) ;
 		set_code(code) ;
 	}
@@ -865,6 +868,8 @@ void make_rom(void){
 	//	DE,DF DEC Ax
 	for(i=0 ; i<2 ; i++){
 		set_opecode((0xDE)+i) ;
+//		code = make_code(0, 0, 0, ADX_DEC, 0, WR_A0+i, 0, 0, 0, 0, 0, 0, 0) ; // @@@
+//		set_code(code) ; // @@@
 		code = make_code(END_MARK, 0, 0, ADX_DEC, 0, WR_A0+i, REGW_EN, WB_A0+i, 0, 0, 0, 0, 0) ;
 		set_code(code) ;
 	}
