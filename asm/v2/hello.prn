@@ -1,15 +1,21 @@
 
 Label ***
- 0027 = MSG
- 0008 = LOOP
- 0012 = L001
- 0016 = TX
- 0014 = HALT
- 0025 = TXEXIT
- 001E = TX00
+ $003F = MSG
+ $0008 = LOOP
+ $0012 = L001
+ $0027 = TXCHAR
+ $0014 = L002
+*Undef = RX
+ $001A = RXCHAR
+ $001E = RX00
+ $0025 = HALT
+ $0038 = TXEXIT
+ $0031 = TX00
+ $003B = JUMPTABLE
+*Undef = TX
 
 Constant ***
- 003E = PROMPT
+ $003E = PROMPT
 
 Code ***
                 prompt eq $3e
@@ -17,54 +23,71 @@ Code ***
                 ; Disp message.
  0000 7F0000    	mov sp,0
  0003 7B00      	mov r3,0
- 0005 7D2700    	mov a1,msg
+ 0005 7D3F00    	mov a1,msg
                 loop:
  0008 05        	ld r1,[a1]
  0009 BF        	or r1,r3
  000A E506      	jz L001
  000C D7        	inc a1
-                ;	jmp tx
- 000D FA0600    	call tx
+                
+ 000D FA1700    	call txchar
  0010 EEF6      	jmps loop
                 
                 L001:
  0012 7A3E      	mov r2,prompt
+                L002:
+ 0014 FA0000    	call rx
+ 0017 FEFAFF    	jmp L002
+                
+                ; r1 : Recv char.
+                rxchar:
+ 001A 60        	push w0
+ 001B 7C010F    	mov a0,$0f01
+                rx00:
+ 001E 00        	ld r0,[a0]
+ 001F 49        	mov r1,r0
+ 0020 B8        	or r0,r0
+ 0021 E5FB      	jz rx00
+                
+ 0023 68        	pop w0
+ 0024 6E        	ret
+                
                 halt:
- 0014 EEFE      	jmps halt
+ 0025 EEFE      	jmps halt
                 
-                ;rx:
-                ;	mov a0,$0f01
-                ;rx00:
-                ;	ld r0,[a0]
-                ;	mov r1,r0
-                ;	or r0,r0
-                ;	jz rx00
+                ; r1 : Ascii code to send.
+                txchar:
+ 0027 7B00      	mov r3,0
+ 0029 BF        	or r1, r3
+ 002A E50C      	jz txexit	;	Wait for TxBuffer empty.
                 
-                ;	ret
+ 002C 64        	push a0
+ 002D 60        	push w0
                 
-                ; r1 : Ascii code of send.
-                tx:
- 0016 7B00      	mov r3,0
- 0018 BF        	or r1, r3
- 0019 E50A      	jz txexit
-                
- 001B 7C000F    	mov a0,$0f00
+ 002E 7C000F    	mov a0,$0f00
                 tx00:
- 001E 00        	ld r0, [a0]
- 001F A508      	and r0, $08
- 0021 E5FB      	jz tx00
- 0023 D6        	inc a0
- 0024 09        	st [a0],r1
+ 0031 00        	ld r0, [a0]
+ 0032 A508      	and r0, $08
+ 0034 E5FB      	jz tx00
+ 0036 D6        	inc a0
+ 0037 09        	st [a0],r1
                 
                 txexit:
- 0025 6E        	ret
- 0026 FF        	nop
+ 0038 68        	pop w0
+ 0039 6C        	pop a0
+ 003A 6E        	ret
+                
+                
+                jumptable:
+ 003B 0000
+ 003D 0800
+                	.dw tx,loop
                 
                 
                 msg:
- 0027 4D6F6E69746F722D512056312E300A00
+ 003F 4D6F6E69746F722D512056312E300A00
                 	.db 'Monitor-Q V1.0', $0a, 0
                 
- 0037
+ 004F
 
 END ***

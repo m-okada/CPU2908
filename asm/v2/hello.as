@@ -9,30 +9,40 @@ loop:
 	or r1,r3
 	jz L001
 	inc a1
-;	jmp tx
-	call tx
+
+	call txchar
 	jmps loop
 
 L001:
 	mov r2,prompt
+L002:
+	call rx
+	jmp L002
+
+; r1 : Recv char.
+rxchar:
+	push w0
+	mov a0,$0f01
+rx00:
+	ld r0,[a0]
+	mov r1,r0
+	or r0,r0
+	jz rx00
+
+	pop w0
+	ret
+
 halt:
 	jmps halt
 
-;rx:
-;	mov a0,$0f01
-;rx00:
-;	ld r0,[a0]
-;	mov r1,r0
-;	or r0,r0
-;	jz rx00
-
-;	ret
-
-; r1 : Ascii code of send.
-tx:
+; r1 : Ascii code to send.
+txchar:
 	mov r3,0
 	or r1, r3
-	jz txexit
+	jz txexit	;	Wait for TxBuffer empty.
+
+	push a0
+	push w0
 
 	mov a0,$0f00
 tx00:
@@ -43,8 +53,13 @@ tx00:
 	st [a0],r1
 
 txexit:
+	pop w0
+	pop a0
 	ret
-	nop
+
+
+jumptable:
+	.dw tx,loop
 
 
 msg:
