@@ -625,6 +625,10 @@ int gen_lop(int op){	//	return opecode
 	op2 = get_register(buff) ;
 
 	if(op2==-1){
+		if(op1!=0){
+			errorOut("OP1 must be a register.") ;
+			return 0 ;
+		}
 		op2 = get_token_value(t, buff) ;
 
 		emit(codePos, Location, 2, op+5, op2, 0) ;
@@ -1066,7 +1070,7 @@ int code_gen(void){
 				offset=gen_Jcc() ;
 				codeByte = emit(codePos, Location, 2, cc, offset, 0) ;
 				break ;
-			case 28:	//	JMP i16
+			case 28:	//	JuMP i16
 				offset = get_offset16(get_token()) ;
 				codeByte = emit(codePos, Location, 3, 0xfe, offset & 0x00ff, (offset >> 8) & 0x00ff) ;
 				break ;
@@ -1377,9 +1381,6 @@ void show_const_list(FILE *fp){
 	}
 }
 
-void print_spc(FILE *fp, int n){
-	fprintf(fp, "          "+(2*n)) ;
-}
 
 void dumpCode(FILE *out_fp){
 	int i ;
@@ -1478,7 +1479,9 @@ void outListing(FILE *fp, FILE *out_fp){
 				for(n=0 ; n<code[i][0] ; n++){
 					fprintf(out_fp, "%02X", code[i][n+1]) ;
 				}
-				print_spc(out_fp, code[i][0]) ;
+
+				fprintf(out_fp, "          "+(2*code[i][0])) ;
+
 				loc+=code[i][0] ;
 				fprintf(out_fp, "%s\n", pos) ;
 				pos = get_line(fp, 0) ;

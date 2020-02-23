@@ -18,8 +18,8 @@ char *inst_str=
 
 
 char *reg_str=
-"R0\1R1\1R2\1R3\1W0\1W1\1A0\1A1\1CP\1SP"
-"A\1B\1C\1D\1W\1V\1X\1Y\1PC\1U" ;//	Alternative
+"R0\1R1\1R2\1R3\1W0\1W1\1A0\1A1\1CP\1SP\1"
+"A\1B\1C\1D\1W\1V\1X\1Y\1PC\1U\1" ;//	Alternative
 
 char *directive_str=
 ".ORG\1.DS\1.DB\1.DW\1.EQ\1.GLOBAL\1" ;
@@ -47,7 +47,9 @@ int get_word(char * str, char *tbl){
 }
 
 int get_register(char *ptr){
-	return get_word(ptr, reg_str) ;
+	int r = get_word(ptr, reg_str) ;
+	if(r>=10 && r<=20) r-=10 ;
+	return r ;
 }
 
 int get_opcode(char *ptr){

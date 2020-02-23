@@ -1,0 +1,75 @@
+
+Label ***
+ $002D = MSG
+ $000A = LOOP
+ $0012 = L001
+ $001A = TXCHAR
+ $0012 = RXCHAR
+ $0015 = RX00
+ $002A = TXEXIT
+ $0022 = TX00
+
+Constant ***
+ $003E = PROMPT
+
+Code ***
+                prompt eq $3e
+                
+                ; Disp message.
+ 0000 7F0000    	mov sp,0
+ 0003 7B00      	mov r3,0
+ 0005 7A01      	mov r2,1
+ 0007 7D2D00    	mov a1,msg
+                loop:
+ 000A 05        	ld r1,[a1]
+ 000B BF        	or r1,r3
+ 000C E504      	jz L001
+                
+ 000E D7        	inc a1
+                
+                ;	add r1,r3
+                ;	inc r1
+                ;	dec r1
+                ;	or r1,r2
+                
+ 000F FE0800    	jmp txchar
+                
+                L001:
+                
+                ; r1 : Recv char.
+                rxchar:
+ 0012 7C010F    	mov a0,$0f01
+                rx00:
+ 0015 00        	ld r0,[a0]
+ 0016 49        	mov r1,r0
+ 0017 B8        	or r0,r0
+ 0018 E5FB      	jz rx00
+                
+                ;	inc r1
+                ;	or r1,r2
+                
+                ; r1 : Ascii code to send.
+                txchar:
+ 001A 7B00      	mov r3,0
+ 001C BF        	or r1, r3
+ 001D E50B      	jz txexit
+                
+ 001F 7C000F    	mov a0,$0f00
+                tx00:
+ 0022 00        	ld r0, [a0]
+ 0023 A508      	and r0, $08
+ 0025 E5FB      	jz tx00	;	Wait while TxBuffer empty.
+                
+ 0027 D6        	inc a0
+                
+ 0028 87        	add r1,r3
+ 0029 09        	st [a0],r1
+                
+                txexit:
+ 002A FEDDFF    	jmp loop
+                msg:
+ 002D 4D6F6E69746F722D512056312E300A00
+                	.db 'Monitor-Q V1.0', $0a, 0
+ 003D
+
+END ***

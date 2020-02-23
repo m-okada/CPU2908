@@ -1,0 +1,154 @@
+
+Label ***
+ $0100 = START
+ $011C = OUT4H
+ $0156 = TOPMSG
+ $010A = LOOP
+ $010B = WAIT
+ $0117 = HALT
+*Undef = SKIP4H
+ $0127 = OUT4H00
+ $0129 = OUT4H01
+ $0154 = OUT2H
+ $0135 = RXCHAR
+ $0139 = RX00
+ $0140 = TXCHAR
+ $0151 = TXEXIT
+ $014A = TX00
+ $0156 = OUTSTRING
+ $0156 = OUTCHAR
+ $0156 = WAITSEND
+
+Constant ***
+ $FF00 = RXBUFF
+
+Code ***
+                ; QBUG Monitor.
+                ; Ver 1.0 M-Okada
+                ; L Load file
+                ; W Write file
+                ; S Step trace
+                ; G Go
+                ; R Dump register
+                ; M Dump memory
+                
+                rxbuff eq $ff00
+                ;
+                .org 0 ; swi 0
+ 0000 FEFD00    	jmp start
+                .org 8 ; swi 1
+ 0008 FA1101    	call out4h
+ 000B FD        	iret
+                .org 64 ; swi 8
+ 0040 FF        	nop
+                
+                .org $100
+                
+                start:
+ 0100 7F0000    	mov sp,0
+ 0103 B5        	xor r1,r1
+ 0104 7C010F    	mov a0,$0f01
+ 0107 7D5601    	mov a1,topmsg
+                loop:
+ 010A 08        	st [a0],r0
+                wait:
+ 010B 00        	ld r0,a0
+ 010C A5FE      	and r0, $fe
+ 010E E5FA      	jz loop
+ 0110 EEF9      	jmps wait
+ 0112 D7        	inc a1
+                
+ 0113 04        	ld r0,[a1]
+ 0114 A0        	and r0,r0
+ 0115 E4F3      	jnz loop
+                
+                halt:
+ 0117 7E1701    	mov pc,halt
+ 011A EEFB      	jmps halt
+                
+                out4h:	; w1 to hex
+ 011C 41        	mov r0, r3
+ 011D A50F      	and r0,$0F
+ 011F 8530      	add r0,$30
+                
+ 0121 AD0A      	cmp r0, 10
+ 0123 E100      	jc skip4h
+ 0125 8537      	add r0,$37 ; 'A'-10
+                out4h00:
+ 0127 8530      	add r0,$30
+                
+                out4h01:
+ 0129 60        	push w0
+                
+ 012A 49        	mov r1,r0
+ 012B C8        	shr r0
+ 012C C8        	shr r0
+ 012D C8        	shr r0
+ 012E C8        	shr r0
+                
+ 012F FA2200    	call out2h
+ 0132 48        	mov r0,r1
+                
+ 0133 68        	pop w0
+ 0134 6E        	ret
+                
+                ;
+                ;r1 : Recv char.
+                ;
+                rxchar:
+ 0135 64        	push a0
+ 0136 7C010F    	mov a0,$0f01
+                rx00:
+ 0139 00        	ld r0,[a0]
+ 013A 49        	mov r1,r0
+ 013B B8        	or r0,r0
+ 013C E5FB      	jz rx00
+                
+ 013E 6C        	pop a0
+ 013F 6E        	ret
+                
+                
+                ;
+                ; r1 : Ascii code to send.
+                ;
+                txchar:
+ 0140 64        	push a0
+ 0141 60        	push w0
+                
+ 0142 7B00      	mov r3,0
+ 0144 BF        	or r1, r3
+ 0145 E50A      	jz txexit	;	Wait for TxBuffer empty.
+                
+ 0147 7C000F    	mov a0,$0f00
+                tx00:
+ 014A 00        	ld r0, [a0]
+ 014B A508      	and r0, $08
+ 014D E5FB      	jz tx00
+ 014F D6        	inc a0
+ 0150 09        	st [a0],r1
+                
+                txexit:
+ 0151 68        	pop w0
+ 0152 6C        	pop a0
+ 0153 6E        	ret
+                
+                ;
+                ; r0 to hex -> w0
+                ;
+                out2h:	; r2 to hex
+ 0154 A50F      	and r0, $0f
+                
+                
+                outstring: ; A0 ptr of ascz string.
+                
+                outchar:
+                
+                waitsend:
+                
+                topmsg:
+ 0156 514255472056312E300A00
+                	.db 'QBUG V1.0',$0a,0
+ 0161 FF        	nop
+ 0162
+
+END ***

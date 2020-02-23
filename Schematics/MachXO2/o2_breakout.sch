@@ -1588,19 +1588,6 @@ Text Label 9350 4850 2    50   ~ 0
 FT_Reset
 Wire Wire Line
 	8850 4850 9350 4850
-$Comp
-L CPU2908CLocal:R R?
-U 1 1 5E34444C
-P 9350 1350
-AR Path="/5E6A6650/5E34444C" Ref="R?"  Part="1" 
-AR Path="/5E34444C" Ref="R12"  Part="1" 
-F 0 "R12" H 9420 1396 50  0000 L CNN
-F 1 "10K" H 9420 1305 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0402" V 9280 1350 50  0001 C CNN
-F 3 "~" H 9350 1350 50  0001 C CNN
-	1    9350 1350
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	9350 1500 9350 1550
 Connection ~ 9350 1550

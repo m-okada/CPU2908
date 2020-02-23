@@ -164,6 +164,13 @@ int _get_token(char* ptr){
 				while(get_char()!=-1) ;	//	comment
 				return -1 ;
 			}
+			else if(cc=='{'){	//	comment
+				while(1){
+					cc =get_char() ;
+					if(cc=='}' || cc==-1) break ;
+				}
+				continue ;
+			}
 			else if(cc==','){	//
 				take_char(cc) ;
 				return 6 ;
