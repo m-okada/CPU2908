@@ -6,6 +6,7 @@
 
 #endif
 
+#include "q_typedef.h"
 
 
 char *inst_str=
@@ -24,8 +25,8 @@ char *reg_str=
 char *directive_str=
 ".ORG\1.DS\1.DB\1.DW\1.EQ\1.GLOBAL\1" ;
 
-int get_word(char * str, char *tbl){
-	int wc=0 ;
+UINT get_word(char * str, char *tbl){
+	UINT wc=0 ;
 	char *ptr = tbl ;
 	char *word = str ;
 
@@ -43,20 +44,20 @@ int get_word(char * str, char *tbl){
 		}
 	}
 
-	return -1 ;
+	return FF ;
 }
 
-int get_register(char *ptr){
+UINT get_register(char *ptr){
 	int r = get_word(ptr, reg_str) ;
 	if(r>=10 && r<20) r-=10 ;
 	return r ;
 }
 
-int get_opcode(char *ptr){
+UINT get_opcode(char *ptr){
 	return get_word(ptr, inst_str) ;
 }
 
-int get_directive(char *ptr){
+UINT get_directive(char *ptr){
 	return get_word(ptr, directive_str) ;
 }
 

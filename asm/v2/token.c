@@ -11,24 +11,27 @@ typedef unsigned char BYTE ;
 
 #endif
 
-int char_buff=-1 ;
+#include "q_typedef.h"
 
-int isNum(char cc){
+
+UINT char_buff=0x0ffff ;
+
+UINT isNum(char cc){
 	if(cc>='0' && cc <='9') return 1 ;
 	return 0 ;
 }
 
-int isAlpha(char cc){
+UINT isAlpha(char cc){
 	if((cc>='A' && cc<='Z') || cc=='_') return 1 ;
 	return 0 ;
 }
 
-int isHex(char cc){
+UINT isHex(char cc){
 	if((cc>='0' && cc <='9') || (cc>='A' && cc<='F')) return 1 ;
 	return 0 ;
 }
 
-int to_upper(int c){
+UINT to_upper(UINT c){
 	return (c>='a' && c<= 'z') ? c-32 : c ;
 }
 
@@ -36,10 +39,10 @@ int to_upper(int c){
 
 char* pos ;
 char buff[128] ;
-int buff_pos=0 ;
+UINT buff_pos=0 ;
 
-int _get_char(void){
-	int cc ;
+UINT _get_char(void){
+	UINT cc ;
 
 	if(*pos!=0){
 		cc = (int)*pos ;
@@ -47,7 +50,7 @@ int _get_char(void){
 		return cc ;
 	}
 	else{
-		return -1 ;
+		return FF ;
 	}
 
 }
@@ -55,11 +58,11 @@ int _get_char(void){
 /*
 1文字読み込み
 */
-int get_char(void){
-	int cc ;
-	if(char_buff!=-1){
+UINT get_char(void){
+	UINT cc ;
+	if(char_buff!=FF){
 		cc =  char_buff ;
-		char_buff=-1 ;
+		char_buff=FF ;
 		return cc ;
 	}
 	else{
@@ -70,8 +73,8 @@ int get_char(void){
 /*
 1文字pushback
 */
-void unget_char(int cc){
-	if(char_buff!=-1){
+void unget_char(UINT cc){
+	if(char_buff!=FF){
 		printf("Error ungetc\n") ;
 	}
 	char_buff=cc ;
@@ -80,8 +83,8 @@ void unget_char(int cc){
 /*
 1文字バッファにコピー
 */
-int take_char(int cc){
-	if(buff_pos==127) return -1 ;
+UINT take_char(UINT cc){
+	if(buff_pos==127) return FF ;
 	buff[buff_pos]=(char)cc ;
 	buff_pos++ ;
 	buff[buff_pos]=0 ;
@@ -92,8 +95,8 @@ int take_char(int cc){
 トークン切り出し
 */
 int get_token(char* ptr){
-	int _get_token(char*) ;
-	int t ;
+	UINT _get_token(char*) ;
+	UINT t ;
 
 	while(1){
 		t=_get_token(ptr) ;
@@ -118,12 +121,12 @@ int get_token(char* ptr){
 	10 string
 
 */
-int _get_token(char* ptr){
-	int state=0 ;
-	int type=0 ;
+UINT _get_token(char* ptr){
+	UINT state=0 ;
+	UINT type=0 ;
 
-	int cc ;
-	int rc ;
+	UINT cc ;
+	UINT rc ;
 	buff_pos=0 ; buff[0]=0 ;
 
 	while(rc=get_char()){
@@ -131,7 +134,7 @@ int _get_token(char* ptr){
 
 		switch(state){
 		case 0:		//	top
-			if(cc==0x0a || cc==-1) return -1 ;
+			if(cc==0x0a || cc==FF) return FF ;
 			else if(isAlpha(cc)){
 				take_char(cc) ;
 				state=1 ;

@@ -8,13 +8,14 @@
 */
 
 #include <stdio.h>
+#include "q_typedef.h"
 
-extern int Line ;
+extern UINT Line ;
 
 char fileBuff[82] ;
 
-char* get_line(FILE* fp, int skip_tab){
-	int i, len ;
+char* get_line(FILE* fp, UINT skip_tab){
+	UINT i, len ;
 
 	while(1){
 		unsigned char cc ;
@@ -43,6 +44,8 @@ char* get_line(FILE* fp, int skip_tab){
 			break ;
 		}
 		len = fread(fileBuff+i+1, 1, 1, fp) ;
+
+
 		if(len!=1){
 			fileBuff[i+1]=0 ;
 			return fileBuff ;

@@ -8,6 +8,7 @@ asq:asq.c token.c get_word.c get_line.c
 
 */
 
+
 /*
 
 行頭はラベル定義（宣言）、ディレクティブ、オペコード
@@ -50,31 +51,38 @@ $HEX
 #include <stdint.h>
 #include <string.h>
 
+#include "q_typedef.h"
 #include "token.h"
 #include "get_word.h"
 
 
-int Line = 0 ;
-int errorCount=0 ;
+UINT Line = 0 ;
+UINT errorCount=0 ;
+UINT FF=0x0ffff ;	//	16bit -1
 
 void errorOut(char *str){
 	errorCount++ ;
 	fprintf(stderr, "Line %d :  Error %s\n", Line, str) ;
 }
 
+
+UINT neg(UINT n){
+	return((~n) +1) & 0x0ffff ;
+}
+
 // 16進文字から整数へ
-int char2int(char cc){
+UINT char2int(char cc){
 	if('0'<=cc && cc<='9'){
 		return cc-'0' ;
 	}
 	else if(cc>='A' && 'F'>=cc){
 		return cc-'A'+10 ;
 	}
-	else return -1 ;
+	else return 0 ;
 }
 
-int str2int(int radix, char *str){
-	int retval=0 ;
+UINT str2int(UINT radix, char *str){
+	UINT retval=0 ;
 
 	while(*str){
 		retval = retval * radix + char2int(*str) ;
@@ -87,8 +95,8 @@ char *str_rchar(char *str, char cc){
 }
 
 //	30バイト比べておなじなら一致にする。（そもそも30バイトしかコピーしてない）
-int str_cmp(char *str1, char* str2){
-	int i ;
+UINT str_cmp(char *str1, char* str2){
+	UINT i ;
 	if(*str1==0 || *str2==0) return 0 ;
 	for(i=0 ; i<30 ; i++){
 		if(str1[i]==0 && str2[i]==0) return 1 ;
@@ -97,8 +105,8 @@ int str_cmp(char *str1, char* str2){
 	return 1 ;
 }
 
-int str_cpy(char *dst, char *src){
-	int i ;
+UINT str_cpy(char *dst, char *src){
+	UINT i ;
 	for(i=0 ; i<30 ; i++){
 		if(src[i]==0){
 			dst[i]=0 ;
@@ -112,17 +120,15 @@ int str_cpy(char *dst, char *src){
 
 
 
-
-
 /*
 コード出力用ワーク
 */
-int op ;
-int op1, op2, op3 ;
-int Location=0 ;
+UINT op ;
+UINT op1, op2, op3 ;
+UINT Location=0 ;
 
 
-int label_value[1024] ;	//	-1:未定義　参照のみで定義されてない。前方参照。
+UINT label_value[1024] ;	//	-1:未定義　参照のみで定義されてない。前方参照。
 char label[1024][32] ;	//	ラベル名 index はlabel_value と同じ
 /*
 ラベルの参照位置
@@ -132,19 +138,19 @@ char label[1024][32] ;	//	ラベル名 index はlabel_value と同じ
 [2] Location
 [3] 型1:バイト2:ワード3:絶対位置（ワード）（ニーモニックで判定する）
 */
-int label_pos[2048][4] ;
+UINT label_pos[2048][4] ;
 
 
 //	文字列バッファ db で定義された値もここに書き込む
 char strings[256][32] ;
-int strings_pos[256] ;	//	Location
+//UINT strings_pos[256] ;	//	Location
 
 
-int currentIdt=-1 ;	//	EQ で定義される定数は識別子を登録した時にここに入れておく。行が変ったらクリア
+UINT currentIdt ;	//	EQ で定義される定数は識別子を登録した時にここに入れておく。行が変ったらクリア
 
 // 定数テーブル
 char constant[1024][32] ;
-int const_value[1024] ;	//	定数　-1なら定数未定義　定数は直後の eq で定義するので。
+UINT const_value[1024] ;	//	定数　-1なら定数未定義　定数は直後の eq で定義するので。
 
 /*
 code[codePos][4]
@@ -161,44 +167,44 @@ FF.xx 未使用。テーブル終端
 最後にコード読みながらリスティングを出力するときにも使う
 コード生成しない行は圧縮する
 */
-int codePos=0 ;
+UINT codePos=0 ;
 unsigned char code[16*1024][4] ;
-int code_loc[16*1024] ;	//	ロケーション
+UINT code_loc[16*1024] ;	//	ロケーション
 
 
 extern char fileBuff[82] ;
-char* get_line(FILE* fp, int skip_tab) ;
+char* get_line(FILE* fp, UINT skip_tab) ;
 
 extern char buff[128] ;
 
-int accept_T(int type){	//@@@
-	int t ;
+UINT accept_T(UINT type){
+	UINT t ;
 	char * ptr ;
 	t = get_token() ;
 	if(t==type) return 1 ;
-	return -1 ;
+	return FF ;
 }
 
-int except_T(int type){
+UINT except_T(UINT type){
 	if(accept_T(type)==1) return 1 ;
 	else return 0 ;
 }
 
 
-int except_reg(void){
-	int r, t ;
+UINT except_reg(void){
+	UINT r, t ;
 
 	t = get_token() ;
 	if(t==1){
 		r = get_register(buff) ;
-		if(r>=0) return r ;
+		if(r!=FF) return r ;
 	}
-	return -1 ;
+	return FF ;
 }
 
 
 // Code generate.
-int emit(int pos, int loc, char nByte, char code1, char code2, char code3){
+UINT emit(UINT pos, UINT loc, char nByte, char code1, char code2, char code3){
 	code_loc[pos]=loc ;
 	code[pos][0]=nByte ;
 	code[pos][1]=code1 ;
@@ -207,30 +213,30 @@ int emit(int pos, int loc, char nByte, char code1, char code2, char code3){
 	return nByte ;
 }
 
-int emit1(int codePos, int location, char code){
+UINT emit1(UINT codePos, UINT location, char code){
 	emit(codePos, Location, 1, code, 0, 0) ;
 	return 1 ;
 }
 
 
 
-int get_const_index(char *str){
-	int i ;
+UINT get_const_index(char *str){
+	UINT i ;
 	for(i=0 ; i<1024 ; i++){
 		if(str_cmp(constant[i], str)){
-			return i ;
+			return (UINT)i ;
 		}
 	}
-	return -1 ;
+	return FF ;
 }
 
-int get_const_value(char *str){
-	int t ;
+UINT get_const_value(char *str){
+	UINT t ;
 	t=get_const_index(str) ;
 	if(t>=0){
 		return const_value[t] ;
 	}
-	return -1 ;
+	return FF ;
 }
 
 
@@ -238,54 +244,60 @@ int get_const_value(char *str){
 str を数値に変換　10進　16進　定数など
 strはget_tokenの戻り値を使うのでtが必要。
 */
-int get_token_value(int t, char *str){
-	int sign=1 ;
+UINT get_token_value(UINT t, char *str){
+	UINT sign=0 ;
+	UINT n ;
 
-	if(t==-1) return 0 ;
+	if(t==FF) return 0 ;
 	else if(t==7){
 		t = get_token() ;
 	}
 	else if(t==8){	//	-
 		t = get_token() ;
-		sign=-1 ;
+		sign=1 ;
 	}
 
 	if(t==1){	//	identifyer
-		int n = get_const_value(str) ;
-		if(n==-1){	//	label
-			return -1 ;
+		n = get_const_value(str) ;
+		if(n==FF){	//	label
+			return FF ;
 		}
-		return (sign*n) & 0x0ffff ;
+		if(sign==1) n=neg(n) ;
+		return n & 0x0ffff ;
 	}
 	else if(t==3){	//	decimal
-		return (sign*str2int(10, str)) & 0x0ffff ;
+		n=str2int(10, str) ;
+		if(sign==1) n=neg(n) ;
+		return n & 0x0ffff ;
 	}
 	else if(t==4){	//	hex
-		return (sign*str2int(16, str)) & 0x0ffff ;
+		n=str2int(16, str) ;
+		if(sign==1) n=neg(n) ;
+		return n & 0x0ffff ;
 	}
 	else{
-		return -1 ;
+		return FF ;
 	}
 }
 
 
-int register_const(char *str){
-	int i, t ;
+UINT register_const(char *str){
+	UINT i, t ;
 	t = get_const_index(str) ;
-	if(t!=-1){
+	if(t!=FF){
 		//	定数二重定義
 		currentIdt=t ;
 		return t ;
 	}
 	for(i=0 ; i<1024 ; i++){
-		if(const_value[i]==-1){
+		if(const_value[i]==FF){
 			str_cpy(constant[i], str) ;
 			currentIdt=i ;
 			const_value[i]=0 ;
 			return i ;
 		}
 	}
-	return -1 ;
+	return FF ;
 }
 
 
@@ -302,34 +314,31 @@ int register_const(char *str){
 		あと、.db、.dwの後ろ
 */
 
-int get_label_index(char* str){
-	int i ;
+UINT get_label_index(char* str){
+	UINT i ;
 	for(i=0 ; i<1024 ; i++){
 		if(str_cmp(label[i], str)){
 			return i ;
 		}
 	}
-	return -1 ;
+	return FF ;
 }
 
 //	ラベル登録
-int register_label(char* str){
-	int i ;
+UINT register_label(char* str){
+	UINT i ;
 
 	for(i=0 ; i<1024 ; i++){
 		if(label[i][0]==0){
 			str_cpy(label[i], str) ;
-			label_value[i]=-1 ;
+			label_value[i]=FF ;
 
 			return i ;
 		}
 	}
 
-	if(i==1024){
-		errorOut("Label table Overflow.") ;
-		return -1 ;	//	満員です
-	}
-	return -1 ;
+	errorOut("Label table Overflow.") ;
+	return FF ;
 }
 
 
@@ -339,11 +348,11 @@ int register_label(char* str){
 codePos, label[idx]
 reftype:0 8bit offset
 */
-int label_add_ref(int codePos, int idx, int reftype){
-	int i ;
+UINT label_add_ref(UINT codePos, UINT idx, UINT reftype){
+	UINT i ;
 
 	for(i=0 ; i<2048 ; i++){
-		if(label_pos[i][0]==-1){
+		if(label_pos[i][0]==FF){
 			label_pos[i][0]=idx ;
 			label_pos[i][1]=codePos ;
 			label_pos[i][2]=Location ;
@@ -351,14 +360,14 @@ int label_add_ref(int codePos, int idx, int reftype){
 			return i ;
 		}
 	}
-	return -1 ;
+	return FF ;
 }
 
 
 //	idx位置のラベルのLocationが確定したので、codeリライト
-int label_rewrite(int idx){
-	int i, pos, loc ;
-	int offset ;
+UINT label_rewrite(UINT idx){
+	UINT i, pos, loc ;
+	UINT offset ;
 	char c0, c1 ;
 
 	for(i=0 ; i<2048 ; i++){
@@ -382,7 +391,7 @@ int label_rewrite(int idx){
 				c1=(label_value[idx] >> 8) & 0x00ff ;
 				break ;
 			}
-			label_pos[i][0]=-1 ;	//	開放
+			label_pos[i][0]=FF ;	//	開放
 			code[pos][2]=c0;
 			code[pos][3]=c1;
 		}
@@ -391,29 +400,27 @@ int label_rewrite(int idx){
 }
 
 
-
 /*
 ラベルのロケーション
 labelから一致したエントリーを探す。-1なら未定義。
 */
-int get_label_value(char* str){
-	int t = get_label_index(str) ;
-	if(t==-1) return -1 ;
+UINT get_label_value(char* str){
+	UINT t = get_label_index(str) ;
+	if(t==FF) return FF ;
 	return label_value[t] ;
 }
-
-
 
 
 /*
 LD dst,src
 srcは(A0|A1|SP)、(A0|A1|SP)＋－imm、
 */
-int gen_LD(void){
-	int r, t, base, sign=1 ;
+UINT gen_LD(void){
+	UINT r, t, base ;
+	UINT sign=0 ;// 1:negetive
 
 	r=except_reg() ;
-	if(r==-1){
+	if(r==FF){
 		errorOut("Register require.") ;
 		return 0 ;
 	}
@@ -433,7 +440,7 @@ int gen_LD(void){
 	}
 
 	r=except_reg() ;
-	if(r==-1){	//
+	if(r==FF){	//
 		errorOut("Register require.") ;
 		return 0 ;
 	}
@@ -448,19 +455,19 @@ int gen_LD(void){
 		op2 = r ;
 		t = get_token() ;
 
-		if(t==8 && (sign=-1) || t==7){	//	- または +
+		if(t==8 && (sign=1) || t==7){	//	- または +
 			//	後ろにオフセットが付くはず
 
 			t = get_token() ;
 
 			op3 = get_token_value(t, buff) ;
 
-			if(op3==-1){
+			if(op3==FF){
 				errorOut("Offset must be number.") ;
 				return 0 ;
 			}
 
-			op3*=sign ;
+			if(sign==1)op3=neg(op3) ;
 
 			base = 0x10+(op2-6)*4 ;
 			if(op2==9){
@@ -470,7 +477,7 @@ int gen_LD(void){
 			return 2 ;
 		}
 		else{	//	+-が無い場合はオフセット無しとして後ろは読み飛ばす
-			int src ;
+			UINT src ;
 			//printf("no offset ") ;
 			if(op2==9){	// Stack pointer. SPなら必ずオフセットつけなくちゃだめ
 				errorOut("Offset reqired SP base addressing.") ;
@@ -489,12 +496,12 @@ int gen_LD(void){
 
 
 
-int gen_ST(void){
-	int r, t, base, sign ;
+UINT gen_ST(void){
+	UINT r, t, base, sign ;
 
-	sign=1 ;
+	sign=0 ;
 	r=except_reg() ;
-	if(r==-1){
+	if(r==FF){
 		errorOut("Register require.") ;
 		return 0 ;
 	}
@@ -503,7 +510,7 @@ int gen_ST(void){
 	op3=0 ;
 	t = get_token() ;
 	if(t==7 || t==8){	// +-
-		if(t==8) sign=-1 ;
+		if(t==8) sign=1 ;
 		t = get_token() ;
 
 		if(t==3){	//	decimal
@@ -516,7 +523,7 @@ int gen_ST(void){
 			errorOut("Offset must be number.") ;
 			return 0 ;
 		}
-		op3 = op3 * sign ;
+		if(sign==1) op3 = neg(op3) ;
 		t = get_token() ;
 	}
 
@@ -526,7 +533,7 @@ int gen_ST(void){
 	}
 
 	r=except_reg() ;
-	if(r==-1){	//
+	if(r==FF){	//
 		errorOut("Register require.") ;
 		return 0 ;
 	}
@@ -557,8 +564,8 @@ int gen_ST(void){
 }
 
 
-int gen_lop(int op){	//	return opecode
-	int t, op1, op2 ;
+UINT gen_lop(UINT op){	//	return opecode
+	UINT t, op1, op2 ;
 
 	t = get_token() ;
 	op1 = get_register(buff) ;
@@ -571,7 +578,7 @@ int gen_lop(int op){	//	return opecode
 	t = get_token() ;
 	op2 = get_register(buff) ;
 
-	if(op2==-1){
+	if(op2==FF){
 		if(op1!=0){
 			errorOut("OP1 must be a register.") ;
 			return 0 ;
@@ -590,14 +597,14 @@ int gen_lop(int op){	//	return opecode
 }
 
 //	1 operand instruction
-int gen_SH(int op){
-	int t, op1 ;
+UINT gen_SH(UINT op){
+	UINT t, op1 ;
 
 	op1 = get_token() ;
 
 	t = get_register(buff) ;
 
-	if(t!=-1){
+	if(t!=FF){
 		emit(codePos, Location, 1, op+t, 0, 0) ;
 		return 1 ;
 	}
@@ -605,8 +612,8 @@ int gen_SH(int op){
 	return 0 ;
 }
 
-int gen_PUSH(void){
-	int t ;
+UINT gen_PUSH(void){
+	UINT t ;
 
 	op1 = get_token() ;
 	t = get_register(buff) ;
@@ -619,8 +626,8 @@ int gen_PUSH(void){
 	return 1 ;
 }
 
-int gen_POP(void){
-	int t ;
+UINT gen_POP(void){
+	UINT t ;
 
 	op1 = get_token() ;
 	t = get_register(buff) ;
@@ -633,14 +640,14 @@ int gen_POP(void){
 	return 1 ;
 }
 
-int gen_INC_DEC(int op){
-	int t ;
+UINT gen_INC_DEC(UINT op){
+	UINT t ;
 
 	op1 = get_token() ;
 
 	t = get_register(buff) ;
 
-	if(t!=-1){
+	if(t!=FF){
 		if(t<8){
 			emit(codePos, Location, 1, op+t, 0, 0) ;
 			return 1 ;
@@ -652,8 +659,8 @@ int gen_INC_DEC(int op){
 
 
 
-int gen_XCHG(void){
-	int t, r, op, imm ;
+UINT gen_XCHG(void){
+	UINT t, r, op, imm ;
 
 	t = get_token() ;
 	op1 = get_register(buff) ;
@@ -686,8 +693,8 @@ int gen_XCHG(void){
 }
 
 
-int gen_MOV(void){
-	int t, r, op, imm, id, pos ;
+UINT gen_MOV(void){
+	UINT t, r, op, imm, id, pos ;
 
 	t = get_token() ;
 	op1 = get_register(buff) ;
@@ -699,14 +706,14 @@ int gen_MOV(void){
 
 	t = get_token() ;
 	op2 = get_register(buff) ;
-	if(op2==-1){
+	if(op2==FF){
 		imm = get_token_value(t, buff) ;
-		if(imm==-1){
+		if(imm==FF){
 			id=get_label_index(buff) ;	//	なかったら定数ではないのでラベルを探す
-			if(id==-1) id = register_label(buff) ;	//	初登場のラベル
+			if(id==FF) id = register_label(buff) ;	//	初登場のラベル
 
 			pos = get_label_value(buff) ;
-			if(pos!=-1){	//	位置がわかってる=定義されている
+			if(pos!=FF){	//	位置がわかってる=定義されている
 				imm = pos ;
 			}
 			else{	// 参照位置の登録
@@ -778,18 +785,18 @@ int gen_MOV(void){
 
 
 
-int gen_Jcc(void){	//	return offset
-	int offset=0 ;
-	int sign=1 ;
-	int id, pos ;
+UINT gen_Jcc(void){	//	return offset
+	UINT offset=0 ;
+//	UINT sign=0 ;
+	UINT id, pos ;
 
-	int t=get_token() ;	//	ラベルは後ろの:が無いから識別子で返って来る
+	UINT t=get_token() ;	//	ラベルは後ろの:が無いから識別子で返って来る
 	if(t==1){	//	ident
 		id = get_const_index(buff) ;	//	定数に登録されているか（定数は先に定義しておかないといけない）
-		if(id==-1){
+		if(id==FF){
 			//printf(" label?(%s) ", buff) ;
 			t=get_label_index(buff) ;	//	なかったら定数ではないのでラベルを探す
-			if(t==-1){
+			if(t==FF){
 				id = register_label(buff) ;	//	初登場のラベル
 			}
 			else{
@@ -799,26 +806,26 @@ int gen_Jcc(void){	//	return offset
 		else{	//	定数だった
 			offset=get_token_value(t, buff) ;
 
-			offset = offset*sign ;
+//			if(sign==1) offset = -offset ;
 			return offset ;
 		}
 
 		pos = get_label_value(buff) ;
-		if(pos!=-1){	//	定義されている
+		if(pos!=FF){	//	定義されている
 			offset = pos - (Location+2) ;
 		}
 		else{	// 参照位置の登録
 			label_add_ref(codePos, id, 1) ;
 		}
 	}
-	else if(t!=-1){
+	else if(t!=FF){
 		offset=get_token_value(t, buff) ;
 		//	error 処理　@@@
 
-		offset *= sign ;
+//		offset *= sign ;
 	}
 	else{
-		return -1 ;
+		return FF ;
 	}
 
 	return offset ;
@@ -827,16 +834,16 @@ int gen_Jcc(void){	//	return offset
 /*
 16bit offset.
 */
-int get_offset16(int t){
-	int offset=0 ;
-	int id, pos ;
+UINT get_offset16(UINT t){
+	UINT offset=0 ;
+	UINT id, pos ;
 
 	// t=get_token() ;	//	ラベルは後ろの:が無いから識別子で返って来る
 	if(t==1){	//	ident
 		id = get_const_index(buff) ;	//	定数に登録されているか（定数は先に定義しておかないといけない）
-		if(id==-1){
+		if(id==FF){
 			t=get_label_index(buff) ;	//	なかったら定数ではないのでラベルを探す
-			if(t==-1){
+			if(t==FF){
 				t = register_label(buff) ;	//	初登場のラベル
 			}
 			id = t ;	//
@@ -847,36 +854,36 @@ int get_offset16(int t){
 		}
 
 		pos = get_label_value(buff) ;
-		if(pos!=-1){	//	すでに定義されている
+		if(pos!=FF){	//	すでに定義されている
 			offset = pos - (Location+3) ;
 		}
 		else{	// 参照位置の登録
 			label_add_ref(codePos, id, 2) ;
 		}
 	}
-	else if(t!=-1){
+	else if(t!=FF){
 		offset=get_token_value(t, buff) ;
-		if(offset==-1){
+		if(offset==FF){
 			errorOut("Illegal offset.") ;
-			return -1 ;
+			return FF ;
 		}
 	}
 	else{
-		return -1 ;
+		return FF ;
 	}
 
 	return offset ;
 }
 
-int get_location16(int t){
-	int offset=0 ;
-	int id, pos ;
+UINT get_location16(UINT t){
+	UINT offset=0 ;
+	UINT id, pos ;
 
 	if(t==1){	//	ident
 		id = get_const_index(buff) ;	//	定数に登録されているか（定数は先に定義しておかないといけない）
-		if(id==-1){
+		if(id==FF){
 			t=get_label_index(buff) ;	//	なかったら定数ではないのでラベルを探す
-			if(t==-1){
+			if(t==FF){
 				t = register_label(buff) ;	//	初登場のラベル
 			}
 			id = t ;	//
@@ -887,30 +894,30 @@ int get_location16(int t){
 		}
 
 		pos = get_label_value(buff) ;
-		if(pos!=-1){	//	すでに定義されている
+		if(pos!=FF){	//	すでに定義されている
 			offset = pos ;
 		}
 		else{	// 未定義なら参照位置を登録
 			label_add_ref(codePos, id, 3) ;
 		}
 	}
-	else if(t!=-1){
+	else if(t!=FF){
 		offset=get_token_value(t, buff) ;
-		if(offset==-1){
+		if(offset==FF){
 			errorOut("Illegal offset.") ;
-			return -1 ;
+			return FF ;
 		}
 	}
 	else{
-		return -1 ;
+		return FF ;
 	}
 
 	return offset ;
 }
 
-int gen_CALL(void){
-	int offset=0 ;
-	int r, t  ;
+UINT gen_CALL(void){
+	UINT offset=0 ;
+	UINT r, t  ;
 
 	t=get_token() ;	//	ラベルは後ろの:が無いから識別子で返って来る
 	if(t==1){	//	ident
@@ -933,20 +940,20 @@ int gen_CALL(void){
 }
 
 
-int code_gen(void){
-	int t, code, gen=0 ;
-	int n ;
-	int codeByte=0 ;
-	int idx ;
-	int offset ;
-	int cc ;
+UINT code_gen(void){
+	UINT t, code, gen=0 ;
+	UINT n ;
+	UINT codeByte=0 ;
+	UINT idx ;
+	UINT offset ;
+	UINT cc ;
 
 	t = get_token() ;
 
 	switch(t){
 	case 1:	//	Identifyer オペコード又は定数。定数の場合後ろはEQしか対応していない。
 		code=get_opcode(buff) ;
-		if(code!=-1){	//	オペコードらしい
+		if(code!=FF){	//	オペコードらしい
 			code++ ;
 			gen=1 ;
 
@@ -1045,10 +1052,10 @@ int code_gen(void){
 				break ;
 			case 38:	//	SWI
 				t = get_token() ;
-				if(t==-1){
+				if(t==FF){
 					codeByte=0 ;
 					errorOut("IMM8 require.") ;
-					return -1 ;
+					return FF ;
 				}
 				else{
 					t = get_token_value(t, buff) ;
@@ -1084,36 +1091,36 @@ int code_gen(void){
 		}
 		else{	//	Identifier　たぶんこのあとeq定数が続く
 			//	constantテーブルに登録してカレントにする。続くeqで定数定義
-			int t ;
+			UINT t ;
 
 			t=register_const(buff) ;
 
-			if(t!=-1){
+			if(t!=FF){
 				currentIdt=t ;
 				t=get_token() ;
 				if(t!=1 || str_cmp("EQ", buff)==0){
 					errorOut("EQ Required.\n") ;
-					return -1 ;
+					return FF ;
 				}
 				else{	//	eq
-					int val ;
+					UINT val ;
 
 					t=get_token() ;
 					t = get_token_value(t, buff) ;
-					if(t==-1){
+					if(t==FF){
 						//	error
 						errorOut("Literal required.\n") ;
-						return -1 ;
+						return FF ;
 					}
 
 					const_value[currentIdt]=t ;
-					currentIdt=-1 ;
+					currentIdt=FF ;
 				}
 			}
 			else{
-				currentIdt=-1 ;
+				currentIdt=FF ;
 				errorOut("Identiyer required.\n") ;
-				return -1 ;
+				return FF ;
 			}
 		}
 		break ;
@@ -1125,7 +1132,7 @@ int code_gen(void){
 			t = get_token() ;
 			n = get_token_value(t, buff) ;
 
-			if(n==-1){
+			if(n==FF){
 				errorOut("Not a number.") ;
 			}
 			else{
@@ -1135,10 +1142,9 @@ int code_gen(void){
 		case 1: // .ds
 			t = get_token() ;
 			if(t==10){
-				for(int i=0 ; i<256 ; i++){
+				for(UINT i=0 ; i<256 ; i++){
 					if(strings[i][0]==0){
 						t = str_cpy(strings[i], buff) ;
-						strings_pos[i]=Location ;
 
 						emit(codePos, Location, 0xfe, i, t, 0) ;
 						break ;
@@ -1146,13 +1152,13 @@ int code_gen(void){
 				}
 			}
 			gen=1 ;
-			Location +=t+1 ;
+			Location += t+1 ;
 
 			break ;
 		case 2: // .db
 			{
-				int n=0, i ;
-				int pos ;
+				UINT n=0, i ;
+				UINT pos ;
 
 				//	空きを探しておく
 				for(i=0 ; i<256 ; i++){
@@ -1162,16 +1168,15 @@ int code_gen(void){
 					}
 				}
 
-				if(pos==-1){
+				if(pos==FF){
 					errorOut("String store over flow.") ;
-					gen=-1 ;
+					gen=FF ;
 					break ;
 				}
 
-				strings_pos[pos]=Location ;
 				while(1){
 					t = get_token() ;
-					if(t==-1){
+					if(t==FF){
 						break ;
 					}
 					else if(t==10){
@@ -1198,7 +1203,7 @@ int code_gen(void){
 				if(t==1){
 					gen=1 ;
 					op1=get_location16(t) ;
-					if(op1==-1){
+					if(op1==FF){
 						emit(codePos, Location, 0xfc, 0, 0, 0) ;
 						codeByte=2 ;
 						Location+=2 ;
@@ -1229,13 +1234,13 @@ int code_gen(void){
 		break ;
 	case 5:	//	Label
 		idx=get_label_index(buff) ;
-		if(idx<0){
+		if(idx==FF){
 			idx = register_label(buff) ;
 		}
 		label_value[idx] = Location ;
 		label_rewrite(idx) ;
 
-		gen=-1 ;
+		gen=FF ;
 		break ;
 	default:
 		if(buff[0]!=0){
@@ -1258,22 +1263,22 @@ char fname[256] ;
 
 extern char* pos ;
 
-int program(void){
-	int t, i=0 ;
+UINT program(void){
+	UINT t, i=0 ;
 
 	//　ソース読みながらコード生成
 	while(1){
-		op1=op2=op3=-1 ;
-		currentIdt=-1 ;	//	カレント識別子　改行時にクリア
+		op1=op2=op3=FF ;
+		currentIdt=FF ;	//	カレント識別子　改行時にクリア
 
 		pos = get_line(src_fp, 1) ;
-		//printf("L:%d %s\n", Line, pos) ;
 		if(pos==NULL) break ;
 
 		t = code_gen() ;
-		if(t<1){ //	空行Pack
+//printf("gen(%d:%x)", t, codePos) ;
+		if(t==FF || t==0){ //	空行Pack
 			if(codePos > 0 && code[codePos-1][0]==0){
-				if(code[codePos-1][1]==255){
+				if(code[codePos-1][1]==0xff){
 					code[codePos-1][2]++ ;
 					code[codePos-1][1]=0 ;
 				}
@@ -1294,18 +1299,19 @@ int program(void){
 
 		i++ ;
 	}
-
+//printf("ret") ;
+//fflush(stdout) ;
 	return 0 ;
 }
 
 
 void show_label_list(FILE *fp){
-	int i ;
+	UINT i ;
 
 	fprintf(fp, "\nLabel ***\n") ;
 	for(i=0 ; i<1024 ; i++){
 		if(label[i][0]!=0){
-			if(label_value[i]==-1){
+			if(label_value[i]==FF){
 				fprintf(fp, "*Undef = %s\n", label[i]) ;
 			}
 			else{
@@ -1316,7 +1322,7 @@ void show_label_list(FILE *fp){
 }
 
 void show_const_list(FILE *fp){
-	int i ;
+	UINT i ;
 
 	fprintf(fp, "\nConstant ***\n") ;
 	for(i=0 ; i<1024 ; i++){
@@ -1328,8 +1334,8 @@ void show_const_list(FILE *fp){
 
 
 void dumpCode(FILE *out_fp){
-	int i ;
-	int loc=0 ;
+	UINT i ;
+	UINT loc=0 ;
 
 	for(i=0 ; i<16*1024 ; i++){
 		if(code[i][0]==0xff){
@@ -1360,7 +1366,7 @@ void dumpCode(FILE *out_fp){
 			if(code[i][0]!=0){
 				fprintf(out_fp, "%04X : ", code_loc[i]) ;
 				loc = code_loc[i] ;
-				int n ;
+				UINT n ;
 				for(n=0 ; n<code[i][0] ; n++){
 					fprintf(out_fp, "%02X ", code[i][n+1]) ;
 				}
@@ -1372,20 +1378,21 @@ void dumpCode(FILE *out_fp){
 }
 
 void outListing(FILE *fp, FILE *out_fp){
-	int i ;
-	int loc=0 ;
+	UINT i ;
+	UINT loc=0 ;
 
 	char *pos = get_line(fp, 0) ;
 
 	fprintf(out_fp, "\nCode ***\n") ;
 	for(i=0 ; i<16*1024 ; i++){
+
 		if(code[i][0]==0xff){
 			break ;
 		}
 		else if(code[i][0]==0xfe){	//	string
 			fprintf(out_fp, " %04X ", code_loc[i]) ;
 			loc = code_loc[i]+code[i][2] ;
-			for(int n=0 ; n<code[i][2] ; n++){
+			for(UINT n=0 ; n<code[i][2] ; n++){
 				fprintf(out_fp, "%02X", strings[code[i][1]][n]) ;
 			}
 			fprintf(out_fp, "\n") ;
@@ -1411,7 +1418,7 @@ void outListing(FILE *fp, FILE *out_fp){
 		}
 		else{
 			if(code[i][0]==0){
-				int n ;
+				UINT n ;
 				for(n=0 ; n<code[i][1] ; n++){
 					fprintf(out_fp, "                %s\n",pos) ;
 					pos = get_line(fp, 0) ;
@@ -1420,7 +1427,7 @@ void outListing(FILE *fp, FILE *out_fp){
 			else{
 				fprintf(out_fp, " %04X ", code_loc[i]) ;
 				loc = code_loc[i] ;
-				int n ;
+				UINT n ;
 				for(n=0 ; n<code[i][0] ; n++){
 					fprintf(out_fp, "%02X", code[i][n+1]) ;
 				}
@@ -1443,15 +1450,15 @@ Command line options.
 */
 unsigned char option_l=0 ;
 
-int main(int argc, char** argv){
-	int i ;
+UINT main(UINT argc, char** argv){
+	UINT i ;
 
 	if(argc<=1){
 		printf("Usage : asq FILENAME\n") ;
 		exit(1) ;
 	}
 
-	for(int i=1 ; i<argc ; i++){
+	for(i=1 ; i<argc ; i++){
 		if(argv[i][0]=='-'){
 			switch(argv[i][1]){
 			case 'v': case 'l': option_l=1 ; break ;	//	l or v option : Display listing.
@@ -1498,7 +1505,7 @@ int main(int argc, char** argv){
 	}
 
 	for(i=0 ; i<2048 ; i++){
-		label_pos[i][0]=-1 ;
+		label_pos[i][0]=FF ;
 	}
 	for(i=0 ; i<256 ; i++){
 		strings[i][0]=0 ;
@@ -1506,11 +1513,12 @@ int main(int argc, char** argv){
 
 	for(i=0 ; i<1024 ; i++){
 		constant[i][0]=0 ;
-		const_value[i]=-1 ;
+		const_value[i]=FF ;
 		label[i][0]=0 ;
 	}
-	const_value[0]=-1 ;
-	label_pos[0][1]=-1 ;
+	const_value[0]=FF ;
+	label_pos[0][1]=FF ;
+	currentIdt=FF ;
 
 	program() ;
 
