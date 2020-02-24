@@ -3,8 +3,8 @@
 CPU2908 assembler
 Ver 1.0 M.Okada
 
-asq:asq.c token.c
-	cc -o asq asq.c token.c -Wno-format-security
+asq:asq.c token.c get_word.c get_line.c
+	cc -o asq asq.c token.c get_word.c get_line.c -Wno-format-security
 
 */
 
@@ -41,7 +41,7 @@ $HEX
 0-9 ではじまるのはDEC
 
 ;　行末までコメント
-
+{} コメント
 */
 
 
@@ -112,6 +112,8 @@ int str_cpy(char *dst, char *src){
 
 
 
+
+
 /*
 コード出力用ワーク
 */
@@ -162,6 +164,53 @@ FF.xx 未使用。テーブル終端
 int codePos=0 ;
 unsigned char code[16*1024][4] ;
 int code_loc[16*1024] ;	//	ロケーション
+
+
+extern char fileBuff[82] ;
+char* get_line(FILE* fp, int skip_tab) ;
+
+extern char buff[128] ;
+
+int accept_T(int type){	//@@@
+	int t ;
+	char * ptr ;
+	t = get_token() ;
+	if(t==type) return 1 ;
+	return -1 ;
+}
+
+int except_T(int type){
+	if(accept_T(type)==1) return 1 ;
+	else return 0 ;
+}
+
+
+int except_reg(void){
+	int r, t ;
+
+	t = get_token() ;
+	if(t==1){
+		r = get_register(buff) ;
+		if(r>=0) return r ;
+	}
+	return -1 ;
+}
+
+
+// Code generate.
+int emit(int pos, int loc, char nByte, char code1, char code2, char code3){
+	code_loc[pos]=loc ;
+	code[pos][0]=nByte ;
+	code[pos][1]=code1 ;
+	code[pos][2]=code2 ;
+	code[pos][3]=code3 ;
+	return nByte ;
+}
+
+int emit1(int codePos, int location, char code){
+	emit(codePos, Location, 1, code, 0, 0) ;
+	return 1 ;
+}
 
 
 
@@ -354,108 +403,6 @@ int get_label_value(char* str){
 }
 
 
-
-
-/*
-	get_line　一行読み込んでポインタを返す。ファイルの終わりならNULLを返す
-		一行最大80バイト
-
-	fp : 入力ファイル
-	skip_tab : 行の先頭のTABとスペース、コメントをスキップ
-
-*/
-char fileBuff[82] ;
-
-char* get_line(FILE* fp, int skip_tab){
-	int i, len ;
-
-	while(1){
-		unsigned char cc ;
-		len = fread(&cc, 1, 1, fp) ;
-		if(len!=1){
-			return NULL ;
-		}
-		//	Skip BOM.
-		else if(cc==0 || cc==0xbb || cc==0xef || cc==0xff || cc==0xfe || cc==0xbf){
-			continue ;
-		}
-		else if((cc!=' ' && cc!=9) || skip_tab==0){
-			fileBuff[0]=(int)cc ;
-			break ;
-		}
-	}
-	for(i=0 ; i<80 ; i++){
-		fileBuff[i+1]=0 ;
-		if(fileBuff[i]==0x0a){
-			fileBuff[i]=0 ;
-			Line++ ;
-			return fileBuff ;
-		}
-		if(fileBuff[i]==';' && skip_tab==1){
-			fileBuff[i]=0 ;
-			break ;
-		}
-		len = fread(fileBuff+i+1, 1, 1, fp) ;
-		if(len!=1){
-			fileBuff[i+1]=0 ;
-			return fileBuff ;
-		}
-	}
-	while(1){
-		unsigned char cc ;
-		len = fread(&cc, 1, 1, fp) ;
-		if(len!=1){
-			return NULL ;
-		}
-		if(cc==0x0a) break ;
-	}
-	Line++ ;
-	return fileBuff ;
-}
-
-
-extern char buff[128] ;
-
-int accept_T(int type){	//@@@
-	int t ;
-	char * ptr ;
-	t = get_token() ;
-	if(t==type) return 1 ;
-	return -1 ;
-}
-
-int except_T(int type){
-	if(accept_T(type)==1) return 1 ;
-	else return 0 ;
-}
-
-
-int except_reg(void){
-	int r, t ;
-
-	t = get_token() ;
-	if(t==1){
-		r = get_register(buff) ;
-		if(r>=0) return r ;
-	}
-	return -1 ;
-}
-
-
-// Code generate.
-int emit(int pos, int loc, char nByte, char code1, char code2, char code3){
-	code_loc[pos]=loc ;
-	code[pos][0]=nByte ;
-	code[pos][1]=code1 ;
-	code[pos][2]=code2 ;
-	code[pos][3]=code3 ;
-	return nByte ;
-}
-
-int emit1(int codePos, int location, char code){
-	emit(codePos, Location, 1, code, 0, 0) ;
-	return 1 ;
-}
 
 
 /*
@@ -1005,11 +952,9 @@ int code_gen(void){
 
 			switch(code){
 			case 1:	//	LD
-//				op=1 ;
 				codeByte = gen_LD() ;
 				break ;
 			case 2:	//	ST
-//				op=2 ;
 				codeByte = gen_ST() ;
 				break ;
 			case 3:	//	MOV

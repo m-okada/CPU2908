@@ -1,6 +1,10 @@
 ﻿// #define DEBUG
+
 /*
-cc -o lex lex.c
+
+字句解析
+
+cc -o parser parser.c
 */
 
 typedef unsigned char BYTE ;
@@ -10,6 +14,8 @@ typedef unsigned char BYTE ;
 
 
 #endif
+
+
 
 char cr=0x0d ;
 char tab=0x09 ;
@@ -21,13 +27,47 @@ int is_white_space(char cc){
 }
 
 
+int isNum(char cc){
+	if(cc>='0' && cc <='9') return 1 ;
+	return 0 ;
+}
+
+int isAlpha(char cc){
+	if((cc>='A' && cc<='Z') ||(cc>='a' && cc<='z') || cc=='_') return 1 ;
+	return 0 ;
+}
+
+int isHex(char cc){
+	if((cc>='0' && cc <='9') || (cc>='A' && cc<='F') || (cc>='a' && cc<='f')) return 1 ;
+	return 0 ;
+}
+
+
 /*
+
+parser
+
 定義方法
 
-yystate,getch,output,state_next
+state,substate,getch,action
 
+action:next_state | next_substate | state_not_change | reduce , take_char | pushback_char
+
+
+state==NUM | NUM8 substate=CC2ND
 
 */
+short OTHER=0xfe ;	//	other input
+short ALPHA=0xf0 ;
+short NUMBER=0xf1 ;		//	1-9～
+short NUMBER0=0xf2 ;	//	0～　x . e
+
+
+unsigned short state_table[][4]={
+}
+
+
+
 int char_buff=-1 ;
 
 void unget_char(int cc){

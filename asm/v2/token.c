@@ -19,7 +19,7 @@ int isNum(char cc){
 }
 
 int isAlpha(char cc){
-	if(cc>='A' && cc<='Z') return 1 ;
+	if((cc>='A' && cc<='Z') || cc=='_') return 1 ;
 	return 0 ;
 }
 

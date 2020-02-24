@@ -48,7 +48,7 @@ int get_word(char * str, char *tbl){
 
 int get_register(char *ptr){
 	int r = get_word(ptr, reg_str) ;
-	if(r>=10 && r<=20) r-=10 ;
+	if(r>=10 && r<20) r-=10 ;
 	return r ;
 }
 
