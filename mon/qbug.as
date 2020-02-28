@@ -21,21 +21,19 @@ rxbuff eq $ff00
 
 start:
 	mov sp,0
-	xor r1,r1
-	mov a0,$0f01
+
 	mov a1,topmsg
-loop:
-	st [a0],r0
-wait:
-	ld r0,a0
-	and r0, $fe
-	jz loop
-	jmps wait
+
+start_msg:
+	ld r0,[a1]
+	or r0,r0
+
 	inc a1
 
 	ld r0,[a1]
 	and r0,r0
-	jnz loop
+	jnz start_msg
+
 
 halt:
 	mov pc,halt
@@ -92,13 +90,13 @@ txchar:
 
 	mov r3,0
 	or r1, r3
-	jz txexit	;	Wait for TxBuffer empty.
+	jnz txexit
 
-	mov a0,$0f00
+	mov a0,$0f00	;	UART status register.
 tx00:
 	ld r0, [a0]
 	and r0, $08
-	jz tx00
+	jz tx00		;	Wait for TxBuffer empty.
 	inc a0
 	st [a0],r1
 
@@ -110,7 +108,7 @@ txexit:
 ;
 ; r0 to hex -> w0
 ;
-out2h:	; r2 to hex
+out2h:	; r0 to hex
 	and r0, $0f
 
 

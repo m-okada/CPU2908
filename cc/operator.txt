@@ -1,0 +1,125 @@
+﻿
+優先順位	演算子	説明	結合性
+1
+	++ --	後置インクリメント、デクリメント	左結合
+()	関数呼び出し
+[]	配列の添字
+.	構造体および共用体のメンバアクセス
+->	ポインタを通した構造体および共用体のメンバアクセス
+(type){list}	複合リテラル(C99)
+2
+	++ --	前置インクリメント、デクリメント[注 1]	右結合
++ -	正号、負号
+! ~	論理否定、ビット単位の論理否定
+(type)	型キャスト
+*	間接参照 (逆参照)
+&	アドレス取得
+sizeof	サイズ取得[注 2]
+_Alignof	アライメント要件(C11)
+3
+	* / %	乗算、除算、剰余	左結合
+4
+	+ -	加算、減算
+5
+	<< >>	ビット単位の左シフト、右シフト
+6
+	< <=	関係演算子 < ≤
+	> >=	関係演算子 > ≥
+7
+	== !=	関係演算子 = ≠
+8
+	&	ビット単位の論理積
+9
+	^	ビット単位の排他的論理和
+10
+	|	ビット単位の論理和
+11
+	&&	論理積
+12
+	||	論理和
+13
+	?:	三項条件[注 3]	右結合
+14[注 4]
+	=	単純代入
+	+= -=	加算、減算による複合代入
+	*= /= %=	乗算、除算、剰余による複合代入
+	<<= >>=	ビット単位の左シフト、右シフトによる複合代入
+	&= ^= |=	ビット単位の論理積、排他的論理和、論理和による複合代入
+15
+	,	コンマ	左結合
+
+
+出てきたときに決定できるもの
+(
+)
+[
+]
+{
+}
+~
+?
+:
+;
+,
+
+
+リテラル
+
+1-9			2	NUMBER
+0			1	DIGIT
+
+a-z A-Z _	3	ALPHA
+0-9 a-z A-Z _ 	HEX
+
++ ++ +=		
+- -- -= ->
+* *=
+& && &=
+/ /= /* //
+% %=
+< <= << <<=
+> >= >> >>=
+= ==
+! !=
+^ ^=
+| || |=
+
+'
+"
+
+
+
+予約語
+
+auto		KW_AUTO
+break		KW_BREAK
+case		KW_CASE
+char		KW_CHAR
+const		KW_CONST
+continue	KW_CONTINUE
+default		KW_DEFAULT
+do			KW_DO
+double		KW_DOUBLE
+else		KW_ELSE
+enum		KW_ENUM
+extern		KW_EXTERN
+float		KW_FLOAT
+for			KW_FOR
+goto		KW_GOTO
+if			KW_IF
+int			KW_INT
+long		KW_LONG
+register	KW_REGISTER
+return		KW_RETURN
+short		KW_SHORT
+signed		KW_SIGNED
+sizeof		KW_SIZEOF
+static		KW_STATIC
+struct		KW_STRUCT
+switch		KW_SWITCH
+typedef		KW_TYPEDEF
+union		KW_UNION
+unsigned	KW_UNSIGNED
+void		KW_VOID
+volatile	KW_VOLATILE
+while		KW_WHILE

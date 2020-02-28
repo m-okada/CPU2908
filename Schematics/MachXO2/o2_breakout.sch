@@ -1111,11 +1111,9 @@ Text Label 10750 5450 2    50   ~ 0
 GCLK1
 Text Label 5600 5200 2    50   ~ 0
 GCLK1
-Text Label 5600 5100 2    50   ~ 0
-~CS0
 Text Label 5600 5500 2    50   ~ 0
 SPI_CS1
-Text Label 5600 5400 2    50   ~ 0
+Text Label 5600 5300 2    50   ~ 0
 SPI_CS0
 Wire Wire Line
 	2300 5500 1800 5500
@@ -1371,8 +1369,6 @@ Wire Wire Line
 	9700 5650 10000 5650
 Text Label 11050 5650 2    50   ~ 0
 SPI_CS3
-NoConn ~ 10000 5550
-NoConn ~ 10000 5450
 NoConn ~ 10000 5350
 NoConn ~ 10500 5350
 Wire Wire Line
@@ -1606,8 +1602,6 @@ Wire Wire Line
 	9350 1700 9700 1700
 Wire Wire Line
 	5100 5300 5600 5300
-Text Label 5600 5300 2    50   ~ 0
-~SD_CD
 Wire Wire Line
 	10500 4150 11100 4150
 Wire Wire Line
@@ -2080,9 +2074,18 @@ Wire Wire Line
 Wire Wire Line
 	10700 5550 10700 6050
 Wire Wire Line
-	9650 5250 9650 6050
+	9650 5250 9650 5550
 NoConn ~ 10000 5950
 NoConn ~ 10500 5950
+Text Label 9700 5450 0    50   ~ 0
+~CS2
+Wire Wire Line
+	9700 5450 10000 5450
+Wire Wire Line
+	10000 5550 9650 5550
+Connection ~ 9650 5550
+Wire Wire Line
+	9650 5550 9650 6050
 Wire Bus Line
 	8000 1200 8000 3100
 Wire Bus Line
@@ -2091,4 +2094,8 @@ Wire Bus Line
 	7950 1100 7950 3450
 Wire Bus Line
 	6050 1100 6050 3500
+Text Label 5600 5100 2    50   ~ 0
+~CS0
+Text Label 5600 5400 2    50   ~ 0
+~SD_CD
 $EndSCHEMATC

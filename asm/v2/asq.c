@@ -127,9 +127,10 @@ UINT op ;
 UINT op1, op2, op3 ;
 UINT Location=0 ;
 
-
+//　ラベル
 UINT label_value[1024] ;	//	-1:未定義　参照のみで定義されてない。前方参照。
 char label[1024][32] ;	//	ラベル名 index はlabel_value と同じ
+
 /*
 ラベルの参照位置
 
@@ -140,10 +141,8 @@ char label[1024][32] ;	//	ラベル名 index はlabel_value と同じ
 */
 UINT label_pos[2048][4] ;
 
-
 //	文字列バッファ db で定義された値もここに書き込む
 char strings[256][32] ;
-//UINT strings_pos[256] ;	//	Location
 
 
 UINT currentIdt ;	//	EQ で定義される定数は識別子を登録した時にここに入れておく。行が変ったらクリア
