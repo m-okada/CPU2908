@@ -1,0 +1,15 @@
+
+Label ***
+ $0000 = ADD
+
+Constant ***
+
+Code ***
+                add:
+ 0000 01        	ld r1,a0
+                	{add r0,3}
+ 0001 EEFD      	jmps add
+ 0003 FF        	nop
+ 0004
+
+END ***

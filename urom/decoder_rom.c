@@ -528,18 +528,35 @@ void make_rom(void){
 
 		code = make_code(0, EX_ALATCH, 0, ADX_DEC, 0, WR_SP, REGW_EN, WB_SP, 0, 0, 0, 0, 0) ;
 		set_code(code) ;
-		code = make_code(0, EX_MEMW_EN | EX_DLATCH, 0, 0, BR_R0+(i<<2), 0, 0, 0, 0, 0, 0, 0, 0) ;
+		code = make_code(0, EX_MEMW_EN | EX_DLATCH, 0, 0, BR_R1+(i<<2), 0, 0, 0, 0, 0, 0, 0, 0) ; // @
 		set_code(code) ;
 
 		set_code(NOP) ;
 
 		code = make_code(0, EX_ALATCH, 0, ADX_DEC, 0, WR_SP, REGW_EN, WB_SP, 0, 0, 0, 0, 0) ;
 		set_code(code) ;
-		code = make_code(0, EX_MEMW_EN | EX_DLATCH, 0, 0, BR_R1+(i<<2), 0, 0, 0, 0, 0, 0, 0, 0) ;
+		code = make_code(0, EX_MEMW_EN | EX_DLATCH, 0, 0, BR_R0+(i<<2), 0, 0, 0, 0, 0, 0, 0, 0) ; // @
 		set_code(code) ;
 
 		set_code(END_MARK) ;
 	}
+
+	// 62,63 SWB Wn
+	set_opecode(0x62) ;
+	code = make_code(0, 0, 0, 0, BR_R0, 0, 0, 0, 0, 0, FB_BUFF1, 0, 0) ;
+	set_code(code) ;
+	code = make_code(0, 0, 0, 0, BR_R1, 0, REGW_EN, WB_R0, 0, 0, 0, 0, 0) ;
+	set_code(code) ;
+	code = make_code(END_MARK, 0, 0, ALU_OP_BUFF1, 0, 0, REGW_EN, WB_R1, 0, 0, 0, 0, MISC_ALU_L) ;
+	set_code(code) ;
+
+	set_opecode(0x63) ;
+	code = make_code(0, 0, 0, 0, BR_R2, 0, 0, 0, 0, 0, FB_BUFF1, 0, 0) ;
+	set_code(code) ;
+	code = make_code(0, 0, 0, 0, BR_R3, 0, REGW_EN, WB_R2, 0, 0, 0, 0, 0) ;
+	set_code(code) ;
+	code = make_code(END_MARK, 0, 0, ALU_OP_BUFF1, 0, 0, REGW_EN, WB_R3, 0, 0, 0, 0, MISC_ALU_L) ;
+	set_code(code) ;
 
 	//	64,65,66 PUSH A0-CP
 	for(i=0 ; i<3 ; i++){

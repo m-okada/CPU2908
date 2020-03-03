@@ -14,7 +14,7 @@ typedef unsigned char BYTE ;
 #include "q_typedef.h"
 
 
-UINT char_buff=0x0ffff ;
+UINT char_buff=0x0ffff ;	//	push back 用
 
 UINT isNum(char cc){
 	if(cc>='0' && cc <='9') return 1 ;
@@ -131,6 +131,7 @@ UINT _get_token(char* ptr){
 
 	while(rc=get_char()){
 		cc = to_upper(rc) ;
+		//printf("T(%x:%d)",rc, state) ;
 
 		switch(state){
 		case 0:		//	top
@@ -165,7 +166,7 @@ UINT _get_token(char* ptr){
 			}
 			else if(cc==';'){
 				while(get_char()!=-1) ;	//	comment
-				return -1 ;
+				return FF ;
 			}
 			else if(cc=='{'){	//	comment
 				while(1){

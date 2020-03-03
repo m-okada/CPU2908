@@ -75,4 +75,4 @@ charCode:
 
 msg:
 	.db 'Monitor-Q V1.0', $0a, 0
-
+	nop

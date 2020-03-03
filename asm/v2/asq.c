@@ -204,6 +204,7 @@ UINT except_reg(void){
 
 // Code generate.
 UINT emit(UINT pos, UINT loc, char nByte, char code1, char code2, char code3){
+	//printf("emit(%d, %x, %d, %x, %x, %x)\n", pos, loc, nByte, code1, code2, code3) ;
 	code_loc[pos]=loc ;
 	code[pos][0]=nByte ;
 	code[pos][1]=code1 ;
@@ -232,7 +233,7 @@ UINT get_const_index(char *str){
 UINT get_const_value(char *str){
 	UINT t ;
 	t=get_const_index(str) ;
-	if(t>=0){
+	if(t!=FF){
 		return const_value[t] ;
 	}
 	return FF ;
@@ -315,8 +316,12 @@ UINT register_const(char *str){
 
 UINT get_label_index(char* str){
 	UINT i ;
+
+	//printf("get label idx(%s)\n", str) ;
 	for(i=0 ; i<1024 ; i++){
+
 		if(str_cmp(label[i], str)){
+			//printf("str cmp(%s, %s)%d ", label[i], str, i) ;
 			return i ;
 		}
 	}
@@ -331,6 +336,7 @@ UINT register_label(char* str){
 		if(label[i][0]==0){
 			str_cpy(label[i], str) ;
 			label_value[i]=FF ;
+			//printf("register label(%d:%s)\n", i, str) ;
 
 			return i ;
 		}
@@ -351,7 +357,9 @@ UINT label_add_ref(UINT codePos, UINT idx, UINT reftype){
 	UINT i ;
 
 	for(i=0 ; i<2048 ; i++){
+		//printf(" R(%d:%x)", i, label_pos[i][0]) ;
 		if(label_pos[i][0]==FF){
+			//printf("label add ref %d(%x) codepos8(%x) loc:%d\n", i, idx, codePos, Location) ;
 			label_pos[i][0]=idx ;
 			label_pos[i][1]=codePos ;
 			label_pos[i][2]=Location ;
@@ -369,8 +377,11 @@ UINT label_rewrite(UINT idx){
 	UINT offset ;
 	char c0, c1 ;
 
+	//printf("rewrite idx:%x ", idx) ;
+
 	for(i=0 ; i<2048 ; i++){
 		if(label_pos[i][0]==idx){
+			//printf("-> i(%d) idx:%x loc(%x)\n", i, idx, label_pos[i][2]) ;
 			pos = label_pos[i][1] ;
 			loc = label_pos[i][2] ;
 
@@ -393,6 +404,8 @@ UINT label_rewrite(UINT idx){
 			label_pos[i][0]=FF ;	//	開放
 			code[pos][2]=c0;
 			code[pos][3]=c1;
+
+//			break ;
 		}
 	}
 	return i ;
@@ -705,8 +718,10 @@ UINT gen_MOV(void){
 
 	t = get_token() ;
 	op2 = get_register(buff) ;
+		//printf("get reg(%x = %X)%x ", buff[0], op2, t) ;
 	if(op2==FF){
 		imm = get_token_value(t, buff) ;
+		//printf("get value(%x)\n", imm) ;
 		if(imm==FF){
 			id=get_label_index(buff) ;	//	なかったら定数ではないのでラベルを探す
 			if(id==FF) id = register_label(buff) ;	//	初登場のラベル
@@ -727,6 +742,7 @@ UINT gen_MOV(void){
 		}
 		else if(op1>=6 && op1<=9){	//	16bit reg
 			op=0x7c+op1-6 ;
+			//printf("16bit op2 imm (%x:%s)\n", imm, buff) ;
 			emit(codePos, Location, 3, op, imm & 0x00ff,  (imm >> 8) & 0x00ff) ;
 			return 3 ;
 		}
@@ -1013,9 +1029,14 @@ UINT code_gen(void){
 			case 22: case 23: case 24: case 25:
 			case 26: case 27: // JL,JG
 			case 29:	//	JumP Short
+			case 49:	//	JB
+			case 50:	//	JNB
+
 				if(code==27) cc=0xe8 ;
 				else if(code==28) cc=0xe9 ;
 				else if(code==29) cc=0xee ;
+				else if(code==49) cc=0xe0 ;
+				else if(code==50) cc=0xe1 ;
 				else cc=code-18+0xe0 ;
 
 				offset=gen_Jcc() ;
@@ -1236,7 +1257,12 @@ UINT code_gen(void){
 		if(idx==FF){
 			idx = register_label(buff) ;
 		}
+		else if(label_value[idx]!=FF){
+			errorOut("Duplicate label.") ;
+			return FF ;
+		}
 		label_value[idx] = Location ;
+		//printf("label location(idx:%x, %x):%s\n", idx, Location, buff) ;
 		label_rewrite(idx) ;
 
 		gen=FF ;
