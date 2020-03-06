@@ -1,0 +1,73 @@
+
+Label ***
+ $0048 = START
+ $0052 = TXCHAR
+ $0066 = RXCHAR
+ $0063 = TXEXIT
+ $005C = TX00
+ $006A = RX00
+
+Constant ***
+
+Code ***
+                ;
+                ;
+                ;
+                .org 0
+ 0000 FE4500    	jmp start
+                .org 64	;	SWI 8 Break point trap.
+ 0040 60        	push w0
+ 0041 7949      	mov r1,$49	; 'I'
+ 0043 FA0C00    	call txchar
+ 0046 68        	pop w0
+ 0047 FD        	iret
+                start:
+ 0048 7F0000    	mov sp,0
+ 004B FA1800    	call rxchar
+ 004E EC        	swi8
+                
+ 004F FEF6FF    	jmp start
+                
+                ;
+                ; r1 : Ascii code to send.
+                ;
+                txchar:
+ 0052 64        	push a0
+ 0053 60        	push w0
+                
+ 0054 7B00      	mov r3,0
+ 0056 BF        	or r1, r3
+ 0057 E50A      	jz txexit
+                
+ 0059 7C000F    	mov a0,$0f00	;	UART status register.
+                tx00:
+ 005C 00        	ld r0, [a0]
+ 005D A508      	and r0, $08
+ 005F E5FB      	jz tx00		;	Wait for TxBuffer empty.
+ 0061 D6        	inc a0
+ 0062 09        	st [a0],r1
+                
+                txexit:
+ 0063 68        	pop w0
+ 0064 6C        	pop a0
+ 0065 6E        	ret
+                
+                ;
+                ;r1 : Recv char.
+                ;
+                rxchar:
+ 0066 64        	push a0
+ 0067 7C010F    	mov a0,$0f01
+                rx00:
+ 006A 00        	ld r0,[a0]
+ 006B 49        	mov r1,r0
+ 006C B8        	or r0,r0
+ 006D E5FB      	jz rx00	;	wait for receive.
+                
+ 006F 6C        	pop a0
+ 0070 6E        	ret
+                
+                
+ 0071
+
+END ***

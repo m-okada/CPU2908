@@ -275,6 +275,15 @@ UINT get_token_value(UINT t, char *str){
 		if(sign==1) n=neg(n) ;
 		return n & 0x0ffff ;
 	}
+	else if(t==10){	// string
+		if(str[1]==0){
+			n = str[0] ;
+		}
+		else{
+			n = (str[0]<<8) | (str[1] & 0x0ff) ;
+		}
+		return n ;
+	}
 	else{
 		return FF ;
 	}
@@ -717,8 +726,13 @@ UINT gen_MOV(void){
 	}
 
 	t = get_token() ;
-	op2 = get_register(buff) ;
+	if(t==1){
+		//op2 = get_register(buff) ;
 		//printf("get reg(%x = %X)%x ", buff[0], op2, t) ;
+	}
+	else{
+		op2 = FF ;
+	}
 	if(op2==FF){
 		imm = get_token_value(t, buff) ;
 		//printf("get value(%x)\n", imm) ;
@@ -1031,12 +1045,14 @@ UINT code_gen(void){
 			case 29:	//	JumP Short
 			case 49:	//	JB
 			case 50:	//	JNB
+			case 51:	//	JE
 
 				if(code==27) cc=0xe8 ;
 				else if(code==28) cc=0xe9 ;
 				else if(code==29) cc=0xee ;
 				else if(code==49) cc=0xe0 ;
 				else if(code==50) cc=0xe1 ;
+				else if(code==51) cc=0xe5 ;
 				else cc=code-18+0xe0 ;
 
 				offset=gen_Jcc() ;
