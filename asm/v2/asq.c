@@ -727,7 +727,7 @@ UINT gen_MOV(void){
 
 	t = get_token() ;
 	if(t==1){
-		//op2 = get_register(buff) ;
+		op2 = get_register(buff) ;
 		//printf("get reg(%x = %X)%x ", buff[0], op2, t) ;
 	}
 	else{
