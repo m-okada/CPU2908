@@ -1348,6 +1348,19 @@ UINT program(void){
 
 void show_label_list(FILE *fp){
 	UINT i ;
+	UINT w ;
+	UINT err=0 ;
+
+	for(i=0 ; i<1024 ; i++){
+		if(label[i][0]!=0){
+			if(label_value[i]==FF){
+				fprintf(fp, "*Undef = %s\n", label[i]) ;
+			}
+			else{
+				fprintf(fp, " $%04X = %s\n", label_value[i], label[i]) ;
+			}
+		}
+	}
 
 	fprintf(fp, "\nLabel ***\n") ;
 	for(i=0 ; i<1024 ; i++){

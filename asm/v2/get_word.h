@@ -1,4 +1,5 @@
-﻿#ifndef __GET_WORD_H__
+﻿
+#ifndef __GET_WORD_H__
 #define __GET_WORD_H__
 
 int get_word(char * str, char *tbl) ;

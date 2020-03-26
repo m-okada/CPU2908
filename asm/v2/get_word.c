@@ -1,6 +1,5 @@
 ﻿
 #ifdef DEBUG_ALONE
-#define DEBUG_ALONE
 
 #include <stdio.h>
 
