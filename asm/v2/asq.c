@@ -22,6 +22,7 @@ asq:asq.c token.c get_word.c get_line.c
 
 識別子 eq 定数　で定数定義。
 
+
 ラベルはコロンで終わる
 Identifier:
 識別子は30バイトまで比較する。Case非センシティブ

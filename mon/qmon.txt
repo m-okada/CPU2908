@@ -1,0 +1,25 @@
+﻿モニター
+
+・Commands
+
+ L	Load file
+ W	Write file
+ S	Step trace
+ G	Go
+ R	Dump register
+ M	Dump memory
+ B	Toggle Break Point
+ 
+ 
+ 
+ステップ実行コンテキスト
+
+条件ジャンプ
+
+フラグによって分岐するのは条件ジャンプだけなので、ジャンプする先としない先にブレークポイント入れる。
+ブレークポイント割り込みはどっちに行ったか
+ROM内にブレークポイント置けるようにRAMと切り替えのフラグつけてRAMにコピーしてRAMで実行する。
+
+まずはRAMでメッセージ出すところから
+
+

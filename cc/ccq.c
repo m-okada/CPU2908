@@ -319,9 +319,9 @@ void asm_outn(int n){
 void error(int n)
 {
 	putchar(10) ;
-	putstring("**Error(") ;
+	putstring("**Error line ") ;
 	putnumber(line+1) ;
-	putstring(") #") ;
+	putstring(" #") ;
 	putnumber(n) ;
 	putstring("\x0a") ;
 	exit(1);
@@ -623,7 +623,7 @@ int sym_lookup(char *s)
 		while ((s[i] == table[t]) & (s[i] != 0)) {	//	strcmp
 			i++ ; t++ ;
 		}
-		if (s[i] == table[t]){	//	比較して一致するならそこをとりあえずマーク
+		if (s[i] == table[t]){	//	比較して一致するならそこをとりあえずマーク。その後見つからなければファイルスコープ
 			current_symbol = t;
 		}
 		while (table[t] != 0){
@@ -633,6 +633,8 @@ int sym_lookup(char *s)
 	}
 	return current_symbol;
 }
+
+
 
 void sym_declare(char *s, int type, int value)
 {
@@ -659,7 +661,7 @@ int sym_declare_global(char *s)
 {
 	int current_symbol = sym_lookup(s);
 
-	asm_out("# declare ") ;
+	asm_out("# declare global ") ;
 	asm_outnl(s) ;
 	asm_outnl(" = ") ;
 
@@ -685,7 +687,7 @@ void sym_define_global(int current_symbol)
 
 	i = load_int(table + t + 2) - code_offset;
 
-	asm_out("# define ") ;
+	asm_out("# define global ") ;
 	asm_outn(current_symbol) ;
 
 	/* 定義されたので、シンボル位置をコード中の参照位置に埋め込む */
@@ -718,8 +720,10 @@ void sym_get_value(char *s)
 	if (table[t + 1] == 'D' | table[t + 1] == 'U') {	//	U:declared but not defined.
 		emit(3, "\xb8.."); /* mov $n,%eax */
 		n=load_int(table + t + 2) ;
-		asm_out("{sym get value} mov a0,") ;	//	mov a0,imm16 ; call a0 ;の組み合わせはここと関数飛び出しのペアのみ
+		asm_out("{sym get value} mov a0,") ;	//	mov a0,imm16 ; call a0 ;の組み合わせはここと関数呼び出しのペアのみ
+		//
 		save_int(code + codepos - 2, n);	//	呼び出し先関数アドレス。ただし、未定義の場合かtable
+		asm_outn(n) ;
 		sym_value=n ;
 	}
 
@@ -845,7 +849,7 @@ int primary_expr()
 		}
 		emit(3, "\xb8.."); /* mov $x,%eax */
 		save_int(code + codepos - 2, n);
-		asm_out("movi w0,") ;
+		asm_out("mov w0,") ;
 		asm_outn(n) ;
 		type = 3;
 	}
@@ -902,7 +906,7 @@ int primary_expr()
 		emit(3, "\xe8..");
 		save_int(code + codepos - 2, i + 1); /* pop eaxの位置をcallしてip(stringの先頭)->eax */
 		emit(i + 1, token);
-		asm_out("lea a0,String") ;
+		asm_out("{lea} mov a0,String") ;
 		asm_outn(stringn) ;
 		stringn++ ;
 		emit(1, "\x58");
@@ -970,7 +974,7 @@ int postfix_expr()
 
 		//emit(2, "\xff\xd0"); /* call *%eax */
 		emit(1, "\xcf") ;
-		asm_out("call a0") ;
+		asm_out("call a0") ;	//	@@@ move->call コンボをa1に逃がしてみた。mov a0; push a0 -> pop a0;call a0 ;でもよい？
 		be_pop(stack_pos - s);
 		stack_pos = s;
 		type = 3;
@@ -1031,7 +1035,7 @@ int prefix_expr()
 		type=post_increment_expr();
 		if (type == 1){
 			emit(2, "\xfe\x00") ;	/* inc byte ptr(%eax) */
-			asm_out("{minus op} ld b0,[a0];  exts w0 ;  neg w0") ;
+			asm_out("{minus op} ld b0,[a0];  sxt w0 ;  neg w0") ;
 		}
 		else if (type == 2){
 			emit(2, "\xff\x00") ;	/* inc dword ptr(%eax) */
@@ -1046,7 +1050,7 @@ int prefix_expr()
 		type=post_increment_expr();
 		if (type == 1){
 			emit(2, "\xfe\x00") ;	/* inc byte ptr(%eax) */
-			asm_out("{plus op} ld b0,[a0];  exts w0") ;
+			asm_out("{plus op} ld b0,[a0];  sxt w0") ;
 		}
 		type=3 ;
 	}
@@ -1254,7 +1258,7 @@ int expression()
 		promote(expression());
 		if(type==1){
 			emit(3, "\x5b\x88\x03"); /* pop %ebx ; mov %al,(%ebx) */
-			asm_out("pop a0;st [a0],b0;ext w0") ;
+			asm_out("pop a0;st [a0],b0;sxt w0") ;
 		}
 		else if(type==2){
 			emit(3, "\x5b\x89\x03"); /* pop %ebx ; mov %eax,(%ebx) */

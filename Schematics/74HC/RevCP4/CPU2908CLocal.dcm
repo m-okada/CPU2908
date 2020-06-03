@@ -1,0 +1,184 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP 74HC04
+D Hex Inverter
+K Not Inv
+$ENDCMP
+#
+$CMP 74HC08
+D Quad 2Input And
+K And2
+$ENDCMP
+#
+$CMP 74HC11
+D Triple 3Input And
+K And3
+$ENDCMP
+#
+$CMP 74HC125
+D Quad Bus Buffer 3State
+K Buf 3state
+$ENDCMP
+#
+$CMP 74HC139
+D Dual 2to4 Decoder
+K Dec4
+$ENDCMP
+#
+$CMP 74HC153
+D Dual 4to1 Multiplexer 74HC153D,652
+K Mux4
+$ENDCMP
+#
+$CMP 74HC157
+D Quad 2Input Multiplexers NonInverting
+K Mux2
+$ENDCMP
+#
+$CMP 74HC161
+D 4bit Binary Presettable Synchronous Counter AsyncReset
+K Cnt4
+$ENDCMP
+#
+$CMP 74HC21
+D Dual 4Input And
+K And4
+$ENDCMP
+#
+$CMP 74HC283
+D 4Bit Binary Full Adder Fast Carry
+K Add Arith
+$ENDCMP
+#
+$CMP 74HC32
+D Quad 2Input Or
+K Or2
+$ENDCMP
+#
+$CMP 74HC377
+D Octal DType FlipFlop DataEnable
+K DFF8
+$ENDCMP
+#
+$CMP 74HC4078
+D 8 Input OR/NOR
+K NOR OR Octal
+$ENDCMP
+#
+$CMP 74HC541
+D Octal Buffer 3State NonInverting
+K Buf8
+$ENDCMP
+#
+$CMP 74HC74
+D Dual D FlipFlop, PositiveEdgeTrig Set Reset
+K DFF
+F 74xx/74hc_hct74.pdf
+$ENDCMP
+#
+$CMP 74HC86
+D Quad 2Input ExclusiveOr
+K Xor2
+$ENDCMP
+#
+$CMP 74HCT273
+D Octal DType FlipFlop Reset
+K DFF8
+$ENDCMP
+#
+$CMP 74HCT541
+D Octal Buffer 3State NonInverting
+K Buf8
+$ENDCMP
+#
+$CMP CD74HC161
+D 4bit Binary Presettable Synchronous Counter AsyncReset
+K Cnt4
+$ENDCMP
+#
+$CMP CD74HC21
+D Dual 4Input And
+K And4
+$ENDCMP
+#
+$CMP CD74HC32
+D Quad 2Input Or
+K Or2
+$ENDCMP
+#
+$CMP CD74HC574
+D Octal DType FlipFlop 3State PositiveEdgeTrig
+K DFF8 3State
+$ENDCMP
+#
+$CMP CD74HC74
+D Dual D FlipFlop, PositiveEdgeTrig Set Reset
+K DFF
+F 74xx/74hc_hct74.pdf
+$ENDCMP
+#
+$CMP LED
+D Light emitting diode
+K LED diode
+F ~
+$ENDCMP
+#
+$CMP LED_G
+D Light emitting diode
+K LED diode
+F ~
+$ENDCMP
+#
+$CMP LED_W
+D Light emitting diode
+K LED diode
+F ~
+$ENDCMP
+#
+$CMP MC74ACT125
+D Quad Bus Buffer 3State
+K Buf 3state
+$ENDCMP
+#
+$CMP MKE02Z16VLD4
+D 40 MHz, Entry-Level, High-Robustness, ESD/EMC performance Microcontroller, Cortex-M0+ core, 16kB Flash, 2kB RAM, LQFP-44
+K NXP Kinetis Microcontroller
+F http://cache.nxp.com/files/microcontrollers/doc/ref_manual/MKE02P64M40SF0RM.pdf
+$ENDCMP
+#
+$CMP MKE02Z32VLD4
+D 40 MHz, Entry-Level, High-Robustness, ESD/EMC performance Microcontroller, Cortex-M0+ core, 32kB Flash, 4kB RAM, LQFP-44
+K NXP Kinetis Microcontroller
+F http://cache.nxp.com/files/microcontrollers/doc/ref_manual/MKE02P64M40SF0RM.pdf
+$ENDCMP
+#
+$CMP MKE02Z64VLD4
+D 40 MHz, Entry-Level, High-Robustness, ESD/EMC performance Microcontroller, Cortex-M0+ core, 64kB Flash, 4kB RAM, LQFP-44
+K NXP Kinetis Microcontroller
+F http://cache.nxp.com/files/microcontrollers/doc/ref_manual/MKE02P64M40SF0RM.pdf
+$ENDCMP
+#
+$CMP R
+D Resistor
+K R res resistor
+F ~
+$ENDCMP
+#
+$CMP SLG74C153
+D Dual 4to1 Multiplexer
+K Mux4
+$ENDCMP
+#
+$CMP TC74HC574
+D Octal DType FlipFlop 3State PositiveEdgeTrig
+K DFF8 3State
+F https://toshiba.semicon-storage.com/info/docget.jsp?did=18123&prodName=TC74VHC574F
+$ENDCMP
+#
+$CMP TC74HCT574
+D Octal DType FlipFlop 3State PositiveEdgeTrig
+K DFF8 3State
+F https://toshiba.semicon-storage.com/info/docget.jsp?did=18123&prodName=TC74VHC574F
+$ENDCMP
+#
+#End Doc Library

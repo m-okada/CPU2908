@@ -1,0 +1,15 @@
+
+Label ***
+
+Constant ***
+
+Code ***
+                ;
+                ; Echo back.
+ 0000 7D5043    	mov a1,'CP'
+ 0003 7850      	mov r0,'P'
+ 0005 7943      	mov r1,'C'
+ 0007 FF        	nop
+ 0008
+
+END ***

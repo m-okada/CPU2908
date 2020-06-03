@@ -306,7 +306,7 @@ Wire Wire Line
 	4000 2650 3950 2650
 Wire Wire Line
 	2150 4500 2450 4500
-Text Label 2200 4500 0    50   ~ 0
+Text Label 2450 4500 2    50   ~ 0
 Q
 Wire Wire Line
 	5750 2550 5900 2550
@@ -471,9 +471,9 @@ ExBusCtrl2
 Text Label 3650 3150 0    50   ~ 0
 ExBusCtrl3
 Entry Wire Line
-	3350 2950 3450 3050
+	3200 2950 3300 3050
 Entry Wire Line
-	3350 3050 3450 3150
+	3200 3050 3300 3150
 Wire Wire Line
 	4400 3000 4200 3000
 Wire Wire Line
@@ -492,7 +492,7 @@ Wire Wire Line
 Wire Wire Line
 	4350 3750 4400 3750
 Wire Wire Line
-	3450 3050 4350 3050
+	3300 3050 4350 3050
 Wire Wire Line
 	5000 3100 5200 3100
 Wire Wire Line
@@ -756,7 +756,7 @@ Wire Wire Line
 	3250 800  3200 800 
 Wire Wire Line
 	2150 4300 2450 4300
-Text Label 2200 4300 0    50   ~ 0
+Text Label 2450 4300 2    50   ~ 0
 E
 Wire Bus Line
 	3150 3300 3150 1350
@@ -764,10 +764,6 @@ Wire Wire Line
 	2150 4400 2450 4400
 Wire Wire Line
 	2150 4600 2450 4600
-Text Label 2200 4400 0    50   ~ 0
-~clkE
-Text Label 2200 4600 0    50   ~ 0
-~clkQ
 Text Label 9700 4650 2    50   ~ 0
 D[0..7]
 Text Label 9800 4200 0    50   ~ 0
@@ -813,7 +809,7 @@ F 3 "" H 8950 800 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	2150 1200 2550 1200
-Text Label 2200 1000 0    50   ~ 0
+Text Label 2550 1000 2    50   ~ 0
 ~RSTO
 $Sheet
 S 1150 900  1000 1950
@@ -836,12 +832,8 @@ F14 "S0" O R 2150 1850 50
 F15 "S1" O R 2150 1950 50 
 F16 "IRQH" O R 2150 1100 50 
 $EndSheet
-Text Label 2200 2700 0    50   ~ 0
+Text Label 2450 2700 2    50   ~ 0
 ~Reset
-Text Label 2200 2600 0    50   ~ 0
-~clkQ
-Text Label 2200 2400 0    50   ~ 0
-~clkE
 Text Label 2450 2300 2    50   ~ 0
 E
 Text Label 2450 2500 2    50   ~ 0
@@ -876,19 +868,19 @@ Wire Bus Line
 	3050 1600 3050 2800
 Wire Bus Line
 	3000 1750 3000 3450
-Text Label 2200 1200 0    50   ~ 0
+Text Label 2550 1200 2    50   ~ 0
 ~IRQ
 Wire Wire Line
 	2150 1850 2450 1850
 Wire Wire Line
 	2150 1950 2450 1950
-Text Label 2250 1850 0    50   ~ 0
+Text Label 2450 1850 2    50   ~ 0
 S0
-Text Label 2250 1950 0    50   ~ 0
+Text Label 2450 1950 2    50   ~ 0
 S1
 Wire Wire Line
 	2150 1100 2550 1100
-Text Label 2200 1100 0    50   ~ 0
+Text Label 2550 1100 2    50   ~ 0
 IRQH
 Wire Bus Line
 	2950 4000 2950 2150
@@ -914,8 +906,6 @@ Wire Wire Line
 	3850 2550 4000 2550
 Wire Wire Line
 	3850 2900 5200 2900
-Wire Wire Line
-	4500 6100 4550 6100
 Wire Wire Line
 	6350 3600 6350 4250
 NoConn ~ 6050 4900
@@ -952,21 +942,21 @@ Wire Wire Line
 Connection ~ 5250 6000
 Wire Wire Line
 	5250 6000 5250 4150
-Connection ~ 3950 4900
+Connection ~ 3850 4900
 Wire Wire Line
-	4550 4900 3950 4900
+	4550 4900 3850 4900
 Wire Wire Line
-	3450 4900 3950 4900
+	3300 4900 3850 4900
 Wire Wire Line
-	3450 5000 3900 5000
-Text Label 3500 5000 0    50   ~ 0
+	3300 5000 3800 5000
+Text Label 3350 5000 0    50   ~ 0
 ExBusCtrl1
-Text Label 3500 4900 0    50   ~ 0
+Text Label 3350 4900 0    50   ~ 0
 ExBusCtrl0
 Entry Wire Line
-	3350 4900 3450 5000
+	3200 4900 3300 5000
 Entry Wire Line
-	3350 4800 3450 4900
+	3200 4800 3300 4900
 Wire Wire Line
 	6350 3600 6900 3600
 Text Label 6900 3600 2    50   ~ 0
@@ -1128,20 +1118,7 @@ Wire Wire Line
 	6600 4300 6600 4700
 Connection ~ 6600 4700
 Wire Wire Line
-	10600 5100 10150 5100
-Wire Wire Line
-	10150 5100 10150 4700
-$Comp
-L power:+5V #PWR08
-U 1 1 6F4D3D76
-P 10150 4700
-F 0 "#PWR08" H 10150 4550 50  0001 C CNN
-F 1 "+5V" H 10165 4873 50  0000 C CNN
-F 2 "" H 10150 4700 50  0001 C CNN
-F 3 "" H 10150 4700 50  0001 C CNN
-	1    10150 4700
-	1    0    0    -1  
-$EndComp
+	10600 5100 10250 5100
 $Comp
 L CPU2908CLocal:74HC125 U8
 U 4 1 6F52C967
@@ -1380,25 +1357,21 @@ Text Label 7850 800  2    50   ~ 0
 TSC
 Wire Wire Line
 	7600 800  7850 800 
-Text Label 4000 800  2    50   ~ 0
-~clkE
 Wire Wire Line
 	3750 800  4000 800 
-Text Label 5350 800  2    50   ~ 0
-~clkQ
 Wire Wire Line
 	5100 800  5350 800 
 $Comp
 L CPU2908CLocal:74HC04 U?
 U 1 1 5F06C858
-P 7350 800
+P 3500 800
 AR Path="/5DC31740/5F06C858" Ref="U?"  Part="1" 
 AR Path="/5F06C858" Ref="U3"  Part="1" 
-F 0 "U3" H 7350 1075 50  0000 C CNN
-F 1 "TC74VHCT04AFT" H 7350 984 50  0000 C CNN
-F 2 "Housings_SSOP:TSSOP-14_4.4x5mm_Pitch0.65mm" H 7250 800 50  0001 C CNN
-F 3 "http://akizukidenshi.com/download/ds/toshiba/TC74VHCT04AFT.pdf" H 7250 800 50  0001 C CNN
-	1    7350 800 
+F 0 "U3" H 3500 1075 50  0000 C CNN
+F 1 "TC74VHCT04AFT" H 3500 984 50  0000 C CNN
+F 2 "Housings_SSOP:TSSOP-14_4.4x5mm_Pitch0.65mm" H 3400 800 50  0001 C CNN
+F 3 "http://akizukidenshi.com/download/ds/toshiba/TC74VHCT04AFT.pdf" H 3400 800 50  0001 C CNN
+	1    3500 800 
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -1415,7 +1388,7 @@ F 3 "http://akizukidenshi.com/download/ds/toshiba/TC74VHCT04AFT.pdf" H 4750 800 
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	3450 3150 4300 3150
+	3300 3150 4300 3150
 Wire Wire Line
 	4350 3050 4350 3750
 $Comp
@@ -1464,7 +1437,7 @@ Wire Wire Line
 Wire Wire Line
 	5350 3650 5350 3000
 Wire Bus Line
-	3050 2800 3350 2800
+	3050 2800 3200 2800
 $Comp
 L Device:R R?
 U 1 1 60EE25E6
@@ -1789,14 +1762,14 @@ $EndComp
 $Comp
 L CPU2908CLocal:74HC04 U?
 U 4 1 5F08D35A
-P 3500 800
+P 4200 6900
 AR Path="/5DC31740/5F08D35A" Ref="U?"  Part="1" 
 AR Path="/5F08D35A" Ref="U3"  Part="4" 
-F 0 "U3" H 3500 1075 50  0000 C CNN
-F 1 "TC74VHCT04AFT" H 3500 984 50  0000 C CNN
-F 2 "Housings_SSOP:TSSOP-14_4.4x5mm_Pitch0.65mm" H 3400 800 50  0001 C CNN
-F 3 "http://akizukidenshi.com/download/ds/toshiba/TC74VHCT04AFT.pdf" H 3400 800 50  0001 C CNN
-	4    3500 800 
+F 0 "U3" H 4200 7175 50  0000 C CNN
+F 1 "TC74VHCT04AFT" H 4200 7084 50  0000 C CNN
+F 2 "Housings_SSOP:TSSOP-14_4.4x5mm_Pitch0.65mm" H 4100 6900 50  0001 C CNN
+F 3 "http://akizukidenshi.com/download/ds/toshiba/TC74VHCT04AFT.pdf" H 4100 6900 50  0001 C CNN
+	4    4200 6900
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -1850,13 +1823,13 @@ F 3 "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf" H 4350 4450 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	4050 4500 3950 4500
+	4050 4500 3850 4500
 Wire Wire Line
-	3950 4500 3950 4900
+	3850 4500 3850 4900
 Wire Wire Line
-	4050 4400 3900 4400
+	4050 4400 3800 4400
 Wire Wire Line
-	3900 4400 3900 5000
+	3800 4400 3800 5000
 Wire Wire Line
 	4600 4450 4800 4450
 Text Label 9500 2200 0    50   ~ 0
@@ -2192,8 +2165,6 @@ Wire Wire Line
 Wire Wire Line
 	6050 4250 6350 4250
 NoConn ~ 10850 4850
-Wire Wire Line
-	10250 4850 10250 5250
 $Comp
 L Device:R R?
 U 1 1 684AF8A7
@@ -2291,10 +2262,99 @@ E
 NoConn ~ 10400 2200
 NoConn ~ 2700 4150
 NoConn ~ 10400 2300
+Wire Wire Line
+	3800 5000 4000 5000
+Wire Wire Line
+	4000 5000 4000 5100
+Wire Wire Line
+	4000 5100 4550 5100
+Connection ~ 3800 5000
+$Comp
+L CPU2908CLocal:74HC04 U?
+U 5 1 62843F9A
+P 4200 6100
+AR Path="/5DC31740/62843F9A" Ref="U?"  Part="1" 
+AR Path="/62843F9A" Ref="U3"  Part="5" 
+F 0 "U3" H 4200 6375 50  0000 C CNN
+F 1 "TC74VHCT04AFT" H 4200 5950 50  0000 C CNN
+F 2 "Housings_SSOP:TSSOP-14_4.4x5mm_Pitch0.65mm" H 4100 6100 50  0001 C CNN
+F 3 "http://akizukidenshi.com/download/ds/toshiba/TC74VHCT04AFT.pdf" H 4100 6100 50  0001 C CNN
+	5    4200 6100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4450 6100 4550 6100
+Wire Wire Line
+	3850 4900 3850 6100
+Wire Wire Line
+	3850 6100 3950 6100
+Wire Wire Line
+	3800 5900 4550 5900
+$Comp
+L CPU2908CLocal:74HC04 U?
+U 6 1 6297AD32
+P 4200 7550
+AR Path="/5DC31740/6297AD32" Ref="U?"  Part="1" 
+AR Path="/6297AD32" Ref="U3"  Part="6" 
+F 0 "U3" H 4200 7825 50  0000 C CNN
+F 1 "TC74VHCT04AFT" H 4200 7400 50  0000 C CNN
+F 2 "Housings_SSOP:TSSOP-14_4.4x5mm_Pitch0.65mm" H 4100 7550 50  0001 C CNN
+F 3 "http://akizukidenshi.com/download/ds/toshiba/TC74VHCT04AFT.pdf" H 4100 7550 50  0001 C CNN
+	6    4200 7550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4450 6900 4550 6900
+Wire Wire Line
+	3800 5900 3800 6900
+Wire Wire Line
+	3800 6900 3950 6900
+Connection ~ 3800 5900
+Wire Wire Line
+	3850 6100 3850 7100
+Wire Wire Line
+	3850 7100 4550 7100
+Connection ~ 3850 6100
+Wire Wire Line
+	3800 5000 3800 5900
+$Comp
+L CPU2908CLocal:74HC04 U?
+U 2 1 633036F5
+P 7350 800
+AR Path="/5DC31E28/633036F5" Ref="U?"  Part="2" 
+AR Path="/633036F5" Ref="U3"  Part="2" 
+F 0 "U3" H 7350 1075 50  0000 C CNN
+F 1 "TC74VHCT04AFT" H 7350 984 50  0000 C CNN
+F 2 "Housings_SSOP:TSSOP-14_4.4x5mm_Pitch0.65mm" H 7250 800 50  0001 C CNN
+F 3 "http://akizukidenshi.com/download/ds/toshiba/TC74VHCT04AFT.pdf" H 7250 800 50  0001 C CNN
+	2    7350 800 
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0105
+U 1 1 63331C36
+P 3750 7500
+F 0 "#PWR0105" H 3750 7350 50  0001 C CNN
+F 1 "+5V" H 3765 7673 50  0000 C CNN
+F 2 "" H 3750 7500 50  0001 C CNN
+F 3 "" H 3750 7500 50  0001 C CNN
+	1    3750 7500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3750 7500 3750 7550
+Wire Wire Line
+	3750 7550 3950 7550
+NoConn ~ 4450 7550
+Wire Wire Line
+	10250 4850 10250 5100
+Connection ~ 10250 5100
+Wire Wire Line
+	10250 5100 10250 5250
 Wire Bus Line
 	9300 2600 9300 2900
 Wire Bus Line
-	3350 2800 3350 5000
+	3200 2800 3200 5000
 Wire Bus Line
 	10600 3700 10600 4200
 Wire Bus Line
@@ -2317,4 +2377,16 @@ Wire Bus Line
 	7000 1300 7000 2900
 Wire Bus Line
 	5100 1300 5100 2450
+Text Label 5350 800  2    50   ~ 0
+nQ
+Text Label 4000 800  2    50   ~ 0
+nE
+Text Label 2450 4600 2    50   ~ 0
+nQ
+Text Label 2450 2600 2    50   ~ 0
+nQ
+Text Label 2450 4400 2    50   ~ 0
+nE
+Text Label 2450 2400 2    50   ~ 0
+nE
 $EndSCHEMATC

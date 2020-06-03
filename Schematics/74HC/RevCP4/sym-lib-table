@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name CPU2908C-rescue)(type Legacy)(uri ${KIPRJMOD}/CPU2908C-rescue.lib)(options "")(descr ""))
+)

@@ -1,0 +1,37 @@
+
+Label ***
+ $004F = MSG
+ $0053 = START
+ $0044 = RXCHAR
+ $0048 = RX00
+
+Constant ***
+
+Code ***
+                .org 0
+ 0000 7D4F00    	mov a1,msg
+ 0003 FE4D00    	jmp start
+                .org 64 ; SWI8
+ 0040 FA0100    	call rxchar
+ 0043 FD        	iret
+                
+                rxchar:
+ 0044 64        	push a0
+ 0045 7C010F    	mov a0,$0f01
+                rx00:
+ 0048 00        	ld r0,[a0]
+ 0049 49        	mov r1,r0
+ 004A B8        	or r0,r0
+ 004B E5FB      	jz rx00	;	wait for receive.
+                
+ 004D 6C        	pop a0
+ 004E 6E        	ret
+                
+                msg:
+ 004F 61626300
+                	.db 'abc',0
+                start:
+ 0053 FF        	nop
+ 0054
+
+END ***

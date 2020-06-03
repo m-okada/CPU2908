@@ -18,7 +18,7 @@ Text HLabel 10450 5000 2    50   Output ~ 0
 D[0..31]
 Text HLabel 800  2050 0    50   Input ~ 0
 load
-Text HLabel 1400 1650 0    50   Input ~ 0
+Text HLabel 1900 1750 0    50   Input ~ 0
 update
 Text HLabel 1950 650  0    50   Input ~ 0
 OpeCode[0..7]
@@ -182,7 +182,6 @@ Connection ~ 3500 7300
 Connection ~ 3850 7300
 Wire Wire Line
 	3850 7300 4250 7300
-Connection ~ 4250 7300
 Wire Wire Line
 	4350 950  4700 950 
 Wire Wire Line
@@ -192,13 +191,13 @@ Wire Wire Line
 Wire Wire Line
 	4700 1250 4350 1250
 Wire Wire Line
-	6550 1000 6200 1000
+	4700 1350 4350 1350
 Wire Wire Line
-	6550 1100 6200 1100
+	4700 1450 4350 1450
 Wire Wire Line
-	6550 1200 6200 1200
+	4700 1550 4350 1550
 Wire Wire Line
-	6550 1300 6200 1300
+	4700 1650 4350 1650
 Entry Wire Line
 	4250 850  4350 950 
 Entry Wire Line
@@ -208,57 +207,24 @@ Entry Wire Line
 Entry Wire Line
 	4250 1150 4350 1250
 Entry Wire Line
-	6100 900  6200 1000
+	4250 1250 4350 1350
 Entry Wire Line
-	6100 1000 6200 1100
+	4250 1350 4350 1450
 Entry Wire Line
-	6100 1100 6200 1200
+	4250 1450 4350 1550
 Entry Wire Line
-	6100 1200 6200 1300
-Text Label 4350 1250 0    50   ~ 0
-OpeCode0
-Text Label 4350 1150 0    50   ~ 0
-OpeCode1
-Text Label 4350 1050 0    50   ~ 0
-OpeCode2
-Text Label 4350 950  0    50   ~ 0
-OpeCode3
-Text Label 6200 1300 0    50   ~ 0
-OpeCode4
-Text Label 6200 1200 0    50   ~ 0
-OpeCode5
-Text Label 6200 1100 0    50   ~ 0
-OpeCode6
-Text Label 6200 1000 0    50   ~ 0
-OpeCode7
+	4250 1550 4350 1650
 Wire Bus Line
 	4250 650  1950 650 
-Wire Bus Line
-	4250 650  6100 650 
-Connection ~ 4250 650 
 Wire Wire Line
 	3000 1950 2900 1950
 Wire Wire Line
 	2900 1950 2900 2350
-Connection ~ 2900 2350
 Wire Wire Line
 	2650 1250 2650 1300
 Wire Wire Line
 	2650 1250 2800 1250
 Connection ~ 2800 1250
-Wire Wire Line
-	3800 1450 4400 1450
-$Comp
-L power:+5V #PWR043
-U 1 1 60F8C2AF
-P 4550 1400
-F 0 "#PWR043" H 4550 1250 50  0001 C CNN
-F 1 "+5V" H 4565 1573 50  0000 C CNN
-F 2 "" H 4550 1400 50  0001 C CNN
-F 3 "" H 4550 1400 50  0001 C CNN
-	1    4550 1400
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	3000 1650 2850 1650
 Wire Wire Line
@@ -280,28 +246,13 @@ F 3 "" H 2850 1400 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	2850 1750 2850 2100
-Wire Wire Line
-	2850 2100 4550 2100
-Connection ~ 2850 1750
-Wire Wire Line
-	2850 1750 3000 1750
-Wire Wire Line
-	4700 1450 4500 1450
-Wire Wire Line
 	800  2050 2800 2050
 Wire Wire Line
 	3000 1450 2800 1450
 Wire Wire Line
 	2800 1450 2800 2050
-Connection ~ 2800 2050
-Wire Wire Line
-	2800 2050 4500 2050
 Wire Wire Line
 	1250 2350 2900 2350
-Wire Bus Line
-	4100 2250 4100 2850
-Connection ~ 4100 2250
 $Comp
 L CPU2908CLocal:74HC161 U37
 U 1 1 80CEC2E9
@@ -313,86 +264,6 @@ F 3 "5.3mm" H 3400 1450 50  0001 C CNN
 	1    3400 1450
 	1    0    0    -1  
 $EndComp
-$Comp
-L Device:C_Small C?
-U 1 1 8491C512
-P 4550 7200
-AR Path="/8491C512" Ref="C?"  Part="1" 
-AR Path="/5DC31740/5FC8D90E/8491C512" Ref="C37"  Part="1" 
-F 0 "C37" H 4642 7246 50  0000 L CNN
-F 1 "0.1uF" H 4642 7155 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0402" H 4550 7200 50  0001 C CNN
-F 3 "~" H 4550 7200 50  0001 C CNN
-	1    4550 7200
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	2900 2350 4600 2350
-Wire Wire Line
-	6450 2350 4600 2350
-Connection ~ 4600 2350
-Wire Wire Line
-	4600 2350 4600 1950
-Wire Wire Line
-	4600 1950 4700 1950
-Wire Wire Line
-	4500 1450 4500 2050
-Wire Wire Line
-	4550 1750 4700 1750
-Wire Wire Line
-	4550 2100 4550 1750
-Wire Wire Line
-	4550 1650 4550 1400
-Wire Wire Line
-	4700 1650 4550 1650
-Wire Wire Line
-	4400 1550 4700 1550
-Wire Wire Line
-	4400 1450 4400 1550
-Connection ~ 4500 2050
-Wire Wire Line
-	4500 2050 6350 2050
-Connection ~ 4550 2100
-Wire Wire Line
-	4550 2100 6400 2100
-Wire Wire Line
-	6450 2000 6450 2350
-Wire Wire Line
-	6550 2000 6450 2000
-$Comp
-L power:+5V #PWR046
-U 1 1 60F8BB39
-P 6450 1450
-F 0 "#PWR046" H 6450 1300 50  0001 C CNN
-F 1 "+5V" H 6465 1623 50  0000 C CNN
-F 2 "" H 6450 1450 50  0001 C CNN
-F 3 "" H 6450 1450 50  0001 C CNN
-	1    6450 1450
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	5500 1450 6300 1450
-Wire Bus Line
-	5900 2250 7750 2250
-Wire Bus Line
-	4100 2250 5900 2250
-Connection ~ 5900 2250
-Wire Wire Line
-	6350 1500 6350 2050
-Wire Wire Line
-	6550 1500 6350 1500
-Wire Wire Line
-	6400 1800 6550 1800
-Wire Wire Line
-	6400 2100 6400 1800
-Wire Wire Line
-	6450 1700 6450 1450
-Wire Wire Line
-	6550 1700 6450 1700
-Wire Wire Line
-	6300 1600 6550 1600
-Wire Wire Line
-	6300 1450 6300 1600
 Text Label 5550 1250 0    50   ~ 0
 A7
 Text Label 5550 1150 0    50   ~ 0
@@ -401,8 +272,6 @@ Text Label 5550 1050 0    50   ~ 0
 A5
 Text Label 5550 950  0    50   ~ 0
 A4
-Entry Wire Line
-	5800 1250 5900 1350
 Entry Wire Line
 	5800 1150 5900 1250
 Entry Wire Line
@@ -417,53 +286,30 @@ Wire Wire Line
 	5500 1050 5800 1050
 Wire Wire Line
 	5500 950  5800 950 
-NoConn ~ 7350 1500
-Text Label 7400 1300 0    50   ~ 0
+Text Label 5550 1650 0    50   ~ 0
 A11
-Text Label 7400 1200 0    50   ~ 0
+Text Label 5550 1550 0    50   ~ 0
 A10
-Text Label 7400 1100 0    50   ~ 0
+Text Label 5550 1450 0    50   ~ 0
 A9
-Text Label 7400 1000 0    50   ~ 0
+Text Label 5550 1350 0    50   ~ 0
 A8
 Entry Wire Line
-	7650 1300 7750 1400
+	5800 1650 5900 1750
 Entry Wire Line
-	7650 1200 7750 1300
+	5800 1550 5900 1650
 Entry Wire Line
-	7650 1100 7750 1200
+	5800 1450 5900 1550
 Entry Wire Line
-	7650 1000 7750 1100
+	5800 1350 5900 1450
 Wire Wire Line
-	7350 1300 7650 1300
+	5500 1650 5800 1650
 Wire Wire Line
-	7350 1200 7650 1200
+	5500 1550 5800 1550
 Wire Wire Line
-	7350 1100 7650 1100
+	5500 1450 5800 1450
 Wire Wire Line
-	7350 1000 7650 1000
-$Comp
-L CPU2908CLocal:74HC161 U41
-U 1 1 80CED82A
-P 6950 1500
-F 0 "U41" H 6950 2225 50  0000 C CNN
-F 1 "TC74HC161" H 6950 2134 50  0000 C CNN
-F 2 "digikey-footprints:SOIC-16_W7.5mm" H 6950 1500 50  0001 C CNN
-F 3 "5.3mm" H 6950 1500 50  0001 C CNN
-	1    6950 1500
-	1    0    0    -1  
-$EndComp
-$Comp
-L CPU2908CLocal:74HC161 U39
-U 1 1 80CECDFD
-P 5100 1450
-F 0 "U39" H 5100 2175 50  0000 C CNN
-F 1 "TC74HC161" H 5100 2084 50  0000 C CNN
-F 2 "digikey-footprints:SOIC-16_W7.5mm" H 5100 1450 50  0001 C CNN
-F 3 "5.3mm" H 5100 1450 50  0001 C CNN
-	1    5100 1450
-	1    0    0    -1  
-$EndComp
+	5500 1350 5800 1350
 $Comp
 L CPU2908CLocal:LED_G D?
 U 1 1 7132E9E3
@@ -563,9 +409,6 @@ Text Label 8850 2100 0    50   ~ 0
 A10
 Text Label 8850 2200 0    50   ~ 0
 A11
-Wire Bus Line
-	7750 2250 8650 2250
-Connection ~ 7750 2250
 Wire Wire Line
 	9250 2200 8750 2200
 Wire Wire Line
@@ -947,11 +790,6 @@ Text Label 2050 2350 0    50   ~ 0
 CounterReset
 Text Label 2400 1750 0    50   ~ 0
 CountUpdate
-Wire Wire Line
-	4250 7300 4550 7300
-Wire Wire Line
-	4550 7100 4250 7100
-Connection ~ 4250 7100
 Wire Bus Line
 	10450 5000 10350 5000
 $Comp
@@ -976,12 +814,6 @@ F 3 "" H 7500 3400 60  0000 C CNN
 	1    7500 3400
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	2050 1650 2050 1750
-Wire Wire Line
-	1400 1650 2050 1650
-Wire Wire Line
-	2050 1750 2850 1750
 NoConn ~ 4400 3400
 NoConn ~ 4400 3500
 NoConn ~ 6600 3600
@@ -1677,18 +1509,56 @@ Wire Wire Line
 Wire Wire Line
 	3500 7300 3850 7300
 NoConn ~ 4400 4600
+Entry Wire Line
+	5800 1250 5900 1350
+Wire Bus Line
+	5900 2250 8650 2250
+NoConn ~ 3800 1450
+Wire Wire Line
+	1900 1750 3000 1750
+Wire Wire Line
+	2800 2050 4550 2050
+Wire Wire Line
+	4550 1850 4700 1850
+Connection ~ 2800 2050
+$Comp
+L power:GND #PWR043
+U 1 1 5EBD0F7F
+P 4600 2200
+F 0 "#PWR043" H 4600 1950 50  0001 C CNN
+F 1 "GND" H 4605 2027 50  0000 C CNN
+F 2 "" H 4600 2200 50  0001 C CNN
+F 3 "" H 4600 2200 50  0001 C CNN
+	1    4600 2200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4600 1950 4600 2200
+Wire Wire Line
+	4700 1950 4600 1950
+Wire Wire Line
+	4550 2050 4550 1850
+$Comp
+L CPU2908CLocal:TC74HCT574 U?
+U 1 1 5EAA5846
+P 5100 1450
+AR Path="/5DC31740/5EAA5846" Ref="U?"  Part="1" 
+AR Path="/5DC31740/5FC8D90E/5EAA5846" Ref="U39"  Part="1" 
+F 0 "U39" H 5100 2175 50  0000 C CNN
+F 1 "SN74HCT574" H 5100 2084 50  0000 C CNN
+F 2 "Footprints:SN74HCT574NSR" H 5100 1450 50  0001 C CNN
+F 3 "https://toshiba.semicon-storage.com/info/docget.jsp?did=18123&prodName=TC74VHC574F" H 5100 1450 50  0001 C CNN
+	1    5100 1450
+	1    0    0    -1  
+$EndComp
 Wire Bus Line
 	3650 2850 3650 3850
 Wire Bus Line
-	6100 650  6100 1300
+	4100 1000 4100 2850
 Wire Bus Line
-	4250 650  4250 1300
+	5900 950  5900 2250
 Wire Bus Line
-	4100 1000 4100 2250
-Wire Bus Line
-	5900 1000 5900 2250
-Wire Bus Line
-	7750 1050 7750 2250
+	4250 650  4250 1650
 Wire Bus Line
 	8650 750  8650 2250
 Wire Bus Line
@@ -1699,4 +1569,20 @@ Wire Bus Line
 	7100 3600 7100 6050
 Wire Bus Line
 	4000 3550 4000 6050
+Text Label 4350 950  0    50   ~ 0
+OpeCode0
+Text Label 4350 1050 0    50   ~ 0
+OpeCode1
+Text Label 4350 1150 0    50   ~ 0
+OpeCode2
+Text Label 4350 1250 0    50   ~ 0
+OpeCode3
+Text Label 4350 1350 0    50   ~ 0
+OpeCode4
+Text Label 4350 1450 0    50   ~ 0
+OpeCode5
+Text Label 4350 1550 0    50   ~ 0
+OpeCode6
+Text Label 4350 1650 0    50   ~ 0
+OpeCode7
 $EndSCHEMATC

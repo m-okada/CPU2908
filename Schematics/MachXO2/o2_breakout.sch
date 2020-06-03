@@ -80,45 +80,45 @@ $EndComp
 $Comp
 L Mechanical:MountingHole H1
 U 1 1 5DAFD2DA
-P 10100 6400
-F 0 "H1" H 10200 6400 50  0000 L CNN
-F 1 "MountingHole" H 10200 6355 50  0001 L CNN
-F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 10100 6400 50  0001 C CNN
-F 3 "~" H 10100 6400 50  0001 C CNN
-	1    10100 6400
+P 1450 7500
+F 0 "H1" H 1550 7500 50  0000 L CNN
+F 1 "MountingHole" H 1550 7455 50  0001 L CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 1450 7500 50  0001 C CNN
+F 3 "~" H 1450 7500 50  0001 C CNN
+	1    1450 7500
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H2
 U 1 1 5DAFD937
-P 10400 6400
-F 0 "H2" H 10500 6400 50  0000 L CNN
-F 1 "MountingHole" H 10500 6355 50  0001 L CNN
-F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 10400 6400 50  0001 C CNN
-F 3 "~" H 10400 6400 50  0001 C CNN
-	1    10400 6400
+P 1750 7500
+F 0 "H2" H 1850 7500 50  0000 L CNN
+F 1 "MountingHole" H 1850 7455 50  0001 L CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 1750 7500 50  0001 C CNN
+F 3 "~" H 1750 7500 50  0001 C CNN
+	1    1750 7500
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H3
 U 1 1 5DAFDF24
-P 10700 6400
-F 0 "H3" H 10800 6400 50  0000 L CNN
-F 1 "MountingHole" H 10800 6355 50  0001 L CNN
-F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 10700 6400 50  0001 C CNN
-F 3 "~" H 10700 6400 50  0001 C CNN
-	1    10700 6400
+P 2050 7500
+F 0 "H3" H 2150 7500 50  0000 L CNN
+F 1 "MountingHole" H 2150 7455 50  0001 L CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 2050 7500 50  0001 C CNN
+F 3 "~" H 2050 7500 50  0001 C CNN
+	1    2050 7500
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H4
 U 1 1 5DAFE526
-P 11000 6400
-F 0 "H4" H 11100 6400 50  0000 L CNN
-F 1 "MountingHole" H 11100 6355 50  0001 L CNN
-F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 11000 6400 50  0001 C CNN
-F 3 "~" H 11000 6400 50  0001 C CNN
-	1    11000 6400
+P 2350 7500
+F 0 "H4" H 2450 7500 50  0000 L CNN
+F 1 "MountingHole" H 2450 7455 50  0001 L CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 2350 7500 50  0001 C CNN
+F 3 "~" H 2350 7500 50  0001 C CNN
+	1    2350 7500
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -212,34 +212,34 @@ Wire Wire Line
 $Comp
 L o2_breakout-rescue:SG-8002CA-Oscillator X1
 U 1 1 5DCCEBCB
-P 6450 5800
-F 0 "X1" H 6250 6050 50  0000 L CNN
-F 1 "19.6608MHz" H 6500 5550 50  0000 L CNN
-F 2 "Oscillators:Oscillator_SMD_EuroQuartz_XO53-4pin_5.0x3.2mm_HandSoldering" H 7150 5450 50  0001 C CNN
-F 3 "https://support.epson.biz/td/api/doc_check.php?mode=dl&lang=en&Parts=SG-8002DC" H 6350 5800 50  0001 C CNN
-	1    6450 5800
+P 6450 6050
+F 0 "X1" H 6250 6300 50  0000 L CNN
+F 1 "19.6608MHz" H 6500 5800 50  0000 L CNN
+F 2 "Oscillators:Oscillator_SMD_EuroQuartz_XO53-4pin_5.0x3.2mm_HandSoldering" H 7150 5700 50  0001 C CNN
+F 3 "https://support.epson.biz/td/api/doc_check.php?mode=dl&lang=en&Parts=SG-8002DC" H 6350 6050 50  0001 C CNN
+	1    6450 6050
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	6150 5800 6100 5800
+	6150 6050 6100 6050
 Wire Wire Line
-	6100 5800 6100 5400
+	6100 6050 6100 5650
 Wire Wire Line
-	6100 5400 6450 5400
+	6100 5650 6450 5650
 Wire Wire Line
-	6450 5400 6450 5500
+	6450 5650 6450 5750
 Wire Wire Line
-	6450 5400 6450 5300
-Connection ~ 6450 5400
+	6450 5650 6450 5550
+Connection ~ 6450 5650
 $Comp
 L power:GND #PWR013
 U 1 1 5DCD58AA
-P 6450 6200
-F 0 "#PWR013" H 6450 5950 50  0001 C CNN
-F 1 "GND" H 6455 6027 50  0000 C CNN
-F 2 "" H 6450 6200 50  0001 C CNN
-F 3 "" H 6450 6200 50  0001 C CNN
-	1    6450 6200
+P 6450 6450
+F 0 "#PWR013" H 6450 6200 50  0001 C CNN
+F 1 "GND" H 6455 6277 50  0000 C CNN
+F 2 "" H 6450 6450 50  0001 C CNN
+F 3 "" H 6450 6450 50  0001 C CNN
+	1    6450 6450
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -267,12 +267,12 @@ $EndComp
 $Comp
 L power:+3V3 #PWR0109
 U 1 1 5DC84AA7
-P 6450 5300
-F 0 "#PWR0109" H 6450 5150 50  0001 C CNN
-F 1 "+3V3" H 6465 5473 50  0000 C CNN
-F 2 "" H 6450 5300 50  0001 C CNN
-F 3 "" H 6450 5300 50  0001 C CNN
-	1    6450 5300
+P 6450 5550
+F 0 "#PWR0109" H 6450 5400 50  0001 C CNN
+F 1 "+3V3" H 6465 5723 50  0000 C CNN
+F 2 "" H 6450 5550 50  0001 C CNN
+F 3 "" H 6450 5550 50  0001 C CNN
+	1    6450 5550
 	1    0    0    -1  
 $EndComp
 $Sheet
@@ -427,7 +427,7 @@ Wire Wire Line
 	2200 4000 2200 3700
 Wire Wire Line
 	2300 6000 2200 6000
-Text Label 1850 3400 0    50   ~ 0
+Text Label 1800 3400 0    50   ~ 0
 nReset
 Wire Wire Line
 	6450 1800 6150 1800
@@ -913,8 +913,6 @@ Wire Wire Line
 	5100 1900 5600 1900
 Text Label 5600 6100 2    50   ~ 0
 SPI_CLK
-Wire Wire Line
-	9950 1350 9950 1150
 Text Label 1800 4100 0    50   ~ 0
 clkE
 Text Label 1800 4200 0    50   ~ 0
@@ -1051,7 +1049,7 @@ Text Label 1800 2600 0    50   ~ 0
 GCLK0
 Wire Wire Line
 	1800 2600 2300 2600
-Text Label 7050 5800 2    50   ~ 0
+Text Label 7050 6050 2    50   ~ 0
 GCLK0
 Wire Wire Line
 	9650 1950 10000 1950
@@ -1131,8 +1129,6 @@ Wire Wire Line
 	5100 5400 5600 5400
 Wire Wire Line
 	5100 5200 5600 5200
-Wire Wire Line
-	5100 5100 5600 5100
 Connection ~ 2200 4000
 Connection ~ 2200 6000
 Wire Wire Line
@@ -1204,88 +1200,19 @@ Text Label 9750 5050 0    50   ~ 0
 Connection ~ 9650 6050
 Wire Wire Line
 	9650 6050 10000 6050
-$Comp
-L CPU2908CLocal:LED D?
-U 1 1 5F60594B
-P 1100 4350
-AR Path="/5E6A6650/5F60594B" Ref="D?"  Part="1" 
-AR Path="/5F60594B" Ref="D4"  Part="1" 
-F 0 "D4" V 1139 4233 50  0000 R CNN
-F 1 "LED" V 1048 4233 50  0000 R CNN
-F 2 "Capacitors_SMD:C_0603" H 1100 4350 50  0001 C CNN
-F 3 "~" H 1100 4350 50  0001 C CNN
-	1    1100 4350
-	0    -1   -1   0   
-$EndComp
-$Comp
-L CPU2908CLocal:R R?
-U 1 1 5F605951
-P 1100 4700
-AR Path="/5E6A6650/5F605951" Ref="R?"  Part="1" 
-AR Path="/5F605951" Ref="R18"  Part="1" 
-F 0 "R18" H 1170 4746 50  0000 L CNN
-F 1 "47K" H 1170 4655 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0402" V 1030 4700 50  0001 C CNN
-F 3 "~" H 1100 4700 50  0001 C CNN
-	1    1100 4700
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
-	1100 4500 1100 4550
-Wire Wire Line
-	1100 4850 1100 4900
-$Comp
-L CPU2908CLocal:LED D?
-U 1 1 5F630D6B
-P 1450 4350
-AR Path="/5E6A6650/5F630D6B" Ref="D?"  Part="1" 
-AR Path="/5F630D6B" Ref="D6"  Part="1" 
-F 0 "D6" V 1489 4233 50  0000 R CNN
-F 1 "LED" V 1398 4233 50  0000 R CNN
-F 2 "Capacitors_SMD:C_0603" H 1450 4350 50  0001 C CNN
-F 3 "~" H 1450 4350 50  0001 C CNN
-	1    1450 4350
-	0    -1   -1   0   
-$EndComp
-$Comp
-L CPU2908CLocal:R R?
-U 1 1 5F630D71
-P 1450 4700
-AR Path="/5E6A6650/5F630D71" Ref="R?"  Part="1" 
-AR Path="/5F630D71" Ref="R20"  Part="1" 
-F 0 "R20" H 1520 4746 50  0000 L CNN
-F 1 "47K" H 1520 4655 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0402" V 1380 4700 50  0001 C CNN
-F 3 "~" H 1450 4700 50  0001 C CNN
-	1    1450 4700
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	1450 4500 1450 4550
-Wire Wire Line
-	1450 4850 1450 4900
-Wire Wire Line
-	1100 4900 1450 4900
-Wire Wire Line
-	1100 4900 1100 5000
-Connection ~ 1100 4900
+	1250 4000 1250 4200
 $Comp
 L power:GND #PWR029
 U 1 1 5F6B389A
-P 1100 5000
-F 0 "#PWR029" H 1100 4750 50  0001 C CNN
-F 1 "GND" H 1105 4827 50  0000 C CNN
-F 2 "" H 1100 5000 50  0001 C CNN
-F 3 "" H 1100 5000 50  0001 C CNN
-	1    1100 5000
+P 1250 4200
+F 0 "#PWR029" H 1250 3950 50  0001 C CNN
+F 1 "GND" H 1255 4027 50  0000 C CNN
+F 2 "" H 1250 4200 50  0001 C CNN
+F 3 "" H 1250 4200 50  0001 C CNN
+	1    1250 4200
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	1450 4200 2300 4200
-Wire Wire Line
-	1100 4100 2300 4100
-Wire Wire Line
-	1100 4100 1100 4200
 $Comp
 L CPU2908CLocal:LED D?
 U 1 1 5F7108B7
@@ -1348,17 +1275,12 @@ Wire Wire Line
 	1250 3950 1250 4000
 Wire Wire Line
 	900  4000 1250 4000
-Connection ~ 900  4000
 Wire Wire Line
 	900  3200 900  3300
 Wire Wire Line
 	900  3200 2300 3200
 Wire Wire Line
 	1250 3300 2300 3300
-Wire Wire Line
-	900  4900 1100 4900
-Wire Wire Line
-	900  4000 900  4900
 Text Label 1400 3200 0    50   ~ 0
 USER_LED1
 Text Label 1400 3300 0    50   ~ 0
@@ -1382,7 +1304,6 @@ Connection ~ 10700 6050
 Wire Wire Line
 	9650 3900 10850 3900
 Connection ~ 9650 3900
-NoConn ~ 2300 3500
 NoConn ~ 2300 3100
 NoConn ~ 5100 4800
 NoConn ~ 2300 5700
@@ -1474,54 +1395,54 @@ Boot
 $Comp
 L CPU2908CLocal:R R?
 U 1 1 60B0A184
-P 5900 4800
+P 6100 4800
 AR Path="/5E6A6650/60B0A184" Ref="R?"  Part="1" 
 AR Path="/60B0A184" Ref="R25"  Part="1" 
-F 0 "R25" H 5970 4846 50  0000 L CNN
-F 1 "10K" H 5970 4755 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0402" V 5830 4800 50  0001 C CNN
-F 3 "~" H 5900 4800 50  0001 C CNN
-	1    5900 4800
+F 0 "R25" H 6170 4846 50  0000 L CNN
+F 1 "10K" H 6170 4755 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0402" V 6030 4800 50  0001 C CNN
+F 3 "~" H 6100 4800 50  0001 C CNN
+	1    6100 4800
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	5900 5000 5900 4950
+	6100 5000 6100 4950
 Wire Wire Line
-	5100 5000 5900 5000
+	5100 5000 6100 5000
 Wire Wire Line
-	5900 4650 5900 4550
+	6100 4650 6100 4150
 $Comp
 L power:+3V3 #PWR0119
 U 1 1 60B5B932
-P 5900 4550
-F 0 "#PWR0119" H 5900 4400 50  0001 C CNN
-F 1 "+3V3" H 5915 4723 50  0000 C CNN
-F 2 "" H 5900 4550 50  0001 C CNN
-F 3 "" H 5900 4550 50  0001 C CNN
-	1    5900 4550
+P 6100 4150
+F 0 "#PWR0119" H 6100 4000 50  0001 C CNN
+F 1 "+3V3" H 6115 4323 50  0000 C CNN
+F 2 "" H 6100 4150 50  0001 C CNN
+F 3 "" H 6100 4150 50  0001 C CNN
+	1    6100 4150
 	1    0    0    -1  
 $EndComp
 $Comp
 L Jumper:Jumper_2_Open JP2
 U 1 1 60B5C787
-P 5900 5200
-F 0 "JP2" V 5854 5298 50  0000 L CNN
-F 1 "Jumper_2_Open" V 5945 5298 50  0000 L CNN
-F 2 "Wire_Connections_Bridges:WireConnection_1.00mmDrill" H 5900 5200 50  0001 C CNN
-F 3 "~" H 5900 5200 50  0001 C CNN
-	1    5900 5200
+P 6100 5200
+F 0 "JP2" V 6054 5298 50  0000 L CNN
+F 1 "Jumper_2_Open" V 6145 5298 50  0000 L CNN
+F 2 "Wire_Connections_Bridges:WireConnection_1.00mmDrill" H 6100 5200 50  0001 C CNN
+F 3 "~" H 6100 5200 50  0001 C CNN
+	1    6100 5200
 	0    1    1    0   
 $EndComp
-Connection ~ 5900 5000
+Connection ~ 6100 5000
 $Comp
 L power:GND #PWR0123
 U 1 1 60B5D1DD
-P 5900 5400
-F 0 "#PWR0123" H 5900 5150 50  0001 C CNN
-F 1 "GND" H 5905 5227 50  0000 C CNN
-F 2 "" H 5900 5400 50  0001 C CNN
-F 3 "" H 5900 5400 50  0001 C CNN
-	1    5900 5400
+P 6100 5400
+F 0 "#PWR0123" H 6100 5150 50  0001 C CNN
+F 1 "GND" H 6105 5227 50  0000 C CNN
+F 2 "" H 6100 5400 50  0001 C CNN
+F 3 "" H 6100 5400 50  0001 C CNN
+	1    6100 5400
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -1541,9 +1462,9 @@ Connection ~ 10700 6150
 Wire Wire Line
 	8250 1500 8250 2000
 Wire Wire Line
-	6750 5800 7050 5800
+	6750 6050 7050 6050
 Wire Wire Line
-	6450 6100 6450 6200
+	6450 6350 6450 6450
 $Comp
 L Mechanical:MountingHole_Pad H5
 U 1 1 5E208030
@@ -1584,18 +1505,9 @@ Text Label 9350 4850 2    50   ~ 0
 FT_Reset
 Wire Wire Line
 	8850 4850 9350 4850
-Wire Wire Line
-	9350 1500 9350 1550
 Connection ~ 9350 1550
 Wire Wire Line
 	9350 1550 9600 1550
-Wire Wire Line
-	9350 1200 9350 1150
-Wire Wire Line
-	9350 1150 9950 1150
-Connection ~ 9950 1150
-Wire Wire Line
-	9950 1150 9950 1100
 Wire Wire Line
 	9350 1550 9350 1700
 Wire Wire Line
@@ -2086,6 +1998,125 @@ Wire Wire Line
 Connection ~ 9650 5550
 Wire Wire Line
 	9650 5550 9650 6050
+Text Label 5600 5100 2    50   ~ 0
+~CS0
+Text Label 5600 5400 2    50   ~ 0
+~SD_CD
+$Comp
+L CPU2908CLocal:LED D?
+U 1 1 5E6424E8
+P 5800 4700
+AR Path="/5E6A6650/5E6424E8" Ref="D?"  Part="1" 
+AR Path="/5E6424E8" Ref="D10"  Part="1" 
+F 0 "D10" V 5839 4583 50  0000 R CNN
+F 1 "LED" V 5748 4583 50  0000 R CNN
+F 2 "Capacitors_SMD:C_0603" H 5800 4700 50  0001 C CNN
+F 3 "~" H 5800 4700 50  0001 C CNN
+	1    5800 4700
+	0    -1   -1   0   
+$EndComp
+$Comp
+L CPU2908CLocal:R R?
+U 1 1 5E6424EE
+P 5800 4400
+AR Path="/5E6A6650/5E6424EE" Ref="R?"  Part="1" 
+AR Path="/5E6424EE" Ref="R32"  Part="1" 
+F 0 "R32" H 5870 4446 50  0000 L CNN
+F 1 "47K" H 5870 4355 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0402" V 5730 4400 50  0001 C CNN
+F 3 "~" H 5800 4400 50  0001 C CNN
+	1    5800 4400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5800 4150 5800 4250
+Wire Wire Line
+	5800 4150 6100 4150
+Connection ~ 6100 4150
+Wire Wire Line
+	5100 5100 5800 5100
+Wire Wire Line
+	5800 4850 5800 5100
+Wire Wire Line
+	1800 4100 2300 4100
+Wire Wire Line
+	1800 4200 2300 4200
+Wire Wire Line
+	2300 3500 1800 3500
+Text Label 1800 3500 0    50   ~ 0
+INT
+Connection ~ 1250 4000
+$Comp
+L Switch:SW_Push SW3
+U 1 1 61426264
+P 1050 1650
+F 0 "SW3" V 1096 1602 50  0000 R CNN
+F 1 "SW_Push" V 1005 1602 50  0000 R CNN
+F 2 "digikey-footprints:SMD-2_3.2x1.5mm" H 1050 1850 50  0001 C CNN
+F 3 "~" H 1050 1850 50  0001 C CNN
+	1    1050 1650
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	1050 1000 2200 1000
+Connection ~ 2200 1000
+$Comp
+L CPU2908CLocal:R R?
+U 1 1 61483531
+P 1050 1250
+AR Path="/5E6A6650/61483531" Ref="R?"  Part="1" 
+AR Path="/61483531" Ref="R18"  Part="1" 
+F 0 "R18" H 1120 1296 50  0000 L CNN
+F 1 "10K" H 1120 1205 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0402" V 980 1250 50  0001 C CNN
+F 3 "~" H 1050 1250 50  0001 C CNN
+	1    1050 1250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1050 1000 1050 1100
+Wire Wire Line
+	1050 1400 1050 1450
+Wire Wire Line
+	1050 1850 1050 2000
+$Comp
+L power:GND #PWR031
+U 1 1 61566A48
+P 1050 2100
+F 0 "#PWR031" H 1050 1850 50  0001 C CNN
+F 1 "GND" H 1055 1927 50  0000 C CNN
+F 2 "" H 1050 2100 50  0001 C CNN
+F 3 "" H 1050 2100 50  0001 C CNN
+	1    1050 2100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C26
+U 1 1 61594D37
+P 700 1750
+F 0 "C26" H 815 1796 50  0000 L CNN
+F 1 "0.1uF" H 815 1705 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0402" H 738 1600 50  0001 C CNN
+F 3 "~" H 700 1750 50  0001 C CNN
+	1    700  1750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	700  1900 700  2000
+Wire Wire Line
+	700  2000 1050 2000
+Connection ~ 1050 2000
+Wire Wire Line
+	1050 2000 1050 2100
+Wire Wire Line
+	1050 1450 700  1450
+Wire Wire Line
+	700  1450 700  1600
+Connection ~ 1050 1450
+Text Label 750  1450 0    50   ~ 0
+INT
+Wire Wire Line
+	9950 1100 9950 1350
 Wire Bus Line
 	8000 1200 8000 3100
 Wire Bus Line
@@ -2094,8 +2125,4 @@ Wire Bus Line
 	7950 1100 7950 3450
 Wire Bus Line
 	6050 1100 6050 3500
-Text Label 5600 5100 2    50   ~ 0
-~CS0
-Text Label 5600 5400 2    50   ~ 0
-~SD_CD
 $EndSCHEMATC

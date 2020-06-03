@@ -69,10 +69,13 @@ state==NUM | NUM8 substate=CC2ND
 #define OTHER 0x1fe 	//	other input stateにも使える
 #define ALPHA 0x1f0
 #define NUMBER 0x1f1 	//	1-9～
-#define ALL 0x1ee 		//	OTHER で代用できる
+#define DIGIT 0x1f2 	//	0-9～
 #define WHITE_SPC 0x1ff
 
-//	action 上位4ビット　アクション　次4ビット　ステート遷移　2ビット予約　最下位6ビット　ステート
+//	すべてのステートにマッチ
+#define STATE_ALL 0x2ff
+
+//	action 上位4ビット　アクション　次4ビット　ステート遷移　2ビット予約　最下位6ビット　ステートまたはサブステート
 #define ACTION_MASK 0x3000
 #define TAKE_CHAR 0x1000
 #define PUSHBACK 0x2000
@@ -82,11 +85,11 @@ state==NUM | NUM8 substate=CC2ND
 #define EVAL 0x8000			//	途中下車して評価
 
 #define STATE_MASK 0xF00
-#define TERM_TRANS 0x100		//	get_tokenを終了
-#define POP1_SUB 0x200		//	サブステートを1個さかのぼる
-#define POP_SUB 0x300		//	サブステートを0にする
-#define CHANGE_STATE 0x400	//	ステート変更
-#define CHANGE_SUBSTATE 0x500	//	ステート変更
+#define TERM_TRANS 0x100	//	get_tokenを終了
+#define POP1_SUB 0x200	//	サブステートを1個さかのぼる
+#define POP_SUB 0x300	//	サブステートを0にする
+#define STATE 0x400	//	ステート変更
+#define SUBSTATE 0x500	//	ステート変更
 
 #define REDUCE 0x600
 #define REDUCE_CLASS1 0x700	//	class1へコピーしてステート変更
@@ -96,7 +99,7 @@ state==NUM | NUM8 substate=CC2ND
 /*
 
 */
-UINT StateTable[][4]={
+UINT StateDiagram[][4]={
 	{0, 0, '(', TAKE_CHAR | REDUCE | 1},
 	{0, 0, ')', TAKE_CHAR | REDUCE | 2},
 	{0, 0, '[', TAKE_CHAR | REDUCE | 3},
@@ -109,20 +112,25 @@ UINT StateTable[][4]={
 	{0, 0, ';', TAKE_CHAR | REDUCE | 10},
 	{0, 0, ',', TAKE_CHAR | REDUCE | 11},
 
-	{0, 0, NUMBER, EVAL | REDUCE | 0x21},
+	{0, 0, '0', STATE | 0x20},
+	{0, 0, NUMBER, TAKE_CHAR | REDUCE | 0x21},
 //	{0, 0, '\'', TAKE_CHAR | REDUCE | 0x31}, // char code
 //	{0, 0, '"', TAKE_CHAR | REDUCE | 0x32},	//	get string
 
+	{0x21, 0, '0', 0}, //@@@
+
 	{0x32, 0, '"', REDUCE_CLASS1 | 0},
 
-	{0, 0, '<', TAKE_CHAR | CHANGE_STATE | 0x04},
-	{4, 0, '<', TAKE_CHAR | CHANGE_SUBSTATE | 0x01},
-	{4, 0, '=', TAKE_CHAR | CHANGE_SUBSTATE | 0x02},
+	{0, 0, '<', TAKE_CHAR | STATE | 0x04},
+	{4, 0, '<', TAKE_CHAR | SUBSTATE | 0x01},
+	{4, 0, '=', TAKE_CHAR | SUBSTATE | 0x02},
 	{4, 1, '=', TAKE_CHAR | REDUCE | 0x0401},
 	{4, 1, OTHER, TAKE_CHAR | REDUCE | 0x0401},
-	{4, ALL, OTHER, PUSHBACK | REDUCE | 0x0402},
+	{4, STATE_ALL, OTHER, PUSHBACK | REDUCE | 0x0402},
 
-	{OTHER, ALL, ALL, DISCARD | REDUCE | 0x00},
+
+
+	{STATE_ALL, STATE_ALL, OTHER, DISCARD | REDUCE | 0x00},
 	{FF, 0, 0, FF}
 } ;
 
@@ -166,7 +174,7 @@ void set_text(char *ptr){
 	text_buff=ptr ;
 	text_pos=0 ;
 
-	diagram=StateTable ;
+	diagram=StateDiagram ;
 	text_pos=ptr ;
 }
 
@@ -313,8 +321,9 @@ UINT search_state(UINT state, UINT substate){
 			t = FF ;
 			break ;
 		}
-		if(diagram[i][0]==state){
+		if(diagram[i][0]==state || diagram[i][0]==STATE_ALL ){
 			t=state ;
+
 			while(1){
 				if(diagram[i][0]!=t){
 					t = FF ;
@@ -326,10 +335,16 @@ UINT search_state(UINT state, UINT substate){
 				}
 				i++ ;
 			}
+
 			break ;
 		}
 		if(diagram[i][0]==OTHER){
 			t = i ;
+			break ;
+		}
+		if(diagram[i][0]!=state){
+			//	@@@ ステートが変わったら未検出で返る
+			t=FF ;
 			break ;
 		}
 		i++ ;
@@ -338,30 +353,45 @@ UINT search_state(UINT state, UINT substate){
 	return t ;
 }
 
-UINT transit(char cc){
-	UINT n_state ;
-	UINT n_substate ;
-	UINT action ;
+
+UINT transit(void){
+	UINT idx, t ;
+
+
+	UINT action, state ;
 	UINT i=0 ;
 
+	UINT cc ;
+	cc = get_char() ;
+	if(cc==FF){
+		return FF ;
+	}
+
 	while(1){
-		action=0 ;
-		if(diagram[i][0]==FF){
-			action = FF ;
-			break ;
+		idx=search_state(yystate, substate) ;
+		if(idx==FF){
+			yystate = substate = 0 ;
+			return 0 ;
 		}
 
-		if(diagram[i][0]==yystate && diagram[i][1]==substate){
-			if(diagram[i][2]==(UINT)cc){
-				action = diagram[i][3] ;
-				break ;
-			}
+		t = diagram[idx][3] ;
+		action = t & ACTION_MASK ;
+		state = t & STATE_MASK ;
+		if(action==TAKE_CHAR){
+			take_char(cc) ;
 		}
-		i++ ;
-	}
-	if(action!=FF){
+		else if(action==PUSHBACK){
+			push_back(cc) ;
+		}
+		else if(action==DISCARD){
+			;
+		}
 
+		if(action==REDUCE){
+			;
+		}
 	}
+	return FF ;
 }
 
 
@@ -458,6 +488,8 @@ int main(int argc, char** argv){
 	set_text("0x8bc5") ;
 	n = eval_number() ;
 	printf("(%X)", n) ;
+
+
 
 //	while((type=get_token())!=0){
 //		printf("[%s:%d]\n", token_buff, type) ;

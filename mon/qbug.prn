@@ -1,24 +1,27 @@
 
 Label ***
  $0100 = START
- $0112 = OUT4H
- $0106 = START_MSG
- $010D = HALT
-*Undef = SKIP4H
- $011D = OUT4H00
- $011F = OUT4H01
- $014A = OUT2H
- $012B = RXCHAR
- $012F = RX00
- $0136 = TXCHAR
- $0147 = TXEXIT
- $0140 = TX00
- $014C = OUTSTRING
- $014C = OUTCHAR
- $014C = WAITSEND
- $014C = TOPMSG
+ $0123 = OUT4H
+ $0180 = TOPMSG
+ $0170 = OUTSTRING
+ $0109 = WAIT
+ $0118 = RXCHAR
+ $0134 = OUT2H
+ $0113 = HALT
+ $011C = RX00
+ $012C = OUTSPC
+ $015C = TXCHAR
+ $0144 = OUT2H_SKIP0
+ $0153 = OUT2H_SKIP1
+ $016D = TXEXIT
+ $0166 = TX00
+ $0172 = OUTCHAR
+ $017D = OUTSTRING_EXIT
+ $0180 = WAITSEND
 
 Constant ***
+ $0F00 = UART_DATA
+ $0F01 = UART_STATUS
  $FF00 = RXBUFF
 
 Code ***
@@ -31,12 +34,14 @@ Code ***
                 ; R Dump register
                 ; M Dump memory
                 
+                uart_data eq $0f00
+                uart_status eq $0f01
                 rxbuff eq $ff00
                 ;
                 .org 0 ; swi 0
  0000 FEFD00    	jmp start
                 .org 8 ; swi 1
- 0008 FA0701    	call out4h
+ 0008 FA1801    	call out4h
  000B FD        	iret
                 .org 64 ; swi 8
  0040 FF        	nop
@@ -46,106 +51,158 @@ Code ***
                 start:
  0100 7F0000    	mov sp,0
                 
- 0103 7D0000    	mov a1,topmsg
+                ;	mov r1,$31
+                ;	call out2h
                 
-                start_msg:
- 0106 04        	ld r0,[a1]
- 0107 B8        	or r0,r0
+ 0103 7C8001    	mov a0,topmsg
+ 0106 FA6700    	call outstring
                 
- 0108 D7        	inc a1
-                
- 0109 04        	ld r0,[a1]
- 010A A0        	and r0,r0
- 010B E4F9      	jnz start_msg
-                
+                wait:
+ 0109 FA0C00    	call rxchar
+ 010C 48        	mov r0,r1
+ 010D FA2400    	call out2h
+ 0110 FEF6FF    	jmp wait
                 
                 halt:
- 010D 7E0000    	mov pc,halt
- 0110 EEFB      	jmps halt
+ 0113 7E1301    	mov pc,halt
+ 0116 EEFB      	jmps halt
                 
-                out4h:	; w1 to hex
- 0112 41        	mov r0, r3
- 0113 A50F      	and r0,$0F
- 0115 8530      	add r0,$30
-                
- 0117 AD0A      	cmp r0, 10
- 0119 E100      	jc skip4h
- 011B 8537      	add r0,$37 ; 'A'-10
-                out4h00:
- 011D 8530      	add r0,$30
-                
-                out4h01:
- 011F 60        	push w0
-                
- 0120 49        	mov r1,r0
- 0121 C8        	shr r0
- 0122 C8        	shr r0
- 0123 C8        	shr r0
- 0124 C8        	shr r0
-                
- 0125 FA2200    	call out2h
- 0128 48        	mov r0,r1
-                
- 0129 68        	pop w0
- 012A 6E        	ret
                 
                 ;
                 ;r1 : Recv char.
                 ;
                 rxchar:
- 012B 64        	push a0
- 012C 7C010F    	mov a0,$0f01
+ 0118 64        	push a0
+ 0119 7C010F    	mov a0,$0f01
                 rx00:
- 012F 00        	ld r0,[a0]
- 0130 49        	mov r1,r0
- 0131 B8        	or r0,r0
- 0132 E5FB      	jz rx00
+ 011C 00        	ld r0,[a0]
+ 011D 49        	mov r1,r0
+ 011E B8        	or r0,r0
+ 011F E5FB      	jz rx00	;	wait for receive.
                 
- 0134 6C        	pop a0
- 0135 6E        	ret
+ 0121 6C        	pop a0
+ 0122 6E        	ret
+                
+                
+                ;
+                ; w0 Hex to send.
+                ;
+                out4h:
+ 0123 FA0E00    	call out2h
+ 0126 62        	swb w0
+ 0127 FA0A00    	call out2h
+ 012A 62        	swb w0
+ 012B 6E        	ret
+                
+                ;
+                ; Out space
+                ;
+                outspc:
+ 012C 60        	push w0
+ 012D 7920      	mov r1,$20
+ 012F FA2A00    	call txchar
+ 0132 68        	pop w0
+ 0133 6E        	ret
+                
+                ;
+                ; r1 Hex to send.
+                ;
+                out2h:
+ 0134 60        	push w0
+ 0135 61        	push w1
+                
+ 0136 45        	mov r2,r1	; save
+                
+ 0137 48        	mov r0,r1
+                
+ 0138 C8        	shr r0
+ 0139 C8        	shr r0
+ 013A C8        	shr r0
+ 013B C8        	shr r0
+                
+ 013C A50F      	and r0,$0f
+ 013E AD0A      	cmp r0,10
+ 0140 E002      	jb out2h_skip0
+                
+ 0142 8507      	add r0,7	; 'A'-'0'-10
+                
+                out2h_skip0:
+ 0144 8530      	add r0,48	;	'0'
+                
+ 0146 49        	mov r1,r0
+ 0147 FA1200    	call txchar
+                
+ 014A 40        	mov r0,r2	; restore
+ 014B A50F      	and r0,$0f
+ 014D AD0A      	cmp r0,10
+ 014F E002      	jb out2h_skip1
+                
+ 0151 8507      	add r0,7	; 'A'-'0'-10
+                
+                out2h_skip1:
+ 0153 8530      	add r0,48	;	'0'
+                
+ 0155 49        	mov r1,r0
+ 0156 FA0300    	call txchar
+                
+ 0159 69        	pop w1
+ 015A 68        	pop w0
+ 015B 6E        	ret
                 
                 
                 ;
                 ; r1 : Ascii code to send.
                 ;
                 txchar:
- 0136 64        	push a0
- 0137 60        	push w0
+ 015C 64        	push a0
+ 015D 60        	push w0
                 
- 0138 7B00      	mov r3,0
- 013A BF        	or r1, r3
- 013B E40A      	jnz txexit
+ 015E 7B00      	mov r3,0
+ 0160 BF        	or r1, r3
+ 0161 E50A      	jz txexit
                 
- 013D 7C000F    	mov a0,$0f00	;	UART status register.
+ 0163 7C000F    	mov a0,$0f00	;	UART status register.
                 tx00:
- 0140 00        	ld r0, [a0]
- 0141 A508      	and r0, $08
- 0143 E5FB      	jz tx00		;	Wait for TxBuffer empty.
- 0145 D6        	inc a0
- 0146 09        	st [a0],r1
+ 0166 00        	ld r0, [a0]
+ 0167 A508      	and r0, $08
+ 0169 E5FB      	jz tx00		;	Wait for TxBuffer empty.
+ 016B D6        	inc a0
+ 016C 09        	st [a0],r1
                 
                 txexit:
- 0147 68        	pop w0
- 0148 6C        	pop a0
- 0149 6E        	ret
+ 016D 68        	pop w0
+ 016E 6C        	pop a0
+ 016F 6E        	ret
+                
                 
                 ;
-                ; r0 to hex -> w0
+                ;  A0 ptr of ascz string.
                 ;
-                out2h:	; r0 to hex
- 014A A50F      	and r0, $0f
-                
-                
-                outstring: ; A0 ptr of ascz string.
-                
+                outstring:
+ 0170 64        	push a0
+ 0171 60        	push w0
                 outchar:
+ 0172 00        	ld r0,[a0]
+ 0173 D6        	inc a0
+ 0174 49        	mov r1,r0
+ 0175 B9        	or r0,r1
+ 0176 E505      	jz outstring_exit
+                
+ 0178 FAE1FF    	call txchar
+ 017B EEF5      	jmps outchar
+                
+                outstring_exit:
+ 017D 68        	pop w0
+ 017E 6C        	pop a0
+ 017F 6E        	ret
+                
                 
                 waitsend:
                 
                 topmsg:
- 014C 514255472056312E300A00
+ 0180 514255472056312E300A00
                 	.db 'QBUG V1.0',$0a,0
- 0157 FF        	nop
- 0158
+ 018B FF        	nop
+ 018C
 
 END ***

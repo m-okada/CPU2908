@@ -7,6 +7,8 @@
 ; R Dump register
 ; M Dump memory
 
+uart_data eq $0f00
+uart_status eq $0f01
 rxbuff eq $ff00
 ;
 .org 0 ; swi 0
@@ -22,48 +24,22 @@ rxbuff eq $ff00
 start:
 	mov sp,0
 
-	mov a1,topmsg
+;	mov r1,$31
+;	call out2h
 
-start_msg:
-	ld r0,[a1]
-	or r0,r0
+	mov a0,topmsg
+	call outstring
 
-	inc a1
-
-	ld r0,[a1]
-	and r0,r0
-	jnz start_msg
-
+waitchar:
+	call rxchar
+	mov r0,r1
+	call out2h
+	jmp waitchar
 
 halt:
 	mov pc,halt
 	jmps halt
 
-out4h:	; w1 to hex
-	mov r0, r3
-	and r0,$0F
-	add r0,$30
-
-	cmp r0, 10
-	jc skip4h
-	add r0,$37 ; 'A'-10
-out4h00:
-	add r0,$30
-
-out4h01:
-	push w0
-
-	mov r1,r0
-	shr r0
-	shr r0
-	shr r0
-	shr r0
-
-	call out2h
-	mov r0,r1
-
-	pop w0
-	ret
 
 ;
 ;r1 : Recv char.
@@ -75,9 +51,75 @@ rx00:
 	ld r0,[a0]
 	mov r1,r0
 	or r0,r0
-	jz rx00
+	jz rx00	;	wait for receive.
 
 	pop a0
+	ret
+
+
+;
+; w0 Hex to send.
+;
+out4h:
+	call out2h
+	swb w0
+	call out2h
+	swb w0
+	ret
+
+;
+; Out space
+;
+outspc:
+	push w0
+	mov r1,$20
+	call txchar
+	pop w0
+	ret
+
+;
+; r1 Hex to send.
+;
+out2h:
+	push w0
+	push w1
+
+	mov r2,r1	; save
+
+	mov r0,r1
+
+	shr r0
+	shr r0
+	shr r0
+	shr r0
+
+	and r0,$0f
+	cmp r0,10
+	jb out2h_skip0
+
+	add r0,7	; 'A'-'0'-10
+
+out2h_skip0:
+	add r0,48	;	'0'
+
+	mov r1,r0
+	call txchar
+
+	mov r0,r2	; restore
+	and r0,$0f
+	cmp r0,10
+	jb out2h_skip1
+
+	add r0,7	; 'A'-'0'-10
+
+out2h_skip1:
+	add r0,48	;	'0'
+
+	mov r1,r0
+	call txchar
+
+	pop w1
+	pop w0
 	ret
 
 
@@ -90,7 +132,7 @@ txchar:
 
 	mov r3,0
 	or r1, r3
-	jnz txexit
+	jz txexit
 
 	mov a0,$0f00	;	UART status register.
 tx00:
@@ -105,16 +147,28 @@ txexit:
 	pop a0
 	ret
 
+
 ;
-; r0 to hex -> w0
+;  A0 ptr of ascz string.
 ;
-out2h:	; r0 to hex
-	and r0, $0f
-
-
-outstring: ; A0 ptr of ascz string.
-
+outstring:
+	push a0
+	push w0
 outchar:
+	ld r0,[a0]
+	inc a0
+	mov r1,r0
+	or r0,r1
+	jz outstring_exit
+
+	call txchar
+	jmps outchar
+
+outstring_exit:
+	pop w0
+	pop a0
+	ret
+
 
 waitsend:
 
