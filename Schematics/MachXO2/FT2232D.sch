@@ -108,8 +108,6 @@ Wire Wire Line
 	4750 5150 4750 5850
 Wire Wire Line
 	4750 5850 5500 5850
-Text HLabel 3750 3550 0    50   Input ~ 0
-nReset
 $Comp
 L CPU2908CLocal:R R1
 U 1 1 5DC786E9
@@ -156,17 +154,6 @@ Wire Wire Line
 Wire Wire Line
 	7900 1700 7700 1700
 $Comp
-L Memory_EEPROM:93CxxA U4
-U 1 1 5DC82A54
-P 3950 4950
-F 0 "U4" H 3950 5431 50  0000 C CNN
-F 1 "93C56" H 3700 4650 50  0000 C CNN
-F 2 "Housings_SOIC:SOIC-8_3.9x4.9mm_Pitch1.27mm" H 3950 4950 50  0001 C CNN
-F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/20001749K.pdf" H 3950 4950 50  0001 C CNN
-	1    3950 4950
-	1    0    0    -1  
-$EndComp
-$Comp
 L power:GND #PWR0104
 U 1 1 5DC86D51
 P 3950 5350
@@ -181,8 +168,6 @@ Wire Wire Line
 	4550 4750 4900 4750
 Wire Wire Line
 	4350 4850 4900 4850
-Wire Wire Line
-	3400 4850 3550 4850
 Wire Wire Line
 	4350 4950 4850 4950
 Wire Wire Line
@@ -201,11 +186,7 @@ $EndComp
 Wire Wire Line
 	4450 4550 4450 5050
 Wire Wire Line
-	4550 4600 3400 4600
-Wire Wire Line
 	4550 4600 4550 4750
-Wire Wire Line
-	3400 4600 3400 4850
 $Comp
 L CPU2908CLocal:R R3
 U 1 1 5DCA0571
@@ -227,44 +208,14 @@ Wire Wire Line
 Wire Wire Line
 	4500 5050 4450 5050
 Connection ~ 4450 5050
-$Comp
-L o2_breakout-rescue:SG-8002CA-Oscillator X?
-U 1 1 5DC12BA3
-P 2900 3850
-AR Path="/5DC12BA3" Ref="X?"  Part="1" 
-AR Path="/5E6A6650/5DC12BA3" Ref="X2"  Part="1" 
-F 0 "X2" H 3244 3896 50  0000 L CNN
-F 1 "6.00MHz" H 3244 3805 50  0000 L CNN
-F 2 "Oscillators:Oscillator_SMD_SeikoEpson_SG8002LB-4pin_5.0x3.2mm_HandSoldering" H 3600 3500 50  0001 C CNN
-F 3 "https://support.epson.biz/td/api/doc_check.php?mode=dl&lang=en&Parts=SG-8002DC" H 2800 3850 50  0001 C CNN
-	1    2900 3850
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3200 3850 4750 3850
 Wire Wire Line
 	4750 3850 4750 4250
 Wire Wire Line
 	4750 4250 4900 4250
 Wire Wire Line
-	2900 4150 2900 4200
-$Comp
-L power:GND #PWR015
-U 1 1 5DC1A4C5
-P 2900 4200
-F 0 "#PWR015" H 2900 3950 50  0001 C CNN
-F 1 "GND" H 2905 4027 50  0000 C CNN
-F 2 "" H 2900 4200 50  0001 C CNN
-F 3 "" H 2900 4200 50  0001 C CNN
-	1    2900 4200
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
 	2600 3850 2500 3850
 Wire Wire Line
 	2500 3850 2500 3500
-Wire Wire Line
-	2500 3500 2900 3500
 Wire Wire Line
 	4450 3150 4900 3150
 Wire Wire Line
@@ -656,8 +607,6 @@ F 3 "" H 1800 3900 50  0001 C CNN
 	1    1800 3900
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	2900 3500 2900 3550
 $Comp
 L Device:C C22
 U 1 1 5DECDE29
@@ -951,12 +900,8 @@ F 3 "" H 3950 4150 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	2300 3500 2500 3500
-Connection ~ 2500 3500
 Wire Wire Line
 	2300 3800 2300 4150
-Wire Wire Line
-	2300 4150 2900 4150
-Connection ~ 2900 4150
 Wire Wire Line
 	3950 5250 3950 5350
 Wire Wire Line
@@ -1147,13 +1092,6 @@ $EndComp
 Wire Wire Line
 	4650 2550 4900 2550
 Wire Wire Line
-	4000 3500 4000 3550
-Wire Wire Line
-	3750 3550 4000 3550
-Connection ~ 4000 3550
-Wire Wire Line
-	4000 3550 4000 3750
-Wire Wire Line
 	4000 3750 4900 3750
 Wire Wire Line
 	3250 1500 4000 1500
@@ -1162,4 +1100,59 @@ Wire Wire Line
 	4000 1500 4000 3200
 Wire Wire Line
 	4000 1500 5400 1500
+Wire Wire Line
+	2300 4150 2900 4150
+Wire Wire Line
+	2900 3500 2900 3550
+Connection ~ 2500 3500
+Wire Wire Line
+	2500 3500 2900 3500
+$Comp
+L power:GND #PWR015
+U 1 1 5DC1A4C5
+P 2900 4200
+F 0 "#PWR015" H 2900 3950 50  0001 C CNN
+F 1 "GND" H 2905 4027 50  0000 C CNN
+F 2 "" H 2900 4200 50  0001 C CNN
+F 3 "" H 2900 4200 50  0001 C CNN
+	1    2900 4200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2900 4150 2900 4200
+Wire Wire Line
+	3200 3850 4750 3850
+Connection ~ 2900 4150
+$Comp
+L o2_breakout-rescue:SG-8002CA-Oscillator X?
+U 1 1 5DC12BA3
+P 2900 3850
+AR Path="/5DC12BA3" Ref="X?"  Part="1" 
+AR Path="/5E6A6650/5DC12BA3" Ref="X2"  Part="1" 
+F 0 "X2" H 3244 3896 50  0000 L CNN
+F 1 "6.00MHz" H 3244 3805 50  0000 L CNN
+F 2 "Oscillators:Oscillator_SMD_SeikoEpson_SG8002LB-4pin_5.0x3.2mm_HandSoldering" H 3600 3500 50  0001 C CNN
+F 3 "https://support.epson.biz/td/api/doc_check.php?mode=dl&lang=en&Parts=SG-8002DC" H 2800 3850 50  0001 C CNN
+	1    2900 3850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3400 4600 3400 4850
+Wire Wire Line
+	4550 4600 3400 4600
+Wire Wire Line
+	3400 4850 3550 4850
+$Comp
+L Memory_EEPROM:93CxxA U4
+U 1 1 5DC82A54
+P 3950 4950
+F 0 "U4" H 3950 5431 50  0000 C CNN
+F 1 "93C56" H 3700 4650 50  0000 C CNN
+F 2 "Housings_SOIC:SOIC-8_3.9x4.9mm_Pitch1.27mm" H 3950 4950 50  0001 C CNN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/20001749K.pdf" H 3950 4950 50  0001 C CNN
+	1    3950 4950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4000 3500 4000 3750
 $EndSCHEMATC
