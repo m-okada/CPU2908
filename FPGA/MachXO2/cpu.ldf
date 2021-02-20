@@ -2,9 +2,9 @@
 <BaliProject version="3.2" title="cpu" device="LCMXO2-2000HC-4TG100C" default_implementation="impl1">
     <Options/>
     <Implementation title="impl1" dir="impl1" description="impl1" synthesis="lse" default_strategy="Strategy1">
-        <Options top="top"/>
+        <Options def_top="SPI" top="top"/>
         <Source name="top.v" type="Verilog" type_short="Verilog">
-            <Options/>
+            <Options top_module="top"/>
         </Source>
         <Source name="core.v" type="Verilog" type_short="Verilog">
             <Options/>

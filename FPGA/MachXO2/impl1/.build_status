@@ -30,7 +30,7 @@
             <Task name="LSE_Compile" build_result="2" update_result="0" update_time="1578387319"/>
         </Milestone>
         <Milestone name="TOOL_Report" build_result="0" build_time="0">
-            <Task name="HDLE" build_result="0" update_result="3" update_time="0"/>
+            <Task name="HDLE" build_result="2" update_result="0" update_time="1612683629"/>
         </Milestone>
         <Report name="" last_build_time="1578387268" last_build_size="0"/>
         <Report name=".vdbs/cpu_impl1_map.vdb" last_build_time="1578117881" last_build_size="177972"/>

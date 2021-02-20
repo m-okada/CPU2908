@@ -183,6 +183,8 @@ DWORD rom_idx[ROM_SIZE]={0} ;
 DWORD OPECode ;
 BYTE STEP ;
 
+#define BRSEL_SHIFT 8
+
 
 DWORD make_code(DWORD endf, DWORD exbus, DWORD ex, DWORD alu, DWORD br, DWORD wr, DWORD regw_en, DWORD r_latch,
 	DWORD stfr, DWORD f_latch_en, DWORD fb_sel, DWORD din_latch, DWORD misc){

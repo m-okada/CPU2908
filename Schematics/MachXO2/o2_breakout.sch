@@ -1,6 +1,5 @@
 EESchema Schematic File Version 4
-LIBS:o2_breakout-cache
-EELAYER 29 0
+EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -2101,6 +2100,8 @@ Text Label 750  1450 0    50   ~ 0
 INT
 Wire Wire Line
 	9950 1100 9950 1350
+Wire Wire Line
+	9250 1550 9600 1550
 Wire Bus Line
 	8000 1200 8000 3100
 Wire Bus Line
@@ -2109,6 +2110,4 @@ Wire Bus Line
 	7950 1100 7950 3450
 Wire Bus Line
 	6050 1100 6050 3500
-Wire Wire Line
-	9250 1550 9600 1550
 $EndSCHEMATC
